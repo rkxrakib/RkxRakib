@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
+
+body {
+    background-color: #0a0a0a;
+    color: #00ff41;
+    font-family: 'Fira Code', monospace;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.terminal-loader {
+    width: 100%;
+    max-width: 800px;
+    background: #111;
+    border: 1px solid #333;
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.terminal-header {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.terminal-button { width: 12px; height: 12px; border-radius: 50%; }
+.red { background: #ff5f56; }
+.yellow { background: #ffbd2e; }
+.green { background: #27c93f; }
+
+.glowing-name {
+    color: #00ff41;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41;
+    animation: shine 1.5s infinite alternate;
+}
+
+@keyframes shine {
+    from { text-shadow: 0 0 5px #00ff41; color: #00ff41; }
+    to { text-shadow: 0 0 20px #fff, 0 0 30px #00ff41; color: #adff2f; }
+}
+
+.skill-bar { margin: 15px 0; }
+.bar { background: #222; border: 1px solid #00ff41; height: 20px; margin-top: 5px; }
+.fill { background: #00ff41; height: 100%; color: #000; text-align: right; padding-right: 5px; font-weight: bold; }
+
+.project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.card { border: 1px dashed #00ff41; padding: 10px; transition: 0.3s; }
+.card:hover { background: #00ff41; color: #000; }
+
+input, textarea, button {
+    width: 100%;
+    background: #000;
+    border: 1px solid #00ff41;
+    color: #00ff41;
+    padding: 10px;
+    margin-top: 10px;
+    font-family: 'Fira Code';
+}
+
+button { cursor: pointer; font-weight: bold; }
+button:hover { background: #00ff41; color: #000; }
