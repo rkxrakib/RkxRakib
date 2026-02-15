@@ -3,107 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RKX RAKIB | Professional Portfolio</title>
+    <title>RKX RAKIB | Premium Portfolio</title>
     <link rel="stylesheet" href="style.css">
-    <!-- FontAwesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Telegram Web App Script -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 </head>
 <body>
 
-    <!-- [ LOGIN SCREEN ] -->
-    <div id="login-screen">
-        <div class="login-card">
-            <img src="https://t.me/i/userpic/320/rkxrakib_69.svg" class="login-avatar" alt="RKX">
-            <h2>Welcome to My System</h2>
-            <p>Please authenticate to view full portfolio</p>
-            
-            <button onclick="loginWithGoogle()" class="google-login-btn">
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
-                Continue with Google
-            </button>
+    <!-- Top Auth Bar -->
+    <nav class="auth-nav">
+        <div id="auth-status">
+            <!-- Dynamic Content via JS -->
+            <button onclick="showLoginModal()" class="login-trigger">Login / Register</button>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideLoginModal()">&times;</span>
+            <h3>Access System</h3>
+            <button onclick="loginWithGoogle()" class="google-btn"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"> Google</button>
+            <button onclick="loginWithTelegram()" id="tg-login-btn" class="tg-btn"><i class="fab fa-telegram"></i> Telegram Login</button>
             <div class="divider"><span>OR</span></div>
-            <div class="email-login">
-                <input type="email" id="log-email" placeholder="Email Address">
-                <input type="password" id="log-pass" placeholder="Password">
-                <button onclick="loginEmail()" class="primary-btn">Sign In</button>
-            </div>
+            <input type="email" id="email" placeholder="Email">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="loginEmail()" class="primary-btn">Sign In</button>
         </div>
     </div>
 
-    <!-- [ MAIN PORTFOLIO ] -->
-    <div id="portfolio-screen" class="hidden">
-        <div class="wrapper">
-            <!-- Header Section -->
-            <header class="main-header card">
-                <div class="profile-info">
-                    <img src="https://t.me/i/userpic/320/rkxrakib_69.svg" class="main-avatar" alt="RKX RAKIB">
-                    <h1 id="display-name">RKX RAKIB</h1>
-                    <p class="role-text">Content Creator & Frontend Developer</p>
-                </div>
-                <div class="action-buttons">
-                    <a href="#" class="btn-small"><i class="fas fa-globe"></i> Website</a>
-                    <a href="#" class="btn-small"><i class="fas fa-shopping-bag"></i> Shop</a>
-                    <button onclick="logout()" class="btn-small logout-btn"><i class="fas fa-sign-out-alt"></i></button>
-                </div>
-            </header>
+    <div class="wrapper">
+        <!-- Header -->
+        <header class="profile-card card">
+            <div class="avatar-container">
+                <img src="https://t.me/i/userpic/320/rkxrakib_69.svg" id="user-avatar" class="main-avatar">
+                <div class="status-dot"></div>
+            </div>
+            <h1 id="user-name">RKX RAKIB</h1>
+            <p class="role-text">Content Creator & Frontend Developer</p>
+        </header>
 
-            <!-- My Portfolio Intro -->
-            <section class="card intro-card">
-                <h3>My Portfolio</h3>
-                <p>👋 Hi I am a web designer and Frontend Developer! I love to create beautiful and functional websites. In addition to this, a digital entrepreneur!</p>
-                <div class="social-row">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="https://t.me/RKX_RAKIB_OFFICIAL"><i class="fab fa-telegram"></i></a>
-                    <a href="#"><i class="fab fa-whatsapp"></i></a>
-                </div>
-            </section>
+        <!-- Intro -->
+        <section class="card intro-section">
+            <h2>I'm RKX Rakib</h2>
+            <p>👋 I am a web designer and Frontend Developer! I love to create beautiful and functional websites. In addition to this, I'm a digital entrepreneur!</p>
+        </section>
 
-            <!-- About Me -->
-            <section class="card">
-                <h2>About Me</h2>
-                <p>I am <span class="highlight">RKX RAKIB</span>, a digital marketing expert and content creator. I specialize in front-end design, customization, and functionality. With over 2 years of experience and 350+ projects completed.</p>
-                <button class="cv-download-btn"><i class="fas fa-cloud-download-alt"></i> Download CV</button>
-                
-                <div class="skills-grid">
-                    <div class="skill-item"><span>HTML/CSS</span> <div class="progress"><div class="fill" style="width:95%"></div></div></div>
-                    <div class="skill-item"><span>JavaScript</span> <div class="progress"><div class="fill" style="width:85%"></div></div></div>
-                    <div class="skill-item"><span>Python</span> <div class="progress"><div class="fill" style="width:80%"></div></div></div>
+        <!-- Skills -->
+        <section class="card">
+            <h3 class="section-title">Technical Expertise</h3>
+            <div class="skills-container">
+                <div class="skill-box">
+                    <span>HTML/CSS</span>
+                    <div class="skill-bar"><div class="skill-per" style="width: 95%;"></div></div>
                 </div>
-            </section>
+                <div class="skill-box">
+                    <span>JavaScript</span>
+                    <div class="skill-bar"><div class="skill-per" style="width: 85%;"></div></div>
+                </div>
+                <div class="skill-box">
+                    <span>Python</span>
+                    <div class="skill-bar"><div class="skill-per" style="width: 80%;"></div></div>
+                </div>
+            </div>
+        </section>
 
-            <!-- Work Grid -->
-            <h2 class="sec-title">My Recent Work</h2>
-            <div class="work-grid">
-                <div class="work-item card">
-                    <img src="https://i.ibb.co/m09L0tH/web-design.jpg" alt="Work">
+        <!-- Projects -->
+        <h2 class="sec-label">Recent Masterpieces</h2>
+        <div class="work-grid">
+            <!-- Project 1 -->
+            <div class="work-item card" onclick="zoomImage(this)">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIAWWAng5lyu5fTaiopl2fcvIdv_YQ6DTocEQlyiOENnKSQT-Z5nVhCyMs&s=10" alt="Web Design">
+                <div class="work-info">
                     <h4>Web Design Project</h4>
-                    <p>Modern interactive animations and UI elements.</p>
+                    <p>Modern animations and interactive elements.</p>
                 </div>
-                <div class="work-item card">
-                    <img src="https://i.ibb.co/3Mv5M8z/ai-bot.jpg" alt="Work">
+            </div>
+            <!-- Project 2 -->
+            <div class="work-item card" onclick="zoomImage(this)">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpnG-sovPqPenkNlv4JfDsVVk852w40OIeEw&usqp=CAU" alt="AI Master">
+                <div class="work-info">
                     <h4>AI Prompt Master</h4>
                     <p>Advanced prompt engineering for AI tools.</p>
                 </div>
             </div>
-
-            <!-- Contact Form -->
-            <section class="card">
-                <h2>Contact Me</h2>
-                <form id="contactForm">
-                    <input type="text" id="contact-name" placeholder="Name" required>
-                    <input type="email" id="contact-email" placeholder="Email" required>
-                    <textarea id="contact-msg" placeholder="Your Message" required></textarea>
-                    <button type="submit" id="submit-btn">Send Message</button>
-                </form>
-            </section>
+            <!-- Project 3 -->
+            <div class="work-item card" onclick="zoomImage(this)">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIWAwD7RAJVKwsDL5WJgtLUDcYLBLc4CpFxg&usqp=CAU" alt="App Design">
+                <div class="work-info">
+                    <h4>Mobile Application Design</h4>
+                    <p>User-friendly classic finishing design.</p>
+                </div>
+            </div>
+            <!-- Project 4 -->
+            <div class="work-item card" onclick="zoomImage(this)">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlikZWlzdodKU28qyO_Cct5E4_ARDe4Ju97Wj-uBE36ykJEg8nnXc_sO0&s=10" alt="Graphic">
+                <div class="work-info">
+                    <h4>Graphic & Video Editing</h4>
+                    <p>Creative visuals and professional editing.</p>
+                </div>
+            </div>
+            <!-- Project 5 -->
+            <div class="work-item card" onclick="zoomImage(this)">
+                <img src="https://www.uscis.gov/sites/default/files/images/topic-landing/USCIS_Online-Tools_241x161_V1@2x.png" alt="Tools">
+                <div class="work-info">
+                    <h4>Online/Offline Tools</h4>
+                    <p>Development of RKXFLI and daily utility tools.</p>
+                </div>
+            </div>
         </div>
+
+        <!-- Contact Form -->
+        <section class="card contact-section">
+            <h3>Get In Touch</h3>
+            <div id="contact-form-container">
+                <!-- Loaded via JS -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Image Zoom Overlay -->
+    <div id="zoom-overlay" onclick="closeZoom()">
+        <img id="zoomed-img">
     </div>
 
     <script src="script.js"></script>
