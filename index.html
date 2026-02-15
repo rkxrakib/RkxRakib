@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>RKX RAKIB | Mobile Portfolio</title>
+    <title>RKX RAKIB | Professional Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -11,109 +11,113 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 </head>
-<body>
+<body oncontextmenu="return false;"> <!-- Right click/Long press disable -->
 
     <!-- [ LOGIN SCREEN ] -->
     <div id="login-screen" class="screen">
-        <div class="auth-container">
-            <div class="auth-box">
-                <div id="auth-form-header">
-                    <h2 id="auth-title">Welcome Back</h2>
-                    <p id="auth-subtitle">Please sign in to continue</p>
-                </div>
+        <div class="auth-box">
+            <h2>Welcome Back</h2>
+            <p>Select a method to authenticate</p>
+            
+            <div class="social-login">
+                <!-- Google Button (Black Theme) -->
+                <button onclick="loginWithGoogle()" class="btn-dark">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="small-logo"> Google
+                </button>
+                <!-- Telegram Button (Black Theme) -->
+                <button onclick="enableTelegramAutoLogin()" class="btn-dark">
+                    <i class="fab fa-telegram-plane"></i> Telegram
+                </button>
+            </div>
 
-                <div class="social-login">
-                    <button onclick="loginWithGoogle()" class="btn-google">
-                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"> Google
-                    </button>
-                    <button onclick="enableTelegramAutoLogin()" class="btn-telegram">
-                        <i class="fab fa-telegram-plane"></i> Telegram Auto Login
-                    </button>
-                </div>
+            <div class="divider"><span>OR</span></div>
 
-                <div class="divider"><span>OR</span></div>
-
-                <div id="email-form">
-                    <input type="email" id="email" placeholder="Email Address">
-                    <input type="password" id="password" placeholder="Password">
-                    <button onclick="loginWithEmail()" class="btn-main">Sign In</button>
-                </div>
-
-                <p class="toggle-text" id="toggle-auth">Don't have an account? <span onclick="toggleAuthMode()">Sign Up</span></p>
+            <div class="email-form">
+                <input type="email" id="log-email" placeholder="Email Address">
+                <input type="password" id="log-pass" placeholder="Password">
+                <button onclick="loginEmail()" class="btn-main">Sign In</button>
             </div>
         </div>
     </div>
 
-    <!-- [ PORTFOLIO SCREEN ] -->
+    <!-- [ MAIN PORTFOLIO ] -->
     <div id="portfolio-screen" class="screen hidden">
         <header class="app-bar">
             <span>RKX SYSTEM</span>
-            <button onclick="handleLogout()" class="logout-icon"><i class="fas fa-sign-out-alt"></i></button>
+            <button onclick="handleLogout()" class="logout-btn"><i class="fas fa-power-off"></i></button>
         </header>
 
-        <main class="content-wrapper">
-            <!-- Profile Card -->
-            <div class="profile-card card">
-                <div class="avatar-wrap">
-                    <img src="" id="user-avatar" alt="User">
-                    <div class="online-status"></div>
-                </div>
-                <h1 id="user-display-name">Loading...</h1>
-                <p class="tagline">Content Creator & Frontend Developer</p>
+        <main class="content">
+            <div class="profile-card">
+                <img src="" id="user-avatar" class="avatar">
+                <h1 id="user-name">RKX RAKIB</h1>
+                <p class="role">Content Creator & Frontend Developer</p>
             </div>
 
-            <!-- About -->
-            <div class="card">
-                <h3>I'm RKX Rakib</h3>
-                <p>👋 I am a web designer and Frontend Developer! I love to create beautiful and functional websites. In addition to this, a digital entrepreneur!</p>
-            </div>
+            <h2 class="sec-title">My Recent Work</h2>
 
-            <!-- Skills -->
-            <div class="card">
-                <h3>Technical Skills</h3>
-                <div class="skill-item">
-                    <span>HTML/CSS</span>
-                    <div class="progress-bar"><div class="fill" style="width: 95%"></div></div>
+            <!-- Project 1 -->
+            <div class="project-card" onclick="toggleZoom(this)">
+                <div class="img-container">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIAWWAng5lyu5fTaiopl2fcvIdv_YQ6DTocEQlyiOENnKSQT-Z5nVhCyMs&s=10" class="p-img">
                 </div>
-                <div class="skill-item">
-                    <span>JavaScript</span>
-                    <div class="progress-bar"><div class="fill" style="width: 85%"></div></div>
-                </div>
-                <div class="skill-item">
-                    <span>Python</span>
-                    <div class="progress-bar"><div class="fill" style="width: 80%"></div></div>
+                <div class="p-info">
+                    <h3>Web Design Project</h3>
+                    <p>A modern web design project featuring various animations and interactive elements.</p>
                 </div>
             </div>
 
-            <!-- Projects -->
-            <h2 class="section-label">My Recent Work</h2>
-            <div class="project-grid">
-                <div class="project-card" onclick="openZoom(this)">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIAWWAng5lyu5fTaiopl2fcvIdv_YQ6DTocEQlyiOENnKSQT-Z5nVhCyMs&s=10">
-                    <p>Web Design</p>
+            <!-- Project 2 -->
+            <div class="project-card" onclick="toggleZoom(this)">
+                <div class="img-container">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpnG-sovPqPenkNlv4JfDsVVk852w40OIeEw&usqp=CAU" class="p-img">
                 </div>
-                <div class="project-card" onclick="openZoom(this)">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpnG-sovPqPenkNlv4JfDsVVk852w40OIeEw&usqp=CAU">
-                    <p>AI Master</p>
-                </div>
-                <div class="project-card" onclick="openZoom(this)">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIWAwD7RAJVKwsDL5WJgtLUDcYLBLc4CpFxg&usqp=CAU">
-                    <p>App Design</p>
+                <div class="p-info">
+                    <h3>Ai prompt master</h3>
+                    <p>I have a unique talent for using AI in an advanced way and creating prompts for all sectors. My main goal is to make tasks easier by using any AI very easily!</p>
                 </div>
             </div>
 
-            <!-- Contact Form -->
-            <div class="card contact-card">
+            <!-- Project 3 -->
+            <div class="project-card" onclick="toggleZoom(this)">
+                <div class="img-container">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIWAwD7RAJVKwsDL5WJgtLUDcYLBLc4CpFxg&usqp=CAU" class="p-img">
+                </div>
+                <div class="p-info">
+                    <h3>Mobile Application design</h3>
+                    <p>It is a user-friendly mobile application that makes the daily tasks of users easier. Very simple and advance design and classic finishing.</p>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card" onclick="toggleZoom(this)">
+                <div class="img-container">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlikZWlzdodKU28qyO_Cct5E4_ARDe4Ju97Wj-uBE36ykJEg8nnXc_sO0&s=10" class="p-img">
+                </div>
+                <div class="p-info">
+                    <h3>Graphic design and video editing</h3>
+                    <p>Creative graphic design where I professionally edit videos using elements that take the quality to another level.</p>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-card" onclick="toggleZoom(this)">
+                <div class="img-container">
+                    <img src="https://www.uscis.gov/sites/default/files/images/topic-landing/USCIS_Online-Tools_241x161_V1@2x.png" class="p-img">
+                </div>
+                <div class="p-info">
+                    <h3>Online offline tools</h3>
+                    <p>Essential equipment for online work. I have an app called "RKXFLI" featuring various types of online and offline tools.</p>
+                </div>
+            </div>
+
+            <!-- Contact -->
+            <div class="contact-section">
                 <h3>Contact Me</h3>
-                <div id="dynamic-contact-ui">
-                    <!-- Loaded via JS -->
-                </div>
+                <div id="contact-ui"></div>
             </div>
         </main>
     </div>
-
-    <!-- Zoom Overlay -->
-    <div id="zoom-overlay" onclick="closeZoom()"><img id="zoomed-img"></div>
 
     <script src="script.js"></script>
 </body>
