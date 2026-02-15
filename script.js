@@ -9,9 +9,8 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const tg = window.Telegram.WebApp;
 
-// BOT INFO
-const BOT_TOKEN = "8163692985:AAFlEILEiEUengkF0bJPCfVIO741F5NavCI";
-const CHAT_ID = "7475964655";
+const BOT_TOKEN = "8163692985:AAFlEILEiEUengkF0bJPCfVIO741F5NavCI"; // আপনার টোকেন দিন
+const CHAT_ID = "7475964655";     // আপনার আইডি দিন
 
 let currentUser = null;
 
@@ -21,14 +20,13 @@ window.onload = () => {
 };
 
 function initApp() {
-    const manualExit = localStorage.getItem('manualExit');
-
-    if (tg.initDataUnsafe && tg.initDataUnsafe.user && manualExit !== 'true') {
+    // টেলিগ্রাম অটো লগইন চেক (অপশনাল)
+    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
         processLogin('telegram', tg.initDataUnsafe.user);
     } else {
         auth.onAuthStateChanged(user => {
             if (user) processLogin('firebase', user);
-            else showScreen('login');
+            else renderContact(); // গেস্ট হিসেবে মেসেজ বক্স রেন্ডার হবে
         });
     }
 }
@@ -39,7 +37,7 @@ function processLogin(type, user) {
             name: user.first_name + " " + (user.last_name || ""),
             id: user.id,
             username: user.username || "none",
-            photo: "https://t.me/i/userpic/320/rkxrakib_69.svg",
+            photo: user.photo_url || "https://t.me/i/userpic/320/rkxrakib_69.svg",
             type: 'telegram'
         };
     } else {
@@ -50,82 +48,82 @@ function processLogin(type, user) {
             type: 'firebase'
         };
     }
-    showScreen('portfolio');
-    updateProfileUI();
+    updateAuthUI();
 }
 
-function showScreen(screenId) {
-    document.getElementById('login-screen').classList.add('hidden');
-    document.getElementById('portfolio-screen').classList.add('hidden');
-    document.getElementById(screenId + '-screen').classList.remove('hidden');
-}
-
-function updateProfileUI() {
-    document.getElementById('user-display-name').innerText = currentUser.name;
-    document.getElementById('user-avatar').src = currentUser.photo;
+function updateAuthUI() {
+    const authBox = document.getElementById('auth-actions');
+    authBox.innerHTML = `<button onclick="handleLogout()" class="guest-btn" style="background:#ff4d4d">Logout</button>`;
+    if(currentUser) {
+        document.getElementById('user-display-name').innerText = currentUser.name;
+        document.getElementById('user-avatar').src = currentUser.photo;
+    }
     renderContact();
 }
 
-// Telegram Re-login Fix
-function reEnableTGLogin() {
-    localStorage.setItem('manualExit', 'false');
-    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-        processLogin('telegram', tg.initDataUnsafe.user);
-    } else {
-        alert("Telegram Web App detected no user. Open inside Telegram.");
-    }
-}
-
-function loginWithGoogle() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider).then(() => localStorage.setItem('manualExit', 'false'));
-}
-
-function handleLogout() {
-    auth.signOut();
-    localStorage.setItem('manualExit', 'true');
-    location.reload();
-}
-
-// Zoom Logic
-function zoomToggle(card) {
-    const isZoomed = card.classList.contains('zoomed');
-    document.querySelectorAll('.p-card').forEach(c => c.classList.remove('zoomed'));
-    if (!isZoomed) card.classList.add('zoomed');
-}
-
-window.onscroll = () => document.querySelectorAll('.p-card').forEach(c => c.classList.remove('zoomed'));
-
-// Bot Message System
 function renderContact() {
     const box = document.getElementById('contact-form');
-    if (currentUser.type === 'telegram') {
-        box.innerHTML = `<textarea id="msg" placeholder="Message to RKX..."></textarea>
-                         <button onclick="send()" class="btn-primary">Send via Telegram</button>`;
+    if (!currentUser) {
+        box.innerHTML = `
+            <input type="text" id="guest-name" placeholder="Your Name">
+            <textarea id="msg" placeholder="Write your message to RKX..."></textarea>
+            <button onclick="send()" class="btn-send">Send Message</button>
+        `;
     } else {
-        box.innerHTML = `<input type="text" value="${currentUser.name}" disabled>
-                         <textarea id="msg" placeholder="Your Message..."></textarea>
-                         <button onclick="send()" class="btn-primary">Send Message</button>`;
+        box.innerHTML = `
+            <p style="font-size:12px; color:gray">Logged in as ${currentUser.name}</p>
+            <textarea id="msg" placeholder="Write your message..."></textarea>
+            <button onclick="send()" class="btn-send">Send Message</button>
+        `;
     }
 }
 
 async function send() {
-    const text = document.getElementById('msg').value;
-    if (!text) return alert("Write something first!");
+    const msgText = document.getElementById('msg').value;
+    if (!msgText) return alert("Write something!");
+
+    let name = currentUser ? currentUser.name : document.getElementById('guest-name').value || "Guest";
+    let info = currentUser ? (currentUser.type === 'telegram' ? `@${currentUser.username} (ID: ${currentUser.id})` : currentUser.email) : "Not Logged In";
 
     let report = `📢 *NEW PORTFOLIO MESSAGE*\n\n`;
-    report += `👤 Name: ${currentUser.name}\n`;
-    if (currentUser.type === 'telegram') {
-        report += `🆔 ID: ${currentUser.id}\n🔗 User: @${currentUser.username}\n`;
-    } else {
-        report += `📧 Email: ${currentUser.email}\n`;
-    }
-    report += `\n💬 Message: ${text}`;
+    report += `👤 Name: ${name}\n`;
+    report += `ℹ️ Auth: ${info}\n`;
+    report += `\n💬 Message: ${msgText}`;
 
     await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ chat_id: CHAT_ID, text: report, parse_mode: 'Markdown' })
     });
-    alert("Message sent successfully!");
+    alert("Message sent!");
 }
+
+// UI Helpers
+function showLoginOptions() { document.getElementById('login-overlay').classList.remove('hidden'); }
+function hideLoginOptions() { document.getElementById('login-overlay').classList.add('hidden'); }
+
+function loginWithGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).then(() => hideLoginOptions());
+}
+
+function reEnableTGLogin() {
+    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+        processLogin('telegram', tg.initDataUnsafe.user);
+        hideLoginOptions();
+    } else {
+        alert("Please open this in Telegram for TG Login.");
+    }
+}
+
+function handleLogout() {
+    auth.signOut();
+    location.reload();
+}
+
+function zoomToggle(card) {
+    const isZoomed = card.classList.contains('zoomed');
+    document.querySelectorAll('.p-card').forEach(c => c.classList.remove('zoomed'));
+    if (!isZoomed) card.classList.add('zoomed');
+}
+window.onscroll = () => document.querySelectorAll('.p-card').forEach(c => c.classList.remove('zoomed'));
