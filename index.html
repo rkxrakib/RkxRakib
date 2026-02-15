@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RKX RAKIB | Root Access</title>
+    <title>RKX RAKIB | Secure Access</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
@@ -11,91 +11,70 @@
 </head>
 <body>
 
-    <!-- Authentication Screen -->
-    <div id="login-screen" class="terminal-auth">
-        <div class="auth-box">
-            <h2 class="glitch">SYSTEM_LOGIN</h2>
-            <p>> Access level: Restricted</p>
-            <button onclick="loginWithGoogle()" class="hacker-btn"><i class="fab fa-google"></i> AUTH_VIA_GOOGLE</button>
-            <div class="input-group">
-                <input type="email" id="email" placeholder="user_id@system">
-                <input type="password" id="pass" placeholder="password_hash">
-                <button onclick="loginWithEmail()" class="hacker-btn">INITIALIZE_LOGIN</button>
+    <!-- Auth Container -->
+    <div id="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <img src="https://i.ibb.co/vz6mXvY/profile.jpg" class="brand-logo">
+                <h2 id="auth-title">Welcome Back</h2>
+                <p id="auth-subtitle">Please enter your details to access the system</p>
             </div>
+
+            <!-- Login Form -->
+            <div id="login-form">
+                <div class="input-box">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="login-email" placeholder="Email Address">
+                </div>
+                <div class="input-box">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="login-pass" placeholder="Password">
+                </div>
+                <button onclick="loginWithEmail()" class="main-btn">Login to System</button>
+            </div>
+
+            <!-- Register Form (Hidden by default) -->
+            <div id="register-form" class="hidden">
+                <div class="input-box">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="reg-name" placeholder="Full Name">
+                </div>
+                <div class="input-box">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="reg-email" placeholder="Email Address">
+                </div>
+                <div class="input-box">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="reg-pass" placeholder="Create Password">
+                </div>
+                <button onclick="registerWithEmail()" class="main-btn">Create Account</button>
+            </div>
+
+            <div class="divider"><span>OR CONTINUE WITH</span></div>
+
+            <button onclick="loginWithGoogle()" class="google-btn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg">
+                Continue with Google
+            </button>
+
+            <p class="toggle-text">
+                <span id="toggle-msg">Don't have an account?</span> 
+                <a href="javascript:void(0)" onclick="toggleAuth()" id="toggle-link">Sign Up</a>
+            </p>
         </div>
     </div>
 
-    <!-- Main Portfolio Screen -->
+    <!-- Portfolio Screen (Hidden) -->
     <div id="portfolio-screen" class="hidden">
-        <div class="container">
-            <!-- Header Profile -->
-            <header class="profile-header">
-                <div class="avatar-wrapper">
-                    <img src="https://i.ibb.co/vz6mXvY/profile.jpg" alt="RKX RAKIB" class="profile-img">
-                </div>
-                <h1 class="glowing-name">RKX RAKIB</h1>
-                <p class="subtitle">Content Creator & Frontend Developer</p>
-                <div class="nav-buttons">
-                    <button class="nav-btn"><i class="fas fa-globe"></i> Website</button>
-                    <button class="nav-btn"><i class="fas fa-shopping-cart"></i> Shop</button>
-                    <button class="nav-btn"><i class="fas fa-language"></i> English</button>
-                </div>
-            </header>
-
-            <!-- Intro Card -->
-            <div class="glass-card main-intro">
-                <h3>My Portfolio</h3>
-                <p>> 👋 Hi I am a web designer and Frontend Developer! I love to create beautiful and functional websites. In addition to this, a digital entrepreneur!</p>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-telegram"></i></a>
-                    <a href="#"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-
-            <!-- About Me -->
-            <div class="glass-card">
-                <h2 class="section-title">About Me</h2>
-                <p>I am <span class="gold-glow">RKX RAKIB</span>, a digital marketing expert and content creator. I specially expert in front-end website design, customization and functionality! With 02 years of experience, I have completed 350+ projects.</p>
-                <button class="cv-btn"><i class="fas fa-download"></i> DOWNLOAD_CV.exe</button>
-            </div>
-
-            <!-- Skills -->
-            <div class="glass-card">
-                <h2 class="section-title">Skills_Stats</h2>
-                <div class="skill"><span>HTML/CSS</span> <div class="bar"><div class="fill" style="width: 95%"></div></div></div>
-                <div class="skill"><span>JavaScript</span> <div class="bar"><div class="fill" style="width: 85%"></div></div></div>
-                <div class="skill"><span>Python</span> <div class="bar"><div class="fill" style="width: 80%"></div></div></div>
-            </div>
-
-            <!-- Projects -->
-            <h2 class="section-title center">My Recent Work</h2>
-            <div class="project-grid">
-                <div class="project-card">
-                    <img src="https://via.placeholder.com/300x150/111/00ff41?text=Web+Design" alt="Web">
-                    <h4>Web Design Project</h4>
-                    <p>Modern animations and interactive elements.</p>
-                </div>
-                <div class="project-card">
-                    <img src="https://via.placeholder.com/300x150/111/00ff41?text=AI+Master" alt="AI">
-                    <h4>Ai Prompt Master</h4>
-                    <p>Unique talent for using AI in advanced ways.</p>
-                </div>
-            </div>
-
-            <!-- Contact -->
-            <div class="glass-card">
-                <h2 class="section-title">Contact Me</h2>
-                <form id="contactForm">
-                    <input type="text" id="name" placeholder="Name" required>
-                    <input type="email" id="email-contact" placeholder="Email" required>
-                    <textarea id="message" placeholder="Type your command/message..." required></textarea>
-                    <button type="submit" class="send-btn">SEND_MESSAGE</button>
-                </form>
-            </div>
+        <!-- আপনার আগের পোর্টফোলিও কোড এখানে থাকবে -->
+        <nav class="top-nav">
+            <span class="logo">RKX RAKIB</span>
+            <button onclick="logout()" class="logout-btn">Logout</button>
+        </nav>
+        <div class="content">
+            <h1>Welcome, <span id="user-display-name" class="gold-glow"></span></h1>
+            <p>You have successfully bypassed the security wall.</p>
+            <!-- পোর্টফোলিও কন্টেন্ট... -->
         </div>
     </div>
 
