@@ -1,84 +1,73 @@
-:root {
-    --primary: #00ff41; /* Hacker Green */
-    --gold: #ffd700;
-    --bg: #0a001a;
-    --glass: rgba(255, 255, 255, 0.05);
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
 body {
-    background: radial-gradient(circle at top, #1a0033, #0a0a0a);
-    color: #e0e0e0;
-    font-family: 'Fira Code', monospace;
-    margin: 0; padding: 0;
+    background: #0f0c29; 
+    background: linear-gradient(135deg, #24243e, #302b63, #0f0c29);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
 }
 
-.container { max-width: 500px; margin: 0 auto; padding: 20px; }
+#auth-container { width: 100%; max-width: 400px; padding: 20px; }
 
-.hidden { display: none; }
-
-/* Glowing Gold Name */
-.glowing-name {
-    color: var(--gold);
-    text-shadow: 0 0 15px var(--gold), 0 0 30px var(--gold);
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 24px;
+.auth-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
 }
 
-.gold-glow { color: var(--gold); font-weight: bold; }
+.brand-logo { width: 70px; height: 70px; border-radius: 50%; border: 2px solid #00ff41; margin-bottom: 15px; }
 
-/* Glass Cards */
-.glass-card {
-    background: var(--glass);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 255, 65, 0.2);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-}
+h2 { font-size: 24px; margin-bottom: 5px; }
+p#auth-subtitle { font-size: 13px; color: #ccc; margin-bottom: 30px; }
 
-/* Profile Image */
-.profile-img {
-    width: 100px; height: 100px;
-    border-radius: 50%;
-    border: 3px solid var(--primary);
-    box-shadow: 0 0 20px var(--primary);
-}
-
-.nav-btn {
-    background: var(--glass);
-    border: 1px solid var(--primary);
-    color: #fff;
-    padding: 8px 15px;
-    border-radius: 20px;
-    margin: 5px;
-    font-size: 12px;
-}
-
-/* Skill Bars */
-.bar { background: #222; height: 10px; border-radius: 5px; margin-top: 5px; }
-.fill { background: linear-gradient(90deg, var(--primary), #adff2f); height: 100%; border-radius: 5px; }
-
-/* Project Cards */
-.project-card {
-    background: #111;
-    border-radius: 15px;
-    overflow: hidden;
-    border: 1px solid #333;
+.input-box {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px 15px;
     margin-bottom: 15px;
-}
-.project-card img { width: 100%; border-bottom: 1px solid var(--primary); }
-.project-card h4, .project-card p { padding: 10px; margin: 0; }
-
-/* Buttons & Inputs */
-input, textarea {
-    width: 100%; background: rgba(0,0,0,0.5); border: 1px solid #444;
-    color: var(--primary); padding: 12px; border-radius: 10px; margin-top: 10px;
+    display: flex;
+    align-items: center;
 }
 
-.send-btn, .cv-btn {
-    width: 100%; background: linear-gradient(90deg, #8a2be2, #00ff41);
-    border: none; padding: 12px; border-radius: 15px; color: white;
-    font-weight: bold; cursor: pointer; margin-top: 15px;
+.input-box i { color: #00ff41; margin-right: 15px; }
+.input-box input {
+    background: transparent; border: none; outline: none; color: white; width: 100%;
+}
+
+.main-btn {
+    width: 100%; background: #00ff41; color: #000; border: none;
+    padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer;
+    transition: 0.3s; margin-top: 10px;
+}
+.main-btn:hover { background: #00cc33; transform: translateY(-2px); }
+
+.divider { margin: 25px 0; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; }
+.divider span {
+    position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+    background: #1e1b3a; padding: 0 10px; font-size: 10px; color: #888;
+}
+
+.google-btn {
+    width: 100%; background: white; color: #333; border: none;
+    padding: 12px; border-radius: 12px; display: flex; align-items: center;
+    justify-content: center; gap: 10px; cursor: pointer; font-weight: 500;
+}
+
+.toggle-text { margin-top: 25px; font-size: 13px; color: #bbb; }
+.toggle-text a { color: #00ff41; text-decoration: none; font-weight: bold; }
+
+.hidden { display: none !important; }
+
+/* Glowing Effect for Name */
+.gold-glow {
+    color: #ffd700; font-weight: bold; text-shadow: 0 0 10px #ffd700;
 }
