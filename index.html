@@ -3,78 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RKX RAKIB | Secure Access</title>
+    <title>RKX RAKIB | Developer Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Firebase Legacy SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-    <!-- Auth Container -->
+    <!-- [ AUTH SECTION ] -->
     <div id="auth-container">
-        <div class="auth-card">
-            <div class="auth-header">
-                <img src="https://i.ibb.co/vz6mXvY/profile.jpg" class="brand-logo">
-                <h2 id="auth-title">Welcome Back</h2>
-                <p id="auth-subtitle">Please enter your details to access the system</p>
-            </div>
-
-            <!-- Login Form -->
+        <div class="auth-card glass">
+            <h2 class="hacker-text">SYSTEM_ACCESS</h2>
             <div id="login-form">
-                <div class="input-box">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="login-email" placeholder="Email Address">
-                </div>
-                <div class="input-box">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="login-pass" placeholder="Password">
-                </div>
-                <button onclick="loginWithEmail()" class="main-btn">Login to System</button>
+                <input type="email" id="login-email" placeholder="Email">
+                <input type="password" id="login-pass" placeholder="Password">
+                <button onclick="loginWithEmail()" class="hacker-btn">LOGIN</button>
             </div>
-
-            <!-- Register Form (Hidden by default) -->
+            
             <div id="register-form" class="hidden">
-                <div class="input-box">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="reg-name" placeholder="Full Name">
-                </div>
-                <div class="input-box">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="reg-email" placeholder="Email Address">
-                </div>
-                <div class="input-box">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="reg-pass" placeholder="Create Password">
-                </div>
-                <button onclick="registerWithEmail()" class="main-btn">Create Account</button>
+                <input type="text" id="reg-name" placeholder="Full Name">
+                <input type="email" id="reg-email" placeholder="Email">
+                <input type="password" id="reg-pass" placeholder="Password">
+                <button onclick="registerWithEmail()" class="hacker-btn">REGISTER</button>
             </div>
 
-            <div class="divider"><span>OR CONTINUE WITH</span></div>
-
+            <div class="divider"><span>OR</span></div>
+            
             <button onclick="loginWithGoogle()" class="google-btn">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G">
                 Continue with Google
             </button>
-
-            <p class="toggle-text">
-                <span id="toggle-msg">Don't have an account?</span> 
-                <a href="javascript:void(0)" onclick="toggleAuth()" id="toggle-link">Sign Up</a>
-            </p>
+            
+            <p onclick="toggleAuth()" id="toggle-text">Don't have an account? <span>Sign Up</span></p>
         </div>
     </div>
 
-    <!-- Portfolio Screen (Hidden) -->
+    <!-- [ MAIN PORTFOLIO SECTION ] (Hidden initially) -->
     <div id="portfolio-screen" class="hidden">
-        <!-- আপনার আগের পোর্টফোলিও কোড এখানে থাকবে -->
-        <nav class="top-nav">
-            <span class="logo">RKX RAKIB</span>
-            <button onclick="logout()" class="logout-btn">Logout</button>
-        </nav>
-        <div class="content">
-            <h1>Welcome, <span id="user-display-name" class="gold-glow"></span></h1>
-            <p>You have successfully bypassed the security wall.</p>
-            <!-- পোর্টফোলিও কন্টেন্ট... -->
+        <div class="container">
+            <!-- Header -->
+            <header class="header-box glass">
+                <div class="profile-area">
+                    <img src="https://telegra.ph/file/bc46b9a89c8949826d03d.jpg" alt="Profile" class="profile-img">
+                    <h1 class="hacker-text">RKX RAKIB</h1>
+                    <p>Content Creator & Frontend Developer</p>
+                </div>
+                <div class="top-buttons">
+                    <button><i class="fas fa-globe"></i> Website</button>
+                    <button><i class="fas fa-shopping-cart"></i> Shop</button>
+                    <button onclick="logout()"><i class="fas fa-sign-out-alt"></i> Exit</button>
+                </div>
+            </header>
+
+            <!-- My Portfolio Intro -->
+            <section class="intro-box glass">
+                <h3>My Portfolio</h3>
+                <p>👋 Hi I am a web designer and Frontend Developer! I love to create beautiful and functional websites. In addition to this, a digital entrepreneur!</p>
+                <div class="social-links">
+                    <i class="fab fa-facebook"></i>
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-twitter"></i>
+                    <a href="https://t.me/RKX_RAKIB_OFFICIAL"><i class="fab fa-telegram"></i></a>
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+            </section>
+
+            <!-- About Me -->
+            <section class="about-box glass">
+                <h2>About Me</h2>
+                <p>I am <span class="glowing-name">RKX RAKIB</span>, a digital marketing expert and content creator. I specially expert in front-end website design, customization and functionality! With 02 years of experience, I have completed 350+ projects.</p>
+                <button class="cv-btn"><i class="fas fa-download"></i> Download CV</button>
+                
+                <div class="skills-area">
+                    <div class="skill"><span>HTML/CSS</span><div class="bar"><div class="fill" style="width:95%"></div></div></div>
+                    <div class="skill"><span>JavaScript</span><div class="bar"><div class="fill" style="width:85%"></div></div></div>
+                    <div class="skill"><span>Python</span><div class="bar"><div class="fill" style="width:80%"></div></div></div>
+                </div>
+            </section>
+
+            <!-- My Recent Work -->
+            <h2 class="title-text">My Recent Work</h2>
+            <div class="work-grid">
+                <div class="work-card glass">
+                    <img src="https://i.ibb.co/m09L0tH/web-design.jpg" alt="Work">
+                    <h4>Web Design Project</h4>
+                    <p>Modern animations and interactive elements.</p>
+                </div>
+                <div class="work-card glass">
+                    <img src="https://i.ibb.co/3Mv5M8z/ai-bot.jpg" alt="Work">
+                    <h4>AI Prompt Master</h4>
+                    <p>Advanced AI prompt engineering sectors.</p>
+                </div>
+            </div>
+
+            <!-- Contact Me -->
+            <section class="contact-box glass">
+                <h2>Contact Me</h2>
+                <form id="contactForm">
+                    <input type="text" id="sender-name" placeholder="Your Name" required>
+                    <input type="email" id="sender-email" placeholder="Email" required>
+                    <textarea id="sender-msg" placeholder="Your Message" required></textarea>
+                    <button type="submit" id="sendBtn">Send Message</button>
+                </form>
+            </section>
         </div>
     </div>
 
