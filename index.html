@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RKX RAKIB | Premium Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RKX RAKIB | Mobile Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -13,115 +13,106 @@
 </head>
 <body>
 
-    <!-- [ LOGIN SCREEN - SLIDING ANIMATION ] -->
-    <div id="login-screen">
-        <div class="container" id="main-container">
-            <!-- Sign Up (Registration) -->
-            <div class="form-container sign-up-container">
-                <form action="#">
-                    <h1>Create Account</h1>
-                    <div class="social-container">
-                        <a href="javascript:void(0)" onclick="loginWithGoogle()" class="social"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"></a>
-                        <a href="javascript:void(0)" onclick="loginWithTelegram()" class="social"><i class="fab fa-telegram-plane"></i></a>
-                    </div>
-                    <span>or use your email for registration</span>
-                    <input type="text" id="reg-name" placeholder="Name" />
-                    <input type="email" id="reg-email" placeholder="Email" />
-                    <input type="password" id="reg-pass" placeholder="Password" />
-                    <button type="button" onclick="registerEmail()">Sign Up</button>
-                </form>
-            </div>
-
-            <!-- Sign In -->
-            <div class="form-container sign-in-container">
-                <form action="#">
-                    <h1>Sign in</h1>
-                    <div class="social-container">
-                        <a href="javascript:void(0)" onclick="loginWithGoogle()" class="social"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"></a>
-                        <a href="javascript:void(0)" onclick="loginWithTelegram()" class="social"><i class="fab fa-telegram-plane"></i></a>
-                    </div>
-                    <span>or use your account</span>
-                    <input type="email" id="log-email" placeholder="Email" />
-                    <input type="password" id="log-pass" placeholder="Password" />
-                    <a href="#">Forgot your password?</a>
-                    <button type="button" onclick="loginEmail()">Sign In</button>
-                </form>
-            </div>
-
-            <!-- Overlay -->
-            <div class="overlay-container">
-                <div class="overlay">
-                    <div class="overlay-panel overlay-left">
-                        <h1>Welcome Back!</h1>
-                        <p>To keep connected with me please login with your personal info</p>
-                        <button class="ghost" id="signIn">Sign In</button>
-                    </div>
-                    <div class="overlay-panel overlay-right">
-                        <h1>Hello, Welcome!</h1>
-                        <p>Enter your details to start up your dashboard!</p>
-                        <button class="ghost" id="signUp">Sign Up</button>
-                    </div>
+    <!-- [ LOGIN SCREEN ] -->
+    <div id="login-screen" class="screen">
+        <div class="auth-container">
+            <div class="auth-box">
+                <div id="auth-form-header">
+                    <h2 id="auth-title">Welcome Back</h2>
+                    <p id="auth-subtitle">Please sign in to continue</p>
                 </div>
+
+                <div class="social-login">
+                    <button onclick="loginWithGoogle()" class="btn-google">
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"> Google
+                    </button>
+                    <button onclick="enableTelegramAutoLogin()" class="btn-telegram">
+                        <i class="fab fa-telegram-plane"></i> Telegram Auto Login
+                    </button>
+                </div>
+
+                <div class="divider"><span>OR</span></div>
+
+                <div id="email-form">
+                    <input type="email" id="email" placeholder="Email Address">
+                    <input type="password" id="password" placeholder="Password">
+                    <button onclick="loginWithEmail()" class="btn-main">Sign In</button>
+                </div>
+
+                <p class="toggle-text" id="toggle-auth">Don't have an account? <span onclick="toggleAuthMode()">Sign Up</span></p>
             </div>
         </div>
     </div>
 
-    <!-- [ MAIN PORTFOLIO SCREEN ] -->
-    <div id="portfolio-screen" class="hidden">
-        <nav class="auth-bar">
-            <button onclick="logout()" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
-        </nav>
+    <!-- [ PORTFOLIO SCREEN ] -->
+    <div id="portfolio-screen" class="screen hidden">
+        <header class="app-bar">
+            <span>RKX SYSTEM</span>
+            <button onclick="handleLogout()" class="logout-icon"><i class="fas fa-sign-out-alt"></i></button>
+        </header>
 
-        <div class="wrapper">
-            <header class="card profile-header">
-                <img src="https://t.me/i/userpic/320/rkxrakib_69.svg" id="user-avatar" class="main-avatar">
-                <h1 id="user-name">RKX RAKIB</h1>
-                <p>Content Creator & Frontend Developer</p>
-            </header>
+        <main class="content-wrapper">
+            <!-- Profile Card -->
+            <div class="profile-card card">
+                <div class="avatar-wrap">
+                    <img src="" id="user-avatar" alt="User">
+                    <div class="online-status"></div>
+                </div>
+                <h1 id="user-display-name">Loading...</h1>
+                <p class="tagline">Content Creator & Frontend Developer</p>
+            </div>
 
-            <section class="card">
-                <h2>I'm RKX Rakib</h2>
+            <!-- About -->
+            <div class="card">
+                <h3>I'm RKX Rakib</h3>
                 <p>👋 I am a web designer and Frontend Developer! I love to create beautiful and functional websites. In addition to this, a digital entrepreneur!</p>
-            </section>
+            </div>
 
             <!-- Skills -->
-            <section class="card">
-                <h3>Technical Expertise</h3>
-                <div class="skills-grid">
-                    <div class="skill"><span>HTML/CSS</span><div class="bar"><div class="fill" style="width:95%"></div></div></div>
-                    <div class="skill"><span>JavaScript</span><div class="bar"><div class="fill" style="width:85%"></div></div></div>
-                    <div class="skill"><span>Python</span><div class="bar"><div class="fill" style="width:80%"></div></div></div>
+            <div class="card">
+                <h3>Technical Skills</h3>
+                <div class="skill-item">
+                    <span>HTML/CSS</span>
+                    <div class="progress-bar"><div class="fill" style="width: 95%"></div></div>
                 </div>
-            </section>
-
-            <!-- Projects with Zoom -->
-            <h2 class="sec-label">My Recent Work</h2>
-            <div class="work-grid">
-                <div class="work-item" onclick="zoomImage(this)">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIAWWAng5lyu5fTaiopl2fcvIdv_YQ6DTocEQlyiOENnKSQT-Z5nVhCyMs&s=10">
-                    <h4>Web Design Project</h4>
+                <div class="skill-item">
+                    <span>JavaScript</span>
+                    <div class="progress-bar"><div class="fill" style="width: 85%"></div></div>
                 </div>
-                <div class="work-item" onclick="zoomImage(this)">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpnG-sovPqPenkNlv4JfDsVVk852w40OIeEw&usqp=CAU">
-                    <h4>AI Prompt Master</h4>
-                </div>
-                <div class="work-item" onclick="zoomImage(this)">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIWAwD7RAJVKwsDL5WJgtLUDcYLBLc4CpFxg&usqp=CAU">
-                    <h4>Mobile App Design</h4>
+                <div class="skill-item">
+                    <span>Python</span>
+                    <div class="progress-bar"><div class="fill" style="width: 80%"></div></div>
                 </div>
             </div>
 
-            <!-- Contact Section -->
-            <section class="card">
-                <h2>Contact Me</h2>
-                <div id="contact-container">
-                    <!-- Loaded via JS based on login status -->
+            <!-- Projects -->
+            <h2 class="section-label">My Recent Work</h2>
+            <div class="project-grid">
+                <div class="project-card" onclick="openZoom(this)">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIAWWAng5lyu5fTaiopl2fcvIdv_YQ6DTocEQlyiOENnKSQT-Z5nVhCyMs&s=10">
+                    <p>Web Design</p>
                 </div>
-            </section>
-        </div>
+                <div class="project-card" onclick="openZoom(this)">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpnG-sovPqPenkNlv4JfDsVVk852w40OIeEw&usqp=CAU">
+                    <p>AI Master</p>
+                </div>
+                <div class="project-card" onclick="openZoom(this)">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIWAwD7RAJVKwsDL5WJgtLUDcYLBLc4CpFxg&usqp=CAU">
+                    <p>App Design</p>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="card contact-card">
+                <h3>Contact Me</h3>
+                <div id="dynamic-contact-ui">
+                    <!-- Loaded via JS -->
+                </div>
+            </div>
+        </main>
     </div>
 
-    <!-- Image Zoom Overlay -->
+    <!-- Zoom Overlay -->
     <div id="zoom-overlay" onclick="closeZoom()"><img id="zoomed-img"></div>
 
     <script src="script.js"></script>
