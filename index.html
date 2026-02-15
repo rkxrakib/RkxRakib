@@ -13,122 +13,116 @@
 </head>
 <body>
 
-    <!-- Top Auth Bar -->
-    <nav class="auth-nav">
-        <div id="auth-status">
-            <!-- Dynamic Content via JS -->
-            <button onclick="showLoginModal()" class="login-trigger">Login / Register</button>
-        </div>
-    </nav>
+    <!-- [ LOGIN SCREEN - SLIDING ANIMATION ] -->
+    <div id="login-screen">
+        <div class="container" id="main-container">
+            <!-- Sign Up (Registration) -->
+            <div class="form-container sign-up-container">
+                <form action="#">
+                    <h1>Create Account</h1>
+                    <div class="social-container">
+                        <a href="javascript:void(0)" onclick="loginWithGoogle()" class="social"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"></a>
+                        <a href="javascript:void(0)" onclick="loginWithTelegram()" class="social"><i class="fab fa-telegram-plane"></i></a>
+                    </div>
+                    <span>or use your email for registration</span>
+                    <input type="text" id="reg-name" placeholder="Name" />
+                    <input type="email" id="reg-email" placeholder="Email" />
+                    <input type="password" id="reg-pass" placeholder="Password" />
+                    <button type="button" onclick="registerEmail()">Sign Up</button>
+                </form>
+            </div>
 
-    <!-- Login Modal -->
-    <div id="login-modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="hideLoginModal()">&times;</span>
-            <h3>Access System</h3>
-            <button onclick="loginWithGoogle()" class="google-btn"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"> Google</button>
-            <button onclick="loginWithTelegram()" id="tg-login-btn" class="tg-btn"><i class="fab fa-telegram"></i> Telegram Login</button>
-            <div class="divider"><span>OR</span></div>
-            <input type="email" id="email" placeholder="Email">
-            <input type="password" id="password" placeholder="Password">
-            <button onclick="loginEmail()" class="primary-btn">Sign In</button>
+            <!-- Sign In -->
+            <div class="form-container sign-in-container">
+                <form action="#">
+                    <h1>Sign in</h1>
+                    <div class="social-container">
+                        <a href="javascript:void(0)" onclick="loginWithGoogle()" class="social"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"></a>
+                        <a href="javascript:void(0)" onclick="loginWithTelegram()" class="social"><i class="fab fa-telegram-plane"></i></a>
+                    </div>
+                    <span>or use your account</span>
+                    <input type="email" id="log-email" placeholder="Email" />
+                    <input type="password" id="log-pass" placeholder="Password" />
+                    <a href="#">Forgot your password?</a>
+                    <button type="button" onclick="loginEmail()">Sign In</button>
+                </form>
+            </div>
+
+            <!-- Overlay -->
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>Welcome Back!</h1>
+                        <p>To keep connected with me please login with your personal info</p>
+                        <button class="ghost" id="signIn">Sign In</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>Hello, Welcome!</h1>
+                        <p>Enter your details to start up your dashboard!</p>
+                        <button class="ghost" id="signUp">Sign Up</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="wrapper">
-        <!-- Header -->
-        <header class="profile-card card">
-            <div class="avatar-container">
+    <!-- [ MAIN PORTFOLIO SCREEN ] -->
+    <div id="portfolio-screen" class="hidden">
+        <nav class="auth-bar">
+            <button onclick="logout()" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </nav>
+
+        <div class="wrapper">
+            <header class="card profile-header">
                 <img src="https://t.me/i/userpic/320/rkxrakib_69.svg" id="user-avatar" class="main-avatar">
-                <div class="status-dot"></div>
-            </div>
-            <h1 id="user-name">RKX RAKIB</h1>
-            <p class="role-text">Content Creator & Frontend Developer</p>
-        </header>
+                <h1 id="user-name">RKX RAKIB</h1>
+                <p>Content Creator & Frontend Developer</p>
+            </header>
 
-        <!-- Intro -->
-        <section class="card intro-section">
-            <h2>I'm RKX Rakib</h2>
-            <p>👋 I am a web designer and Frontend Developer! I love to create beautiful and functional websites. In addition to this, I'm a digital entrepreneur!</p>
-        </section>
+            <section class="card">
+                <h2>I'm RKX Rakib</h2>
+                <p>👋 I am a web designer and Frontend Developer! I love to create beautiful and functional websites. In addition to this, a digital entrepreneur!</p>
+            </section>
 
-        <!-- Skills -->
-        <section class="card">
-            <h3 class="section-title">Technical Expertise</h3>
-            <div class="skills-container">
-                <div class="skill-box">
-                    <span>HTML/CSS</span>
-                    <div class="skill-bar"><div class="skill-per" style="width: 95%;"></div></div>
+            <!-- Skills -->
+            <section class="card">
+                <h3>Technical Expertise</h3>
+                <div class="skills-grid">
+                    <div class="skill"><span>HTML/CSS</span><div class="bar"><div class="fill" style="width:95%"></div></div></div>
+                    <div class="skill"><span>JavaScript</span><div class="bar"><div class="fill" style="width:85%"></div></div></div>
+                    <div class="skill"><span>Python</span><div class="bar"><div class="fill" style="width:80%"></div></div></div>
                 </div>
-                <div class="skill-box">
-                    <span>JavaScript</span>
-                    <div class="skill-bar"><div class="skill-per" style="width: 85%;"></div></div>
-                </div>
-                <div class="skill-box">
-                    <span>Python</span>
-                    <div class="skill-bar"><div class="skill-per" style="width: 80%;"></div></div>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Projects -->
-        <h2 class="sec-label">Recent Masterpieces</h2>
-        <div class="work-grid">
-            <!-- Project 1 -->
-            <div class="work-item card" onclick="zoomImage(this)">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIAWWAng5lyu5fTaiopl2fcvIdv_YQ6DTocEQlyiOENnKSQT-Z5nVhCyMs&s=10" alt="Web Design">
-                <div class="work-info">
+            <!-- Projects with Zoom -->
+            <h2 class="sec-label">My Recent Work</h2>
+            <div class="work-grid">
+                <div class="work-item" onclick="zoomImage(this)">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIAWWAng5lyu5fTaiopl2fcvIdv_YQ6DTocEQlyiOENnKSQT-Z5nVhCyMs&s=10">
                     <h4>Web Design Project</h4>
-                    <p>Modern animations and interactive elements.</p>
                 </div>
-            </div>
-            <!-- Project 2 -->
-            <div class="work-item card" onclick="zoomImage(this)">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpnG-sovPqPenkNlv4JfDsVVk852w40OIeEw&usqp=CAU" alt="AI Master">
-                <div class="work-info">
+                <div class="work-item" onclick="zoomImage(this)">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpnG-sovPqPenkNlv4JfDsVVk852w40OIeEw&usqp=CAU">
                     <h4>AI Prompt Master</h4>
-                    <p>Advanced prompt engineering for AI tools.</p>
+                </div>
+                <div class="work-item" onclick="zoomImage(this)">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIWAwD7RAJVKwsDL5WJgtLUDcYLBLc4CpFxg&usqp=CAU">
+                    <h4>Mobile App Design</h4>
                 </div>
             </div>
-            <!-- Project 3 -->
-            <div class="work-item card" onclick="zoomImage(this)">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIWAwD7RAJVKwsDL5WJgtLUDcYLBLc4CpFxg&usqp=CAU" alt="App Design">
-                <div class="work-info">
-                    <h4>Mobile Application Design</h4>
-                    <p>User-friendly classic finishing design.</p>
-                </div>
-            </div>
-            <!-- Project 4 -->
-            <div class="work-item card" onclick="zoomImage(this)">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlikZWlzdodKU28qyO_Cct5E4_ARDe4Ju97Wj-uBE36ykJEg8nnXc_sO0&s=10" alt="Graphic">
-                <div class="work-info">
-                    <h4>Graphic & Video Editing</h4>
-                    <p>Creative visuals and professional editing.</p>
-                </div>
-            </div>
-            <!-- Project 5 -->
-            <div class="work-item card" onclick="zoomImage(this)">
-                <img src="https://www.uscis.gov/sites/default/files/images/topic-landing/USCIS_Online-Tools_241x161_V1@2x.png" alt="Tools">
-                <div class="work-info">
-                    <h4>Online/Offline Tools</h4>
-                    <p>Development of RKXFLI and daily utility tools.</p>
-                </div>
-            </div>
-        </div>
 
-        <!-- Contact Form -->
-        <section class="card contact-section">
-            <h3>Get In Touch</h3>
-            <div id="contact-form-container">
-                <!-- Loaded via JS -->
-            </div>
-        </section>
+            <!-- Contact Section -->
+            <section class="card">
+                <h2>Contact Me</h2>
+                <div id="contact-container">
+                    <!-- Loaded via JS based on login status -->
+                </div>
+            </section>
+        </div>
     </div>
 
     <!-- Image Zoom Overlay -->
-    <div id="zoom-overlay" onclick="closeZoom()">
-        <img id="zoomed-img">
-    </div>
+    <div id="zoom-overlay" onclick="closeZoom()"><img id="zoomed-img"></div>
 
     <script src="script.js"></script>
 </body>
