@@ -1,3 +1,4 @@
+// Firebase Config
 const firebaseConfig = {
     apiKey: "AIzaSyDvtZJhIN850tU7cETuiqRyCyjCBdlFt-Y",
     authDomain: "fynora-81313.firebaseapp.com",
@@ -11,62 +12,58 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
+// Telegram WebApp Initialization
+const tg = window.Telegram.WebApp;
+tg.expand(); // ফুল স্ক্রিন করার জন্য
+
+// টেলিগ্রাম অটো লগইন চেক
+window.onload = () => {
+    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+        const user = tg.initDataUnsafe.user;
+        document.getElementById('login-screen').classList.add('hidden');
+        document.getElementById('portfolio-screen').classList.remove('hidden');
+        document.getElementById('display-name').innerText = user.first_name + (user.last_name ? " " + user.last_name : "");
+        console.log("Auto-login via Telegram:", user.id);
+    }
+};
+
 // Google Login
 function loginWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider).catch(e => alert(e.message));
 }
 
-// Email Auth
-function registerWithEmail() {
-    const email = document.getElementById('reg-email').value;
-    const pass = document.getElementById('reg-pass').value;
-    auth.createUserWithEmailAndPassword(email, pass).catch(e => alert(e.message));
-}
-
-function loginWithEmail() {
-    const email = document.getElementById('login-email').value;
-    const pass = document.getElementById('login-pass').value;
-    auth.signInWithEmailAndPassword(email, pass).catch(e => alert(e.message));
-}
-
-// UI Toggles
-function toggleAuth() {
-    document.getElementById('login-form').classList.toggle('hidden');
-    document.getElementById('register-form').classList.toggle('hidden');
-}
-
 // Auth State
 auth.onAuthStateChanged(user => {
-    if (user) {
-        document.getElementById('auth-container').classList.add('hidden');
+    if (user && !tg.initDataUnsafe.user) {
+        document.getElementById('login-screen').classList.add('hidden');
         document.getElementById('portfolio-screen').classList.remove('hidden');
-        window.location.hash = "/main";
-    } else {
-        document.getElementById('auth-container').classList.remove('hidden');
-        document.getElementById('portfolio-screen').classList.add('hidden');
-        window.location.hash = "/";
+        document.getElementById('display-name').innerText = user.displayName;
     }
 });
 
-function logout() { auth.signOut(); }
+function logout() { auth.signOut(); location.reload(); }
 
-// Message to Telegram
+// Send Message to Bot
 document.getElementById('contactForm').onsubmit = async (e) => {
     e.preventDefault();
-    const user = auth.currentUser;
-    const data = {
-        name: document.getElementById('sender-name').value,
-        email: document.getElementById('sender-email').value,
-        msg: document.getElementById('sender-msg').value,
-        fb_uid: user ? user.uid : "Not logged in"
+    
+    // টেলিগ্রাম ইউজার ডাটা (যদি থাকে)
+    const tgUser = tg.initDataUnsafe.user || {};
+    
+    const formData = {
+        name: document.getElementById('contact-name').value,
+        email: document.getElementById('contact-email').value,
+        message: document.getElementById('contact-msg').value,
+        tg_id: tgUser.id || "N/A",
+        tg_username: tgUser.username || "N/A"
     };
 
     const res = await fetch('/api/send-message', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: JSON.stringify(formData)
     });
 
-    if (res.ok) alert("Message sent to Rakib's Terminal!");
+    if (res.ok) alert("Message sent successfully!");
 };
