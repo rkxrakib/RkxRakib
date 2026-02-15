@@ -3,71 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RKX RAKIB | Portfolio</title>
+    <title>RKX RAKIB | Root Access</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="terminal-loader">
-        <div class="terminal-header">
-            <div class="terminal-button red"></div>
-            <div class="terminal-button yellow"></div>
-            <div class="terminal-button green"></div>
-            <div class="terminal-title">System@RKX_RAKIB: ~</div>
-        </div>
-        
-        <header>
-            <h1 id="typing-text">👋 Hi I am a web designer and Frontend Developer!</h1>
-            <p>I love to create beautiful and functional websites. In addition to this, a digital entrepreneur!</p>
-            <h2 class="highlight-name">I am <span class="glowing-name">RKX RAKIB</span></h2>
-            <p>A digital marketing expert, content creator, and specialized in HTML, CSS, and Javascript.</p>
-        </header>
 
-        <section class="experience">
-            <p>> [INFO] 02 years of experience completed.</p>
-            <p>> [INFO] More than 350+ projects finished successfully.</p>
-            <p>> [INFO] Deep interest in Python programming (80% skilled).</p>
-        </section>
-
-        <section class="skills">
-            <h3>[ SKILLS_STATS ]</h3>
-            <div class="skill-bar"><span>HTML/CSS</span><div class="bar"><div class="fill" style="width: 95%;">95%</div></div></div>
-            <div class="skill-bar"><span>JavaScript</span><div class="bar"><div class="fill" style="width: 85%;">85%</div></div></div>
-            <div class="skill-bar"><span>Digital Marketing</span><div class="bar"><div class="fill" style="width: 90%;">90%</div></div></div>
-            <div class="skill-bar"><span>Python</span><div class="bar"><div class="fill" style="width: 80%;">80%</div></div></div>
-            <div class="skill-bar"><span>Telegram Bots</span><div class="bar"><div class="fill" style="width: 75%;">75%</div></div></div>
-        </section>
-
-        <section class="projects">
-            <h3>[ RECENT_WORKS ]</h3>
-            <div class="project-grid">
-                <div class="card">
-                    <h4>Web Design Project</h4>
-                    <p>Modern animations & interactive elements.</p>
-                </div>
-                <div class="card">
-                    <h4>AI Prompt Master</h4>
-                    <p>Advanced AI prompt engineering for all sectors.</p>
-                </div>
-                <div class="card">
-                    <h4>Toolify App</h4>
-                    <p>Online/Offline tools for Android & Web.</p>
-                </div>
+    <!-- Authentication Screen -->
+    <div id="login-screen" class="terminal-auth">
+        <div class="auth-box">
+            <h2 class="glitch">SYSTEM_LOGIN</h2>
+            <p>> Access level: Restricted</p>
+            <button onclick="loginWithGoogle()" class="hacker-btn"><i class="fab fa-google"></i> AUTH_VIA_GOOGLE</button>
+            <div class="input-group">
+                <input type="email" id="email" placeholder="user_id@system">
+                <input type="password" id="pass" placeholder="password_hash">
+                <button onclick="loginWithEmail()" class="hacker-btn">INITIALIZE_LOGIN</button>
             </div>
-        </section>
-
-        <section class="contact">
-            <h3>[ CONTACT_ME ]</h3>
-            <form id="contactForm">
-                <input type="text" id="name" placeholder="Your Name" required>
-                <input type="email" id="email" placeholder="Email Address" required>
-                <textarea id="message" placeholder="Your Message" required></textarea>
-                <button type="submit" id="sendBtn">RUN send_message.sh</button>
-            </form>
-            <div id="status"></div>
-        </section>
+        </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Main Portfolio Screen -->
+    <div id="portfolio-screen" class="hidden">
+        <div class="container">
+            <!-- Header Profile -->
+            <header class="profile-header">
+                <div class="avatar-wrapper">
+                    <img src="https://i.ibb.co/vz6mXvY/profile.jpg" alt="RKX RAKIB" class="profile-img">
+                </div>
+                <h1 class="glowing-name">RKX RAKIB</h1>
+                <p class="subtitle">Content Creator & Frontend Developer</p>
+                <div class="nav-buttons">
+                    <button class="nav-btn"><i class="fas fa-globe"></i> Website</button>
+                    <button class="nav-btn"><i class="fas fa-shopping-cart"></i> Shop</button>
+                    <button class="nav-btn"><i class="fas fa-language"></i> English</button>
+                </div>
+            </header>
+
+            <!-- Intro Card -->
+            <div class="glass-card main-intro">
+                <h3>My Portfolio</h3>
+                <p>> 👋 Hi I am a web designer and Frontend Developer! I love to create beautiful and functional websites. In addition to this, a digital entrepreneur!</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <!-- About Me -->
+            <div class="glass-card">
+                <h2 class="section-title">About Me</h2>
+                <p>I am <span class="gold-glow">RKX RAKIB</span>, a digital marketing expert and content creator. I specially expert in front-end website design, customization and functionality! With 02 years of experience, I have completed 350+ projects.</p>
+                <button class="cv-btn"><i class="fas fa-download"></i> DOWNLOAD_CV.exe</button>
+            </div>
+
+            <!-- Skills -->
+            <div class="glass-card">
+                <h2 class="section-title">Skills_Stats</h2>
+                <div class="skill"><span>HTML/CSS</span> <div class="bar"><div class="fill" style="width: 95%"></div></div></div>
+                <div class="skill"><span>JavaScript</span> <div class="bar"><div class="fill" style="width: 85%"></div></div></div>
+                <div class="skill"><span>Python</span> <div class="bar"><div class="fill" style="width: 80%"></div></div></div>
+            </div>
+
+            <!-- Projects -->
+            <h2 class="section-title center">My Recent Work</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <img src="https://via.placeholder.com/300x150/111/00ff41?text=Web+Design" alt="Web">
+                    <h4>Web Design Project</h4>
+                    <p>Modern animations and interactive elements.</p>
+                </div>
+                <div class="project-card">
+                    <img src="https://via.placeholder.com/300x150/111/00ff41?text=AI+Master" alt="AI">
+                    <h4>Ai Prompt Master</h4>
+                    <p>Unique talent for using AI in advanced ways.</p>
+                </div>
+            </div>
+
+            <!-- Contact -->
+            <div class="glass-card">
+                <h2 class="section-title">Contact Me</h2>
+                <form id="contactForm">
+                    <input type="text" id="name" placeholder="Name" required>
+                    <input type="email" id="email-contact" placeholder="Email" required>
+                    <textarea id="message" placeholder="Type your command/message..." required></textarea>
+                    <button type="submit" class="send-btn">SEND_MESSAGE</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
 </body>
-                                                                                                                              </html>
+</html>
