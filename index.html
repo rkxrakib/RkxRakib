@@ -3,110 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RKX RAKIB | Developer Portfolio</title>
+    <title>RKX RAKIB | Professional Portfolio</title>
     <link rel="stylesheet" href="style.css">
-    <!-- FontAwesome for Icons -->
+    <!-- FontAwesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Firebase Legacy SDK -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Telegram Web App Script -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 </head>
 <body>
 
-    <!-- [ AUTH SECTION ] -->
-    <div id="auth-container">
-        <div class="auth-card glass">
-            <h2 class="hacker-text">SYSTEM_ACCESS</h2>
-            <div id="login-form">
-                <input type="email" id="login-email" placeholder="Email">
-                <input type="password" id="login-pass" placeholder="Password">
-                <button onclick="loginWithEmail()" class="hacker-btn">LOGIN</button>
-            </div>
+    <!-- [ LOGIN SCREEN ] -->
+    <div id="login-screen">
+        <div class="login-card">
+            <img src="https://t.me/i/userpic/320/rkxrakib_69.svg" class="login-avatar" alt="RKX">
+            <h2>Welcome to My System</h2>
+            <p>Please authenticate to view full portfolio</p>
             
-            <div id="register-form" class="hidden">
-                <input type="text" id="reg-name" placeholder="Full Name">
-                <input type="email" id="reg-email" placeholder="Email">
-                <input type="password" id="reg-pass" placeholder="Password">
-                <button onclick="registerWithEmail()" class="hacker-btn">REGISTER</button>
-            </div>
-
-            <div class="divider"><span>OR</span></div>
-            
-            <button onclick="loginWithGoogle()" class="google-btn">
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G">
+            <button onclick="loginWithGoogle()" class="google-login-btn">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
                 Continue with Google
             </button>
-            
-            <p onclick="toggleAuth()" id="toggle-text">Don't have an account? <span>Sign Up</span></p>
+            <div class="divider"><span>OR</span></div>
+            <div class="email-login">
+                <input type="email" id="log-email" placeholder="Email Address">
+                <input type="password" id="log-pass" placeholder="Password">
+                <button onclick="loginEmail()" class="primary-btn">Sign In</button>
+            </div>
         </div>
     </div>
 
-    <!-- [ MAIN PORTFOLIO SECTION ] (Hidden initially) -->
+    <!-- [ MAIN PORTFOLIO ] -->
     <div id="portfolio-screen" class="hidden">
-        <div class="container">
-            <!-- Header -->
-            <header class="header-box glass">
-                <div class="profile-area">
-                    <img src="https://telegra.ph/file/bc46b9a89c8949826d03d.jpg" alt="Profile" class="profile-img">
-                    <h1 class="hacker-text">RKX RAKIB</h1>
-                    <p>Content Creator & Frontend Developer</p>
+        <div class="wrapper">
+            <!-- Header Section -->
+            <header class="main-header card">
+                <div class="profile-info">
+                    <img src="https://t.me/i/userpic/320/rkxrakib_69.svg" class="main-avatar" alt="RKX RAKIB">
+                    <h1 id="display-name">RKX RAKIB</h1>
+                    <p class="role-text">Content Creator & Frontend Developer</p>
                 </div>
-                <div class="top-buttons">
-                    <button><i class="fas fa-globe"></i> Website</button>
-                    <button><i class="fas fa-shopping-cart"></i> Shop</button>
-                    <button onclick="logout()"><i class="fas fa-sign-out-alt"></i> Exit</button>
+                <div class="action-buttons">
+                    <a href="#" class="btn-small"><i class="fas fa-globe"></i> Website</a>
+                    <a href="#" class="btn-small"><i class="fas fa-shopping-bag"></i> Shop</a>
+                    <button onclick="logout()" class="btn-small logout-btn"><i class="fas fa-sign-out-alt"></i></button>
                 </div>
             </header>
 
             <!-- My Portfolio Intro -->
-            <section class="intro-box glass">
+            <section class="card intro-card">
                 <h3>My Portfolio</h3>
                 <p>👋 Hi I am a web designer and Frontend Developer! I love to create beautiful and functional websites. In addition to this, a digital entrepreneur!</p>
-                <div class="social-links">
-                    <i class="fab fa-facebook"></i>
-                    <i class="fab fa-instagram"></i>
-                    <i class="fab fa-twitter"></i>
+                <div class="social-row">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
                     <a href="https://t.me/RKX_RAKIB_OFFICIAL"><i class="fab fa-telegram"></i></a>
-                    <i class="fab fa-whatsapp"></i>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </section>
 
             <!-- About Me -->
-            <section class="about-box glass">
+            <section class="card">
                 <h2>About Me</h2>
-                <p>I am <span class="glowing-name">RKX RAKIB</span>, a digital marketing expert and content creator. I specially expert in front-end website design, customization and functionality! With 02 years of experience, I have completed 350+ projects.</p>
-                <button class="cv-btn"><i class="fas fa-download"></i> Download CV</button>
+                <p>I am <span class="highlight">RKX RAKIB</span>, a digital marketing expert and content creator. I specialize in front-end design, customization, and functionality. With over 2 years of experience and 350+ projects completed.</p>
+                <button class="cv-download-btn"><i class="fas fa-cloud-download-alt"></i> Download CV</button>
                 
-                <div class="skills-area">
-                    <div class="skill"><span>HTML/CSS</span><div class="bar"><div class="fill" style="width:95%"></div></div></div>
-                    <div class="skill"><span>JavaScript</span><div class="bar"><div class="fill" style="width:85%"></div></div></div>
-                    <div class="skill"><span>Python</span><div class="bar"><div class="fill" style="width:80%"></div></div></div>
+                <div class="skills-grid">
+                    <div class="skill-item"><span>HTML/CSS</span> <div class="progress"><div class="fill" style="width:95%"></div></div></div>
+                    <div class="skill-item"><span>JavaScript</span> <div class="progress"><div class="fill" style="width:85%"></div></div></div>
+                    <div class="skill-item"><span>Python</span> <div class="progress"><div class="fill" style="width:80%"></div></div></div>
                 </div>
             </section>
 
-            <!-- My Recent Work -->
-            <h2 class="title-text">My Recent Work</h2>
+            <!-- Work Grid -->
+            <h2 class="sec-title">My Recent Work</h2>
             <div class="work-grid">
-                <div class="work-card glass">
+                <div class="work-item card">
                     <img src="https://i.ibb.co/m09L0tH/web-design.jpg" alt="Work">
                     <h4>Web Design Project</h4>
-                    <p>Modern animations and interactive elements.</p>
+                    <p>Modern interactive animations and UI elements.</p>
                 </div>
-                <div class="work-card glass">
+                <div class="work-item card">
                     <img src="https://i.ibb.co/3Mv5M8z/ai-bot.jpg" alt="Work">
                     <h4>AI Prompt Master</h4>
-                    <p>Advanced AI prompt engineering sectors.</p>
+                    <p>Advanced prompt engineering for AI tools.</p>
                 </div>
             </div>
 
-            <!-- Contact Me -->
-            <section class="contact-box glass">
+            <!-- Contact Form -->
+            <section class="card">
                 <h2>Contact Me</h2>
                 <form id="contactForm">
-                    <input type="text" id="sender-name" placeholder="Your Name" required>
-                    <input type="email" id="sender-email" placeholder="Email" required>
-                    <textarea id="sender-msg" placeholder="Your Message" required></textarea>
-                    <button type="submit" id="sendBtn">Send Message</button>
+                    <input type="text" id="contact-name" placeholder="Name" required>
+                    <input type="email" id="contact-email" placeholder="Email" required>
+                    <textarea id="contact-msg" placeholder="Your Message" required></textarea>
+                    <button type="submit" id="submit-btn">Send Message</button>
                 </form>
             </section>
         </div>
