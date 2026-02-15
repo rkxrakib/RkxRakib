@@ -1,68 +1,84 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
+:root {
+    --primary: #00ff41; /* Hacker Green */
+    --gold: #ffd700;
+    --bg: #0a001a;
+    --glass: rgba(255, 255, 255, 0.05);
+}
 
 body {
-    background-color: #0a0a0a;
-    color: #00ff41;
+    background: radial-gradient(circle at top, #1a0033, #0a0a0a);
+    color: #e0e0e0;
     font-family: 'Fira Code', monospace;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
+    margin: 0; padding: 0;
 }
 
-.terminal-loader {
-    width: 100%;
-    max-width: 800px;
-    background: #111;
-    border: 1px solid #333;
-    box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
-    padding: 20px;
-    border-radius: 8px;
-}
+.container { max-width: 500px; margin: 0 auto; padding: 20px; }
 
-.terminal-header {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #333;
-    padding-bottom: 10px;
-}
+.hidden { display: none; }
 
-.terminal-button { width: 12px; height: 12px; border-radius: 50%; }
-.red { background: #ff5f56; }
-.yellow { background: #ffbd2e; }
-.green { background: #27c93f; }
-
+/* Glowing Gold Name */
 .glowing-name {
-    color: #00ff41;
-    font-weight: bold;
+    color: var(--gold);
+    text-shadow: 0 0 15px var(--gold), 0 0 30px var(--gold);
     text-transform: uppercase;
-    text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41;
-    animation: shine 1.5s infinite alternate;
+    font-weight: bold;
+    font-size: 24px;
 }
 
-@keyframes shine {
-    from { text-shadow: 0 0 5px #00ff41; color: #00ff41; }
-    to { text-shadow: 0 0 20px #fff, 0 0 30px #00ff41; color: #adff2f; }
+.gold-glow { color: var(--gold); font-weight: bold; }
+
+/* Glass Cards */
+.glass-card {
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 255, 65, 0.2);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
 }
 
-.skill-bar { margin: 15px 0; }
-.bar { background: #222; border: 1px solid #00ff41; height: 20px; margin-top: 5px; }
-.fill { background: #00ff41; height: 100%; color: #000; text-align: right; padding-right: 5px; font-weight: bold; }
-
-.project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-.card { border: 1px dashed #00ff41; padding: 10px; transition: 0.3s; }
-.card:hover { background: #00ff41; color: #000; }
-
-input, textarea, button {
-    width: 100%;
-    background: #000;
-    border: 1px solid #00ff41;
-    color: #00ff41;
-    padding: 10px;
-    margin-top: 10px;
-    font-family: 'Fira Code';
+/* Profile Image */
+.profile-img {
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    border: 3px solid var(--primary);
+    box-shadow: 0 0 20px var(--primary);
 }
 
-button { cursor: pointer; font-weight: bold; }
-button:hover { background: #00ff41; color: #000; }
+.nav-btn {
+    background: var(--glass);
+    border: 1px solid var(--primary);
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 20px;
+    margin: 5px;
+    font-size: 12px;
+}
+
+/* Skill Bars */
+.bar { background: #222; height: 10px; border-radius: 5px; margin-top: 5px; }
+.fill { background: linear-gradient(90deg, var(--primary), #adff2f); height: 100%; border-radius: 5px; }
+
+/* Project Cards */
+.project-card {
+    background: #111;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid #333;
+    margin-bottom: 15px;
+}
+.project-card img { width: 100%; border-bottom: 1px solid var(--primary); }
+.project-card h4, .project-card p { padding: 10px; margin: 0; }
+
+/* Buttons & Inputs */
+input, textarea {
+    width: 100%; background: rgba(0,0,0,0.5); border: 1px solid #444;
+    color: var(--primary); padding: 12px; border-radius: 10px; margin-top: 10px;
+}
+
+.send-btn, .cv-btn {
+    width: 100%; background: linear-gradient(90deg, #8a2be2, #00ff41);
+    border: none; padding: 12px; border-radius: 15px; color: white;
+    font-weight: bold; cursor: pointer; margin-top: 15px;
+}
