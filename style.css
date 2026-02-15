@@ -1,57 +1,64 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
+:root {
+    --primary: #6366f1;
+    --bg: #f8fafc;
+    --text: #1e293b;
+    --card: #ffffff;
+}
 
 body {
-    background: #0a0a0a;
-    color: #e0e0e0;
-    font-family: 'Fira Code', monospace;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
     margin: 0;
+    display: flex;
+    justify-content: center;
 }
 
-.glass {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 255, 65, 0.2);
-    border-radius: 20px;
-    padding: 20px;
+.wrapper { width: 100%; max-width: 480px; padding: 20px; }
+
+.card {
+    background: var(--card);
+    border-radius: 24px;
+    padding: 24px;
     margin-bottom: 20px;
-}
-
-.hacker-text { color: #00ff41; text-shadow: 0 0 5px #00ff41; }
-
-/* Golden Glowing Name */
-.glowing-name {
-    color: #ffd700;
-    font-weight: bold;
-    text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
-    animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-    0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; }
-}
-
-.profile-img {
-    width: 100px; height: 100px; border-radius: 50%;
-    border: 3px solid #00ff41; box-shadow: 0 0 15px #00ff41;
-}
-
-.skill .bar { background: #222; height: 10px; border-radius: 5px; margin: 10px 0; }
-.skill .fill { background: #00ff41; height: 100%; border-radius: 5px; box-shadow: 0 0 10px #00ff41; }
-
-input, textarea {
-    width: 100%; background: #000; border: 1px solid #333;
-    color: #00ff41; padding: 12px; margin-top: 10px; border-radius: 10px;
-}
-
-.hacker-btn, .cv-btn, #sendBtn {
-    width: 100%; background: #00ff41; color: #000; border: none;
-    padding: 12px; font-weight: bold; border-radius: 10px; cursor: pointer; margin-top: 15px;
-}
-
-.google-btn {
-    width: 100%; background: white; color: #333; border-radius: 10px;
-    padding: 10px; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
 .hidden { display: none !important; }
-.container { max-width: 500px; margin: 0 auto; padding: 20px; }
+
+/* Login Styling */
+#login-screen {
+    width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+.login-card { background: white; padding: 40px; border-radius: 30px; text-align: center; width: 320px; }
+.login-avatar { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 15px; }
+
+.google-login-btn {
+    width: 100%; background: white; border: 1px solid #ddd; padding: 10px;
+    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    gap: 10px; cursor: pointer; font-weight: 600;
+}
+.google-login-btn img { width: 20px; } /* লোগো ছোট করা হয়েছে */
+
+/* Header */
+.main-avatar { width: 90px; height: 90px; border-radius: 50%; margin-bottom: 10px; border: 4px solid #fff; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+.main-header { text-align: center; }
+.highlight { color: var(--primary); font-weight: 700; }
+
+/* Buttons */
+.btn-small { background: #f1f5f9; padding: 8px 16px; border-radius: 12px; text-decoration: none; color: #475569; font-size: 14px; margin: 0 5px; border: none; }
+.primary-btn, .cv-download-btn, #submit-btn {
+    width: 100%; background: var(--primary); color: white; border: none; padding: 14px;
+    border-radius: 14px; font-weight: 600; cursor: pointer; margin-top: 15px;
+}
+
+/* Skills */
+.progress { background: #e2e8f0; height: 8px; border-radius: 10px; margin: 10px 0 20px; }
+.fill { background: var(--primary); height: 100%; border-radius: 10px; }
+
+/* Inputs */
+input, textarea {
+    width: 100%; background: #f1f5f9; border: none; padding: 12px;
+    border-radius: 12px; margin-top: 10px; box-sizing: border-box;
+}
