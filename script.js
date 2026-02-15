@@ -1,4 +1,7 @@
-// Firebase Config
+// --- CONFIGURATION ---
+const BOT_TOKEN = "8163692985:AAFlEILEiEUengkF0bJPCfVIO741F5NavCI"; // আপনার টেলিগ্রাম বট টোকেন দিন
+const CHAT_ID = "7475964655";     // আপনার চ্যাট আইডি দিন
+
 const firebaseConfig = {
     apiKey: "AIzaSyDvtZJhIN850tU7cETuiqRyCyjCBdlFt-Y",
     authDomain: "fynora-81313.firebaseapp.com",
@@ -9,136 +12,107 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const tg = window.Telegram.WebApp;
 
-let currentUserData = null;
+let userData = null;
 
-// Initialize App
+// UI Elements
+const signUpButton = document.getElementById('signUp');
+const signInButton = document.getElementById('signIn');
+const container = document.getElementById('main-container');
+
+signUpButton.addEventListener('click', () => container.classList.add("right-panel-active"));
+signInButton.addEventListener('click', () => container.classList.remove("right-panel-active"));
+
+// On Load Logic
 window.onload = () => {
-    checkAuthStatus();
-    renderContactForm();
-};
-
-function checkAuthStatus() {
-    // Check if user manually logged out from TG
-    const isLoggedOut = localStorage.getItem('loggedOut');
+    const isLoggedOut = localStorage.getItem('manuallyLoggedOut');
 
     if (tg.initDataUnsafe && tg.initDataUnsafe.user && isLoggedOut !== 'true') {
-        loginAsTelegram(tg.initDataUnsafe.user);
+        loginAsTG(tg.initDataUnsafe.user);
     } else {
         auth.onAuthStateChanged(user => {
             if (user) {
-                currentUserData = {
-                    name: user.displayName,
-                    email: user.email,
-                    photo: user.photoURL || "https://ui-avatars.com/api/?name=" + user.email,
-                    type: 'firebase'
-                };
-                updateUI(currentUserData);
-            } else {
-                renderLoggedOutUI();
+                userData = { name: user.displayName, email: user.email, photo: user.photoURL, type: 'google' };
+                showPortfolio();
             }
         });
     }
-}
+};
 
-function loginAsTelegram(user) {
-    currentUserData = {
-        name: user.first_name + (user.last_name ? " " + user.last_name : ""),
-        username: user.username || "N/A",
+function loginAsTG(user) {
+    userData = {
+        name: user.first_name + " " + (user.last_name || ""),
+        username: user.username || "no_username",
         id: user.id,
-        photo: "https://t.me/i/userpic/320/" + (user.username || user.id) + ".jpg",
+        photo: user.photo_url || "https://t.me/i/userpic/320/rkxrakib_69.svg",
         type: 'telegram'
     };
-    localStorage.setItem('loggedOut', 'false');
-    updateUI(currentUserData);
+    localStorage.setItem('manuallyLoggedOut', 'false');
+    showPortfolio();
 }
 
-function updateUI(user) {
-    document.getElementById('user-name').innerText = user.name;
-    document.getElementById('user-avatar').src = user.photo;
-    document.getElementById('auth-status').innerHTML = `<button onclick="logout()" class="logout-btn">Logout</button>`;
-    renderContactForm();
+function showPortfolio() {
+    document.getElementById('login-screen').classList.add('hidden');
+    document.getElementById('portfolio-screen').classList.remove('hidden');
+    document.getElementById('user-name').innerText = userData.name;
+    document.getElementById('user-avatar').src = userData.photo;
+    renderForm();
 }
 
-function renderLoggedOutUI() {
-    document.getElementById('auth-status').innerHTML = `<button onclick="showLoginModal()" class="login-trigger">Login / Register</button>`;
-    renderContactForm();
+function renderForm() {
+    const box = document.getElementById('contact-container');
+    if (userData.type === 'telegram') {
+        box.innerHTML = `<textarea id="msg" placeholder="Write message to Rakib..."></textarea>
+                         <button onclick="sendBotMessage()">Send to Telegram</button>`;
+    } else {
+        box.innerHTML = `<input type="text" value="${userData.name}" disabled>
+                         <input type="email" value="${userData.email}" disabled>
+                         <textarea id="msg" placeholder="Your Message"></textarea>
+                         <button onclick="sendBotMessage()">Send Message</button>`;
+    }
 }
 
-// Auth Actions
-function showLoginModal() { document.getElementById('login-modal').style.display = 'flex'; }
-function hideLoginModal() { document.getElementById('login-modal').style.display = 'none'; }
+async function sendBotMessage() {
+    const text = document.getElementById('msg').value;
+    if (!text) return alert("Write something!");
 
-function loginWithGoogle() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider).then(() => hideLoginModal());
-}
+    let fullMessage = `📩 *New Message From Portfolio*\n\n`;
+    if (userData.type === 'telegram') {
+        fullMessage += `👤 Name: ${userData.name}\n🆔 ID: ${userData.id}\n🔗 User: @${userData.username}\n🖼 Photo: ${userData.photo}\n\n`;
+    } else {
+        fullMessage += `👤 Name: ${userData.name}\n📧 Email: ${userData.email}\n\n`;
+    }
+    fullMessage += `💬 Message: ${text}`;
 
-function loginWithTelegram() {
-    localStorage.setItem('loggedOut', 'false');
-    location.reload(); // Re-trigger auto login
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+    const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: CHAT_ID, text: fullMessage, parse_mode: 'Markdown' })
+    });
+
+    if (res.ok) alert("Message sent to Rakib's Bot!");
 }
 
 function logout() {
     auth.signOut();
-    localStorage.setItem('loggedOut', 'true');
-    currentUserData = null;
+    localStorage.setItem('manuallyLoggedOut', 'true');
     location.reload();
 }
 
-// Contact Form Logic
-function renderContactForm() {
-    const container = document.getElementById('contact-form-container');
-    if (!currentUserData) {
-        container.innerHTML = `
-            <input type="text" id="c-name" placeholder="Full Name">
-            <input type="email" id="c-email" placeholder="Email Address">
-            <textarea id="c-msg" placeholder="Your Message"></textarea>
-            <button onclick="sendMessage()" class="primary-btn">Send Message</button>
-        `;
-    } else if (currentUserData.type === 'telegram') {
-        container.innerHTML = `
-            <p>Logged in as <b>${currentUserData.name}</b></p>
-            <textarea id="c-msg" placeholder="Write your message..."></textarea>
-            <button onclick="sendMessage()" class="primary-btn">Send to RKX</button>
-        `;
-    } else {
-        container.innerHTML = `
-            <input type="text" value="${currentUserData.name}" disabled>
-            <input type="email" value="${currentUserData.email}" disabled>
-            <textarea id="c-msg" placeholder="Your Message"></textarea>
-            <button onclick="sendMessage()" class="primary-btn">Send Message</button>
-        `;
-    }
+// Google Login
+function loginWithGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider);
 }
 
-async function sendMessage() {
-    const msg = document.getElementById('c-msg').value;
-    if(!msg) return alert("Please type a message");
-
-    let payload = { message: msg };
-
-    if (currentUserData && currentUserData.type === 'telegram') {
-        payload.tg_name = currentUserData.name;
-        payload.tg_id = currentUserData.id;
-        payload.tg_username = currentUserData.username;
-        payload.photo = currentUserData.photo;
-    } else {
-        payload.name = currentUserData ? currentUserData.name : document.getElementById('c-name').value;
-        payload.email = currentUserData ? currentUserData.email : document.getElementById('c-email').value;
-    }
-
-    // Replace with your actual Bot API URL
-    console.log("Sending to Bot:", payload);
-    alert("Message Sent to RKX Rakib!");
+function loginWithTelegram() {
+    localStorage.setItem('manuallyLoggedOut', 'false');
+    location.reload();
 }
 
-// Image Zoom Animation
+// Zoom Image
 function zoomImage(el) {
-    const imgSrc = el.querySelector('img').src;
-    document.getElementById('zoomed-img').src = imgSrc;
-    document.getElementById('zoom-overlay').classList.add('show-zoom');
+    document.getElementById('zoomed-img').src = el.querySelector('img').src;
+    document.getElementById('zoom-overlay').style.display = 'flex';
 }
-
-function closeZoom() {
-    document.getElementById('zoom-overlay').classList.remove('show-zoom');
-}
+function closeZoom() { document.getElementById('zoom-overlay').style.display = 'none'; }
