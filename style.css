@@ -1,44 +1,27 @@
-.auth-card {
-    width: 320px; /* একটু বড় করা হয়েছে */
-    max-height: 90vh;
-    overflow-y: auto;
+:root {
+    --bg: #050505;
+    --card: #121212;
+    --primary: #8b5cf6;
+    --text: #ffffff;
 }
-
-.divider {
-    margin: 15px 0;
-    font-size: 12px;
-    color: #555;
-    position: relative;
-    text-align: center;
-}
-
-.divider::before, .divider::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    width: 40%;
-    height: 1px;
-    background: #333;
-}
-.divider::before { left: 0; }
-.divider::after { right: 0; }
-
-.forgot-link {
-    font-size: 12px;
-    color: var(--primary);
-    cursor: pointer;
-    margin-top: 8px;
-    text-decoration: underline;
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    color: #888;
-    margin-top: 15px;
-    cursor: pointer;
-}
-
-#recaptcha-container {
-    margin: 10px 0;
-}
+body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; -webkit-user-select: none; }
+.hidden { display: none !important; }
+.top-nav { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; background: #000; position: sticky; top: 0; z-index: 1000; }
+.guest-btn { background: var(--primary); color: white; border: none; padding: 5px 15px; border-radius: 10px; cursor: pointer; font-size: 14px; }
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; align-items: center; justify-content: center; }
+.auth-card { background: var(--card); padding: 30px; border-radius: 25px; text-align: center; border: 1px solid #333; width: 280px; }
+.btn-black { width: 100%; padding: 12px; background: #000; color: white; border: 1px solid #333; border-radius: 12px; margin: 8px 0; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
+.main-content { padding: 15px; }
+.card { background: var(--card); padding: 20px; border-radius: 20px; margin-bottom: 15px; border: 1px solid #222; }
+.u-img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--primary); }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.location-card { display: flex; align-items: center; gap: 15px; }
+.location-card i { font-size: 24px; color: var(--primary); }
+.p-card { transition: transform 0.4s ease; overflow: hidden; border-radius: 15px; background: var(--card); border: 1px solid #222; margin-bottom: 15px;}
+.img-box img { width: 100%; height: 160px; object-fit: cover; }
+.p-desc { padding: 15px; }
+.p-desc h4 { margin: 0; color: var(--primary); font-size: 18px; }
+.p-desc p { font-size: 12px; color: #aaa; margin-top: 5px; }
+.p-card.zoomed { transform: scale(1.05); border-color: var(--primary); z-index: 10; }
+input, textarea { width: 100%; background: #000; border: 1px solid #333; color: white; border-radius: 10px; padding: 12px; box-sizing: border-box; margin-top: 10px; font-family: inherit; }
+.btn-send { background: var(--primary); width: 100%; color: white; border: none; padding: 12px; border-radius: 10px; margin-top: 15px; cursor: pointer; font-weight: bold; }
