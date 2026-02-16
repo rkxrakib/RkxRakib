@@ -9,15 +9,19 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const tg = window.Telegram.WebApp;
 
+// --- আপনার ডিটেইলস এখানে দিন ---
+const BOT_TOKEN = "8163692985:AAFlEILEiEUengkF0bJPCfVIO741F5NavCI"; 
+const CHAT_ID = "7475964655";     
+
 let currentUser = null;
 
 window.onload = () => {
     tg.expand();
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', { 'size': 'invisible' });
     initApp();
 };
 
 function initApp() {
+    // টেলিগ্রাম অটো লগইন চেক
     if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
         processLogin('telegram', tg.initDataUnsafe.user);
     } else {
@@ -28,52 +32,19 @@ function initApp() {
     }
 }
 
-// --- Login Functions ---
-
-async function loginWithEmail() {
-    const email = document.getElementById('auth-email').value;
-    const pass = document.getElementById('auth-pass').value;
-    if(!email || !pass) return alert("Fill all fields");
-    try {
-        await auth.signInWithEmailAndPassword(email, pass);
-        hideLoginOptions();
-    } catch (e) { alert(e.message); }
-}
-
-async function forgotPassword() {
-    const email = document.getElementById('auth-email').value;
-    if(!email) return alert("Enter email first");
-    try {
-        await auth.sendPasswordResetEmail(email);
-        alert("Reset link sent to email!");
-    } catch (e) { alert(e.message); }
-}
-
-async function loginWithPhone() {
-    const phone = document.getElementById('auth-phone').value;
-    if(!phone.startsWith('+')) return alert("Enter with country code (ex: +880)");
-    try {
-        const confirmation = await auth.signInWithPhoneNumber(phone, window.recaptchaVerifier);
-        const code = prompt("Enter OTP:");
-        if(code) {
-            await confirmation.confirm(code);
-            hideLoginOptions();
-        }
-    } catch (e) { alert(e.message); }
-}
-
 function processLogin(type, user) {
     if (type === 'telegram') {
         currentUser = {
             name: user.first_name + " " + (user.last_name || ""),
             id: user.id,
+            username: user.username || "n/a",
             photo: user.photo_url || "https://t.me/i/userpic/320/rkxrakib_69.svg",
             type: 'telegram'
         };
     } else {
         currentUser = {
-            name: user.displayName || user.email || user.phoneNumber,
-            email: user.email || user.phoneNumber,
+            name: user.displayName,
+            email: user.email,
             photo: user.photoURL || "https://t.me/i/userpic/320/rkxrakib_69.svg",
             type: 'firebase'
         };
@@ -84,69 +55,107 @@ function processLogin(type, user) {
 function updateAuthUI() {
     const authBox = document.getElementById('auth-actions');
     authBox.innerHTML = `<button onclick="handleLogout()" class="guest-btn" style="background:#ff4d4d">Logout</button>`;
-    document.getElementById('user-display-name').innerText = currentUser.name;
-    document.getElementById('user-avatar').src = currentUser.photo;
+    if(currentUser) {
+        document.getElementById('user-display-name').innerText = currentUser.name;
+        document.getElementById('user-avatar').src = currentUser.photo;
+    }
     renderContact();
 }
 
 function renderContact() {
     const box = document.getElementById('contact-form');
     if (!currentUser) {
+        // লগআউট অবস্থায় নাম, ইমেইল, বয়স চাইবে
         box.innerHTML = `
             <input type="text" id="g-name" placeholder="Full Name">
             <input type="email" id="g-email" placeholder="Email Address">
-            <textarea id="msg" placeholder="Write your message..."></textarea>
+            <input type="number" id="g-age" placeholder="Your Age">
+            <textarea id="msg" placeholder="Write your message to RKX..."></textarea>
             <button onclick="send()" class="btn-send">Send Message</button>
         `;
     } else {
+        // লগইন অবস্থায় শুধু মেসেজ বক্স
         box.innerHTML = `
-            <p style="font-size:12px; color:#888;">Logged in as: <b>${currentUser.name}</b></p>
+            <p style="font-size:12px; color:#888; margin-bottom:0;">Logged in as: <b>${currentUser.name}</b></p>
             <textarea id="msg" placeholder="Write your message..."></textarea>
             <button onclick="send()" class="btn-send">Send Message</button>
         `;
     }
 }
 
-// --- SEND MESSAGE USING YOUR API ---
 async function send() {
     const msgText = document.getElementById('msg').value;
     if (!msgText) return alert("Please type a message!");
 
-    let name, email;
+    let report = `🚀 NEW PORTFOLIO MESSAGE\n\n`;
+
     if (!currentUser) {
-        name = document.getElementById('g-name').value || "Guest";
-        email = document.getElementById('g-email').value || "No Email";
+        const gName = document.getElementById('g-name').value || "Unknown";
+        const gEmail = document.getElementById('g-email').value || "No Email";
+        const gAge = document.getElementById('g-age').value || "N/A";
+        report += `👤 Name: ${gName}\n📧 Email: ${gEmail}\n🎂 Age: ${gAge}\n🌐 Status: Guest (Logged Out)\n`;
     } else {
-        name = currentUser.name;
-        email = currentUser.email || "User Logged In";
+        report += `👤 Name: ${currentUser.name}\n`;
+        if (currentUser.type === 'telegram') {
+            report += `🆔 TG ID: ${currentUser.id}\n🔗 Username: @${currentUser.username}\n🌐 Status: Telegram User\n`;
+        } else {
+            report += `📧 Email: ${currentUser.email}\n🌐 Status: Google/Email User\n`;
+        }
     }
 
+    report += `\n💬 MESSAGE:\n${msgText}`;
+
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+    
     try {
-        const response = await fetch('/api/send-message', {
+        const response = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email, message: msgText })
+            body: JSON.stringify({
+                chat_id: CHAT_ID,
+                text: report
+                // Parse mode বাদ দেওয়া হয়েছে যাতে আন্ডারস্কোর (_) এর জন্য মেসেজ ফেইল না হয়
+            })
         });
 
         if (response.ok) {
             alert("Message sent successfully!");
             document.getElementById('msg').value = "";
         } else {
-            alert("Error sending message.");
+            const err = await response.json();
+            alert("Error: " + err.description);
         }
-    } catch (e) { alert("Server error!"); }
+    } catch (e) {
+        alert("Check your internet or Bot Token!");
+    }
 }
 
+// UI Helpers
 function showLoginOptions() { document.getElementById('login-overlay').classList.remove('hidden'); }
 function hideLoginOptions() { document.getElementById('login-overlay').classList.add('hidden'); }
-function loginWithGoogle() { auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(() => hideLoginOptions()); }
+
+function loginWithGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).then(() => hideLoginOptions());
+}
+
 function reEnableTGLogin() {
     if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
         processLogin('telegram', tg.initDataUnsafe.user);
         hideLoginOptions();
     } else {
-        alert("Use Phone Login for browser or open in Telegram.");
+        alert("Please open this app inside Telegram for TG Login.");
     }
 }
-function handleLogout() { auth.signOut(); location.reload(); }
-function zoomToggle(card) { card.classList.toggle('zoomed'); }
+
+function handleLogout() {
+    auth.signOut();
+    location.reload();
+}
+
+function zoomToggle(card) {
+    const isZoomed = card.classList.contains('zoomed');
+    document.querySelectorAll('.p-card').forEach(c => c.classList.remove('zoomed'));
+    if (!isZoomed) card.classList.add('zoomed');
+}
+window.onscroll = () => document.querySelectorAll('.p-card').forEach(c => c.classList.remove('zoomed'));
