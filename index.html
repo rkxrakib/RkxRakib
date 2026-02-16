@@ -1,43 +1,115 @@
-<!-- [ LOGIN OPTIONS OVERLAY ] -->
-<div id="login-overlay" class="overlay hidden" onclick="hideLoginOptions()">
-    <div class="auth-card" onclick="event.stopPropagation()">
-        <h3>Connect Account</h3>
-        
-        <!-- Tab Buttons (Optional but cleaner) -->
-        <div class="auth-methods">
-            <!-- Email Login Section -->
-            <div id="email-section">
-                <input type="email" id="auth-email" placeholder="Email Address">
-                <input type="password" id="auth-pass" placeholder="Password">
-                <button onclick="loginWithEmail()" class="btn-send">Login with Email</button>
-                <p class="forgot-link" onclick="forgotPassword()">Forgot Password?</p>
-            </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RKX RAKIB | Professional Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+</head>
+<body oncontextmenu="return false;">
 
-            <div class="divider">OR</div>
+    <nav class="top-nav">
+        <span class="logo-text">RKX RAKIB</span>
+        <div id="auth-actions">
+            <button onclick="showLoginOptions()" class="guest-btn">Login</button>
+        </div>
+    </nav>
 
-            <!-- Phone Login Section -->
-            <div id="phone-section">
-                <div id="recaptcha-container"></div>
-                <input type="tel" id="auth-phone" placeholder="+88017XXXXXXXX">
-                <button onclick="loginWithPhone()" class="btn-black"><i class="fas fa-phone"></i> Send OTP</button>
-            </div>
+    <!-- [ LOGIN OPTIONS OVERLAY ] -->
+    <div id="login-overlay" class="overlay hidden" onclick="hideLoginOptions()">
+        <div class="auth-card" onclick="event.stopPropagation()">
+            <h3>Connect Account</h3>
+            
+            <!-- Email Login -->
+            <input type="email" id="auth-email" placeholder="Email" class="login-input">
+            <input type="password" id="auth-pass" placeholder="Password" class="login-input">
+            <button onclick="loginWithEmail()" class="btn-send" style="margin-top:5px;">Login with Email</button>
+            <p onclick="forgotPassword()" class="forgot-link">Forgot Password?</p>
 
-            <div class="divider">OR</div>
+            <div style="margin: 10px 0; color: #555; font-size: 12px;">OR</div>
 
-            <!-- Social Logins -->
+            <!-- Phone Login -->
+            <input type="tel" id="auth-phone" placeholder="+88017xxxxxxxx" class="login-input">
+            <button onclick="loginWithPhone()" class="btn-black"><i class="fas fa-phone"></i> Login with Phone</button>
+            <div id="recaptcha-container"></div>
+
+            <div style="margin: 10px 0; color: #555; font-size: 12px;">OR</div>
+
             <div class="auth-buttons">
                 <button onclick="loginWithGoogle()" class="btn-black">
                     <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Google
                 </button>
-                
-                <!-- Telegram Widget Container -->
-                <div id="tg-widget-container">
-                    <button id="tg-login-btn" onclick="reEnableTGLogin()" class="btn-black">
-                        <i class="fab fa-telegram-plane"></i> Telegram App
-                    </button>
-                </div>
+                <button onclick="reEnableTGLogin()" class="btn-black">
+                    <i class="fab fa-telegram-plane"></i> Telegram
+                </button>
+            </div>
+            <button onclick="hideLoginOptions()" style="background:none; border:none; color:#888; margin-top:10px; cursor:pointer;">Close</button>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <!-- Profile Header -->
+        <div class="profile-header card">
+            <div class="p-wrap">
+                <img src="https://t.me/i/userpic/320/rkxrakib_69.svg" id="user-avatar" class="u-img">
+                <div class="badge">PRO</div>
+            </div>
+            <h1 id="user-display-name">RKX RAKIB</h1>
+            <p class="sub-text">Content Creator & Frontend Developer</p>
+        </div>
+
+        <!-- Identity Info -->
+        <div class="info-grid">
+            <div class="info-item card">
+                <i class="fas fa-birthday-cake"></i>
+                <span>Birthday</span>
+                <b>19 November</b>
+            </div>
+            <div class="info-item card">
+                <i class="fas fa-user-clock"></i>
+                <span>Age</span>
+                <b>15+ Years</b>
             </div>
         </div>
-        <button onclick="hideLoginOptions()" class="close-btn">Close</button>
-    </div>
-</div>
+
+        <div class="card location-card">
+            <i class="fas fa-map-marker-alt"></i>
+            <div>
+                <span>Address & Home</span>
+                <p>Jamalpur, Mymensingh, Bangladesh</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>About Me</h3>
+            <p>👋 Hi, I'm a web designer and Frontend Developer! I love to create beautiful and functional websites.</p>
+        </div>
+
+        <h2 class="sec-label">My Recent Work</h2>
+        <div class="project-list">
+            <!-- Projects copy from your original file -->
+            <div class="p-card card" onclick="zoomToggle(this)">
+                <div class="img-box"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIAWWAng5lyu5fTaiopl2fcvIdv_YQ6DTocEQlyiOENnKSQT-Z5nVhCyMs&s=10"></div>
+                <div class="p-desc">
+                    <h4>Web Design Project</h4>
+                    <p>A modern web design project featuring various animations.</p>
+                </div>
+            </div>
+            <!-- Add other projects here as they were -->
+        </div>
+
+        <!-- Contact Section -->
+        <div class="card contact-area">
+            <h3>Contact Me</h3>
+            <div id="contact-form"></div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
