@@ -1,141 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>RKX RAKIB | Professional Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-</head>
-<body oncontextmenu="return false;">
+<!-- [ LOGIN OPTIONS OVERLAY ] -->
+<div id="login-overlay" class="overlay hidden" onclick="hideLoginOptions()">
+    <div class="auth-card" onclick="event.stopPropagation()">
+        <h3>Connect Account</h3>
+        
+        <!-- Tab Buttons (Optional but cleaner) -->
+        <div class="auth-methods">
+            <!-- Email Login Section -->
+            <div id="email-section">
+                <input type="email" id="auth-email" placeholder="Email Address">
+                <input type="password" id="auth-pass" placeholder="Password">
+                <button onclick="loginWithEmail()" class="btn-send">Login with Email</button>
+                <p class="forgot-link" onclick="forgotPassword()">Forgot Password?</p>
+            </div>
 
-    <!-- [ TOP NAV & LOGIN OPTIONS ] -->
-    <nav class="top-nav">
-        <span class="logo-text">RKX RAKIB</span>
-        <div id="auth-actions">
-            <!-- Dynamic Login/Logout buttons will appear here -->
-            <button onclick="showLoginOptions()" class="guest-btn">Login</button>
-        </div>
-    </nav>
+            <div class="divider">OR</div>
 
-    <!-- [ LOGIN OPTIONS OVERLAY - Optional ] -->
-    <div id="login-overlay" class="overlay hidden" onclick="hideLoginOptions()">
-        <div class="auth-card" onclick="event.stopPropagation()">
-            <h3>Connect Account</h3>
+            <!-- Phone Login Section -->
+            <div id="phone-section">
+                <div id="recaptcha-container"></div>
+                <input type="tel" id="auth-phone" placeholder="+88017XXXXXXXX">
+                <button onclick="loginWithPhone()" class="btn-black"><i class="fas fa-phone"></i> Send OTP</button>
+            </div>
+
+            <div class="divider">OR</div>
+
+            <!-- Social Logins -->
             <div class="auth-buttons">
                 <button onclick="loginWithGoogle()" class="btn-black">
                     <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Google
                 </button>
-                <button onclick="reEnableTGLogin()" class="btn-black">
-                    <i class="fab fa-telegram-plane"></i> Telegram
-                </button>
+                
+                <!-- Telegram Widget Container -->
+                <div id="tg-widget-container">
+                    <button id="tg-login-btn" onclick="reEnableTGLogin()" class="btn-black">
+                        <i class="fab fa-telegram-plane"></i> Telegram App
+                    </button>
+                </div>
             </div>
         </div>
+        <button onclick="hideLoginOptions()" class="close-btn">Close</button>
     </div>
-
-    <!-- [ MAIN CONTENT - ALWAYS VISIBLE ] -->
-    <main class="main-content">
-        <!-- Header Profile -->
-        <div class="profile-header card">
-            <div class="p-wrap">
-                <img src="https://t.me/i/userpic/320/rkxrakib_69.svg" id="user-avatar" class="u-img">
-                <div class="badge">PRO</div>
-            </div>
-            <h1 id="user-display-name">RKX RAKIB</h1>
-            <p class="sub-text">Content Creator & Frontend Developer</p>
-        </div>
-
-        <!-- Identity Information -->
-        <div class="info-grid">
-            <div class="info-item card">
-                <i class="fas fa-birthday-cake"></i>
-                <span>Birthday</span>
-                <b>19 November</b>
-            </div>
-            <div class="info-item card">
-                <i class="fas fa-user-clock"></i>
-                <span>Age</span>
-                <b>15+ Years</b>
-            </div>
-        </div>
-
-        <div class="card location-card">
-            <i class="fas fa-map-marker-alt"></i>
-            <div>
-                <span>Address & Home</span>
-                <p>Jamalpur, Mymensingh, Bangladesh</p>
-            </div>
-        </div>
-
-        <!-- About -->
-        <div class="card">
-            <h3>About Me</h3>
-            <p>👋 Hi, I'm a web designer and Frontend Developer! I love to create beautiful and functional websites. In addition to this, I'm a digital entrepreneur!</p>
-        </div>
-
-        <!-- Recent Work (Projects) -->
-        <h2 class="sec-label">My Recent Work</h2>
-
-        <div class="project-list">
-            <!-- Project 1 -->
-            <div class="p-card card" onclick="zoomToggle(this)">
-                <div class="img-box"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIAWWAng5lyu5fTaiopl2fcvIdv_YQ6DTocEQlyiOENnKSQT-Z5nVhCyMs&s=10"></div>
-                <div class="p-desc">
-                    <h4>Web Design Project</h4>
-                    <p>A modern web design project featuring various animations and interactive elements.</p>
-                </div>
-            </div>
-
-            <!-- Project 2 -->
-            <div class="p-card card" onclick="zoomToggle(this)">
-                <div class="img-box"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpnG-sovPqPenkNlv4JfDsVVk852w40OIeEw&usqp=CAU"></div>
-                <div class="p-desc">
-                    <h4>Ai prompt master</h4>
-                    <p>I have a unique talent for using AI in an advanced way and creating prompts for all sectors. My main goal is to make tasks easier.</p>
-                </div>
-            </div>
-
-            <!-- Project 3 -->
-            <div class="p-card card" onclick="zoomToggle(this)">
-                <div class="img-box"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIWAwD7RAJVKwsDL5WJgtLUDcYLBLc4CpFxg&usqp=CAU"></div>
-                <div class="p-desc">
-                    <h4>Mobile Application design</h4>
-                    <p>User-friendly mobile application that makes daily tasks easier. Classic and simple finish.</p>
-                </div>
-            </div>
-            
-            <!-- Project 4 -->
-            <div class="p-card card" onclick="zoomToggle(this)">
-                <div class="img-box"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlikZWlzdodKU28qyO_Cct5E4_ARDe4Ju97Wj-uBE36ykJEg8nnXc_sO0&s=10"></div>
-                <div class="p-desc">
-                    <h4>Graphic & Video Editing</h4>
-                    <p>Creative graphic design and professional video editing projects with high-quality elements.</p>
-                </div>
-            </div>
-
-            <!-- Project 5 -->
-            <div class="p-card card" onclick="zoomToggle(this)">
-                <div class="img-box"><img src="https://www.uscis.gov/sites/default/files/images/topic-landing/USCIS_Online-Tools_241x161_V1@2x.png"></div>
-                <div class="p-desc">
-                    <h4>Online offline tools</h4>
-                    <p>I built "RKXFLI", an Android app with various online and offline utility tools.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Contact Section -->
-        <div class="card contact-area">
-            <h3>Contact Me</h3>
-            <div id="contact-form">
-                <!-- User can send message with or without login -->
-            </div>
-        </div>
-    </main>
-
-    <script src="script.js"></script>
-</body>
-</html>
+</div>
