@@ -1,55 +1,61 @@
-// --- YETI FORM LOGIC ---
-function showLoginOptions() {
-    document.getElementById('login-overlay').classList.remove('hidden');
-    initLoginForm(); // Initialize animation when shown
+// --- Overlay Controls ---
+function toggleLogin(show) {
+    const overlay = document.getElementById('login-overlay');
+    if (show) {
+        overlay.classList.remove('hidden');
+        initYeti();
+    } else {
+        overlay.classList.add('hidden');
+    }
 }
 
-function hideLoginOptions() {
-    document.getElementById('login-overlay').classList.add('hidden');
-}
-
-// Register GSAP Plugin
-gsap.registerPlugin(MorphSVGPlugin);
-
-function initLoginForm() {
+// --- Yeti Animation Logic ---
+function initYeti() {
     const email = document.querySelector('#loginEmail');
     const password = document.querySelector('#loginPassword');
+    const showPass = document.querySelector('#showPasswordCheck');
     const armL = document.querySelector('.armL');
     const armR = document.querySelector('.armR');
     const eyeL = document.querySelector('.eyeL');
     const eyeR = document.querySelector('.eyeR');
-    const showPasswordCheck = document.querySelector('#showPasswordCheck');
+    const fingers = document.querySelector('.twoFingers');
 
-    // Initial Positions
-    gsap.set(armL, { x: -93, y: 220, rotation: 105, transformOrigin: "top left", visibility: "visible" });
-    gsap.set(armR, { x: -93, y: 220, rotation: -105, transformOrigin: "top right", visibility: "visible" });
+    // Initial State
+    gsap.set([armL, armR], { visibility: "visible" });
+    gsap.set(armL, { x: -93, y: 220, rotation: 105, transformOrigin: "top left" });
+    gsap.set(armR, { x: -93, y: 220, rotation: -105, transformOrigin: "top right" });
 
-    // Cover Eyes on Password Focus
+    // 1. Email Typing (Eyes look around)
+    email.addEventListener('input', (e) => {
+        let val = e.target.value.length;
+        let moveX = Math.min(val * 0.8, 15) - 7;
+        gsap.to([eyeL, eyeR], { x: moveX, duration: 0.2 });
+    });
+
+    // 2. Password Focus (Close Eyes)
     password.addEventListener('focus', () => {
-        gsap.to(armL, 0.45, { x: -93, y: 10, rotation: 0, ease: "quad.out" });
-        gsap.to(armR, 0.45, { x: -93, y: 10, rotation: 0, ease: "quad.out", delay: 0.1 });
-    });
-
-    password.addEventListener('blur', () => {
-        gsap.to(armL, 0.7, { y: 220, rotation: 105, ease: "quad.inOut" });
-        gsap.to(armR, 0.7, { y: 220, rotation: -105, ease: "quad.inOut" });
-    });
-
-    // Toggle Show Password
-    showPasswordCheck.addEventListener('change', (e) => {
-        password.type = e.target.checked ? "text" : "password";
-        if(e.target.checked) {
-            // Spread fingers slightly if you want extra effect
-            gsap.to(armL, 0.3, { x: -105 }); 
-        } else {
-            gsap.to(armL, 0.3, { x: -93 });
+        if (!showPass.checked) {
+            gsap.to(armL, { x: -93, y: 10, rotation: 0, duration: 0.45 });
+            gsap.to(armR, { x: -93, y: 10, rotation: 0, duration: 0.45 });
         }
     });
 
-    // Follow Cursor logic for Email
-    email.addEventListener('input', () => {
-        let val = email.value.length;
-        let moveX = Math.min(val * 2, 25);
-        gsap.to([eyeL, eyeR], 0.2, { x: moveX - 10 });
+    // 3. Password Blur (Open Eyes)
+    password.addEventListener('blur', () => {
+        gsap.to(armL, { y: 220, rotation: 105, duration: 0.5 });
+        gsap.to(armR, { y: 220, rotation: -105, duration: 0.5 });
+    });
+
+    // 4. Show Password (Peek / উঁকি মারা)
+    showPass.addEventListener('change', (e) => {
+        if (e.target.checked) {
+            password.type = "text";
+            // আঙুল ফাঁক করে উঁকি দিবে
+            gsap.to(fingers, { rotation: 35, x: -10, duration: 0.3, transformOrigin: "bottom left" });
+        } else {
+            password.type = "password";
+            // আঙুল আবার বন্ধ করবে
+            gsap.to(fingers, { rotation: 0, x: 0, duration: 0.3 });
+        }
     });
 }
