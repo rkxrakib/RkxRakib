@@ -1,27 +1,93 @@
-:root {
-    --bg: #050505;
-    --card: #121212;
-    --primary: #8b5cf6;
-    --text: #ffffff;
+/* --- YETI LOGIN OVERLAY STYLES --- */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
 }
-body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; -webkit-user-select: none; }
-.hidden { display: none !important; }
-.top-nav { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; background: #000; position: sticky; top: 0; z-index: 1000; }
-.guest-btn { background: var(--primary); color: white; border: none; padding: 5px 15px; border-radius: 10px; cursor: pointer; font-size: 14px; }
-.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; align-items: center; justify-content: center; }
-.auth-card { background: var(--card); padding: 30px; border-radius: 25px; text-align: center; border: 1px solid #333; width: 280px; }
-.btn-black { width: 100%; padding: 12px; background: #000; color: white; border: 1px solid #333; border-radius: 12px; margin: 8px 0; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
-.main-content { padding: 15px; }
-.card { background: var(--card); padding: 20px; border-radius: 20px; margin-bottom: 15px; border: 1px solid #222; }
-.u-img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--primary); }
-.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.location-card { display: flex; align-items: center; gap: 15px; }
-.location-card i { font-size: 24px; color: var(--primary); }
-.p-card { transition: transform 0.4s ease; overflow: hidden; border-radius: 15px; background: var(--card); border: 1px solid #222; margin-bottom: 15px;}
-.img-box img { width: 100%; height: 160px; object-fit: cover; }
-.p-desc { padding: 15px; }
-.p-desc h4 { margin: 0; color: var(--primary); font-size: 18px; }
-.p-desc p { font-size: 12px; color: #aaa; margin-top: 5px; }
-.p-card.zoomed { transform: scale(1.05); border-color: var(--primary); z-index: 10; }
-input, textarea { width: 100%; background: #000; border: 1px solid #333; color: white; border-radius: 10px; padding: 12px; box-sizing: border-box; margin-top: 10px; font-family: inherit; }
-.btn-send { background: var(--primary); width: 100%; color: white; border: none; padding: 12px; border-radius: 10px; margin-top: 15px; cursor: pointer; font-weight: bold; }
+
+.close-overlay {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+}
+
+.yeti-form {
+    background: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    position: relative;
+}
+
+.svgContainer {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 10px;
+    position: relative;
+    border-radius: 50%;
+    border: 3px solid #217093;
+    overflow: hidden;
+}
+
+.mySVG {
+    width: 100%;
+    height: 100%;
+}
+
+.yeti-form .inputGroup {
+    margin-bottom: 20px;
+}
+
+.yeti-form label {
+    display: block;
+    color: #217093;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.yeti-form input[type=email], 
+.yeti-form input[type=password] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #217093;
+    border-radius: 8px;
+    background: #f3fafd;
+    color: #333;
+    box-sizing: border-box;
+}
+
+#showPasswordToggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+#login-btn {
+    width: 100%;
+    padding: 15px;
+    background: #4eb8dd;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#login-btn:hover {
+    background: #217093;
+}
