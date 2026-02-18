@@ -17,7 +17,7 @@
     <nav class="top-nav">
         <span class="logo-text">RKX RAKIB</span>
         <div id="auth-actions">
-            <a href="login.html" id="login-link" class="guest-btn" style="text-decoration: none;">Login</a>
+            <a href="javascript:void(0)" id="login-link" class="guest-btn" onclick="toggleLogin()" style="text-decoration: none;">Login</a>
         </div>
     </nav>
 
@@ -168,5 +168,54 @@
         });
       }
     </script>
+<!-- Login Overlay HTML -->
+<div id="rkx-login-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center; flex-direction: column;">
+    <button onclick="toggleLogin()" style="position: absolute; top: 20px; right: 20px; background: #ff2770; color: white; border: none; padding: 10px 15px; border-radius: 50%; cursor: pointer;">X</button>
+    
+    <div class="box" style="transform: scale(0.9);">
+        <div class="login">
+            <div class="loginBx">
+                <h2><i class="fa-solid fa-right-to-bracket"></i> Login <i class="fa-solid fa-heart"></i></h2>
+                <input type="email" id="modal-email" placeholder="Email">
+                <input type="password" id="modal-pass" placeholder="Password">
+                <input type="submit" value="Sign in" onclick="modalSignIn()" />
+                <div class="group">
+                    <a href="#">Forgot Password</a>
+                    <a href="javascript:void(0)" onclick="modalSignUp()" style="color: #ff2770;">Sign up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// বক্স ওপেন/বন্ধ করার ফাংশন
+function toggleLogin() {
+    const overlay = document.getElementById('rkx-login-overlay');
+    overlay.style.display = (overlay.style.display === 'none' || overlay.style.display === '') ? 'flex' : 'none';
+}
+
+// ইন-পেজ লগইন ফাংশন
+function modalSignIn() {
+    const email = document.getElementById('modal-email').value;
+    const pass = document.getElementById('modal-pass').value;
+    if(!email || !pass) return alert("Fill all fields");
+    
+    firebase.auth().signInWithEmailAndPassword(email, pass)
+    .then(() => { alert("Login Success!"); toggleLogin(); })
+    .catch(err => alert(err.message));
+}
+
+// ইন-পেজ সাইন-আপ ফাংশন
+function modalSignUp() {
+    const email = document.getElementById('modal-email').value;
+    const pass = document.getElementById('modal-pass').value;
+    if(!email || !pass) return alert("Enter email/pass to signup");
+    
+    firebase.auth().createUserWithEmailAndPassword(email, pass)
+    .then(() => alert("Account Created! Now Sign in."))
+    .catch(err => alert(err.message));
+}
+</script>
 </body>
 </html>
