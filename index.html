@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>RKX RAKIB | Professional Portfolio</title>
+    <title>RKX RAKIB</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -17,8 +17,7 @@
     <nav class="top-nav">
         <span class="logo-text">RKX RAKIB</span>
         <div id="auth-actions">
-            <!-- Dynamic Login/Logout buttons will appear here -->
-            <a href="login.html" class="guest-btn" style="text-decoration: none; display: inline-block;">Login</a>
+            <a href="login.html" id="login-link" class="guest-btn" style="text-decoration: none;">Login</a>
         </div>
     </nav>
 
@@ -43,7 +42,7 @@
         <div class="profile-header card">
             <div class="p-wrap">
                 <img src="https://t.me/i/userpic/320/rkxrakib_69.svg" id="user-avatar" class="u-img">
-                <div class="badge">PRO</div>
+                <div class="badge">x</div>
             </div>
             <h1 id="user-display-name">RKX RAKIB</h1>
             <p class="sub-text">Content Creator & Frontend Developer</p>
@@ -67,7 +66,7 @@
             <i class="fas fa-map-marker-alt"></i>
             <div>
                 <span>Address & Home</span>
-                <p>Jamalpur, Mymensingh, Bangladesh</p>
+                <p>Mymensingh, Bangladesh</p>
             </div>
         </div>
 
@@ -137,5 +136,37 @@
     </main>
 
     <script src="script.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDvtZJhIN850tU7cETuiqRyCyjCBdlFt-Y",
+        authDomain: "fynora-81313.firebaseapp.com",
+        databaseURL: "https://fynora-81313-default-rtdb.firebaseio.com",
+        projectId: "fynora-81313",
+        storageBucket: "fynora-81313.firebasestorage.app",
+        messagingSenderId: "593306264446",
+        appId: "1:593306264446:web:da476d4c77ae4ede6b492f",
+        measurementId: "G-BX0FWR2YMT"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+
+      // Check login status
+      auth.onAuthStateChanged((user) => {
+        const authActions = document.getElementById('auth-actions');
+        if (user) {
+          authActions.innerHTML = `
+            <span style="color: #8b5cf6; font-size: 12px; margin-right: 10px;">Active</span>
+            <button onclick="logoutUser()" class="guest-btn">Logout</button>
+          `;
+        }
+      });
+
+      function logoutUser() {
+        auth.signOut().then(() => {
+          window.location.reload();
+        });
+      }
+    </script>
 </body>
 </html>
