@@ -7,13 +7,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: #252432;
-}
+/* Body style removed to prevent index.html layout break */
 
 @property --a {
   syntax: "<angle>";
