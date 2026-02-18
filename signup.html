@@ -198,15 +198,6 @@
         <p style="text-align: center; margin-top: 15px; font-family: sans-serif; color: #217093;">
             Already have an account? <a href="login.html" style="font-weight: bold; color: #4eb8dd; text-decoration: none;">Log In</a>
         </p>
-        <p style="text-align: center; margin-top: 15px; font-family: sans-serif; color: #217093;">
-            Don't have an account? <a href="signup.html" style="font-weight: bold; color: #4eb8dd; text-decoration: none;">Sign Up</a>
-        </p>
-        <p style="text-align: center; margin-top: 15px; font-family: sans-serif; color: #217093;">
-            Don't have an account? <a href="signup.html" style="font-weight: bold; color: #4eb8dd; text-decoration: none;">Sign Up</a>
-        </p>
-        <p style="text-align: center; margin-top: 15px; font-family: sans-serif; color: #217093;">
-            Don't have an account? <a href="signup.html" style="font-weight: bold; color: #4eb8dd; text-decoration: none;">Sign Up</a>
-        </p>
     </form>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -257,17 +248,6 @@
           alert("Error: " + error.message);
       });
   }
-      
-      auth.signInWithEmailAndPassword(emailVal, passwordVal)
-      .then((userCredential) => {
-          // সফল হলে মেইন ফোল্ডারের index.html এ যাবে
-          window.location.href = "index.html"; 
-      })
-      .catch((error) => {
-          btn.innerText = "Log in";
-          alert("Error: " + error.message);
-      });
-  }
 </script>
 
-  </html>
+</html>
