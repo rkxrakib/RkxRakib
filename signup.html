@@ -179,18 +179,35 @@
             </div>
         </div>
 
-        <div class="inputGroup inputGroup1">
-            <label for="loginEmail" id="loginEmailLabel">Email</label>
-            <input type="email" id="loginEmail" maxlength="254" />
-            <p class="helper helper1">email@domain.com</p>
+        <!-- Full Name -->
+        <div class="inputGroup">
+            <label>Full Name</label>
+            <input type="text" id="regName" placeholder="Enter your name" style="height: 50px; font-size: 1.2em;"/>
         </div>
-        <div class="inputGroup inputGroup2">
-            <label for="loginPassword" id="loginPasswordLabel">Password</label>
-            <input type="password" id="loginPassword" />
-            <label id="showPasswordToggle" for="showPasswordCheck">Show
-                <input id="showPasswordCheck" type="checkbox" />
-                <div class="indicator"></div>
-            </label>
+        <!-- Email -->
+        <div class="inputGroup">
+            <label>Email</label>
+            <input type="email" id="loginEmail" placeholder="email@domain.com" style="height: 50px; font-size: 1.2em;"/>
+        </div>
+        <!-- Phone Number -->
+        <div class="inputGroup">
+            <label>Phone Number</label>
+            <input type="number" id="regPhone" placeholder="017XXXXXXXX" style="height: 50px; font-size: 1.2em;"/>
+        </div>
+        <!-- Password -->
+        <div class="inputGroup">
+            <label>Password</label>
+            <input type="password" id="loginPassword" placeholder="Min 6 chars" style="height: 50px; font-size: 1.2em;"/>
+        </div>
+        <!-- Confirm Password -->
+        <div class="inputGroup">
+            <label>Confirm Password</label>
+            <input type="password" id="regConfirmPassword" placeholder="Repeat password" style="height: 50px; font-size: 1.2em;"/>
+        </div>
+        <!-- Simple Math Captcha -->
+        <div class="inputGroup">
+            <label id="captchaLabel">What is 5 + 3?</label>
+            <input type="number" id="regCaptcha" placeholder="Enter result" style="height: 50px; font-size: 1.2em;"/>
         </div>
         <div class="inputGroup inputGroup3">
             <button type="button" id="login" onclick="registerUser()">Create Account</button>
@@ -221,20 +238,60 @@
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
 
+  // ক্যাপচা জেনারেটর
+  let num1 = Math.floor(Math.random() * 10);
+  let num2 = Math.floor(Math.random() * 10);
+  let captchaAnswer = num1 + num2;
+  document.getElementById('captchaLabel').innerText = `What is ${num1} + ${num2}?`;
+
   function registerUser() {
-      const emailVal = document.getElementById('loginEmail').value;
-      const passwordVal = document.getElementById('loginPassword').value;
+      const name = document.getElementById('regName').value;
+      const email = document.getElementById('loginEmail').value;
+      const phone = document.getElementById('regPhone').value;
+      const pass = document.getElementById('loginPassword').value;
+      const confirmPass = document.getElementById('regConfirmPassword').value;
+      const captchaInput = document.getElementById('regCaptcha').value;
       const btn = document.getElementById('login');
 
-      if(!emailVal || !passwordVal) {
-          alert("ইমেইল এবং পাসওয়ার্ড দিন!");
+      // ভ্যালিডেশন
+      if(!name || !email || !phone || !pass || !confirmPass || !captchaInput) {
+          alert("সবগুলো ঘর পূরণ করুন!");
           return;
       }
-      
-      if(passwordVal.length < 6) {
+      if(pass !== confirmPass) {
+          alert("পাসওয়ার্ড দুটি মেলেনি!");
+          return;
+      }
+      if(pass.length < 6) {
           alert("পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে!");
           return;
       }
+      if(parseInt(captchaInput) !== captchaAnswer) {
+          alert("ভুল ক্যাপচা! আবার চেষ্টা করুন।");
+          return;
+      }
+
+      btn.innerText = "Processing...";
+      
+      // Firebase-এ ইউজার তৈরি করা
+      auth.createUserWithEmailAndPassword(email, pass)
+      .then((userCredential) => {
+          const user = userCredential.user;
+          // ডাটাবেজে নাম এবং ফোন নাম্বার সেভ করা
+          firebase.database().ref('users/' + user.uid).set({
+              fullName: name,
+              phoneNumber: phone,
+              email: email
+          }).then(() => {
+              alert("রেজিস্ট্রেশন সফল হয়েছে!");
+              window.location.href = "index.html";
+          });
+      })
+      .catch((error) => {
+          btn.innerText = "Create Account";
+          alert("Error: " + error.message);
+      });
+  }
 
       btn.innerText = "Creating Account...";
       
