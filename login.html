@@ -3,22 +3,16 @@
 
 <head>
     <meta charset="UTF-8">
-    <!-- মোবাইলে জুম সমস্যা ঠিক করার জন্য নিচের লাইনটি যোগ করা হয়েছে -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Yeti Login Form Animation | RKX RAKIB</title>
+    <title>Yeti Login Form Animation | @coding.stella</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-    <link rel="stylesheet" href="yeti-login.css">
-
-    <!-- ফায়ারবেস এসডিকে (লগইন কাজ করানোর জন্য) -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <link rel="stylesheet" href="yeti-style.css">
 </head>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
 <body>
-    <!-- ফিরে যাওয়ার বাটন -->
-    <a href="index.html" style="position: fixed; top: 15px; left: 15px; color: #217093; text-decoration: none; font-weight: bold; z-index: 100;">← Back</a>
 
-    <form onsubmit="return false;">
+    <form>
         <div class="svgContainer">
             <div>
                 <svg class="mySVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -199,7 +193,7 @@
             </label>
         </div>
         <div class="inputGroup inputGroup3">
-            <button id="login">Log in</button>
+            <button type="button" id="login" onclick="loginUser()">Log in</button>
         </div>
     </form>
 
@@ -208,5 +202,44 @@
     <script src="yeti-login.js"></script>
 
 </body>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDvtZJhIN850tU7cETuiqRyCyjCBdlFt-Y",
+    authDomain: "fynora-81313.firebaseapp.com",
+    databaseURL: "https://fynora-81313-default-rtdb.firebaseio.com",
+    projectId: "fynora-81313",
+    storageBucket: "fynora-81313.firebasestorage.app",
+    messagingSenderId: "593306264446",
+    appId: "1:593306264446:web:da476d4c77ae4ede6b492f",
+    measurementId: "G-BX0FWR2YMT"
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  function loginUser() {
+      const emailVal = document.getElementById('loginEmail').value;
+      const passwordVal = document.getElementById('loginPassword').value;
+      const btn = document.getElementById('login');
+
+      if(!emailVal || !passwordVal) {
+          alert("Please enter Email & Password!");
+          return;
+      }
+
+      btn.innerText = "Processing...";
+      
+      auth.signInWithEmailAndPassword(emailVal, passwordVal)
+      .then((userCredential) => {
+          // সফল হলে মেইন ফোল্ডারের index.html এ যাবে
+          window.location.href = "index.html"; 
+      })
+      .catch((error) => {
+          btn.innerText = "Log in";
+          alert("Error: " + error.message);
+      });
+  }
+</script>
 
 </html>
