@@ -3,180 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>RKX RAKIB | SYSTEM ANALYZER PRO</title>
+    <title>RKX RAKIB | SYSTEM ANALYZER & BYPASS v2</title>
+    
+    <!-- Premium Gaming & Hacker Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Orbitron:wght@400;700;900&family=Russo+One&family=Share+Tech+Mono&family=Fira+Code:wght@300&display=swap" rel="stylesheet">
+
     <style>
-        /* Gaming & Tech Fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Orbitron:wght@400;700;900&family=Russo+One&family=Share+Tech+Mono&display=swap');
+        :root {
+            --primary: #ff0000;
+            --secondary: #ffbd00;
+            --matrix: #00ff00;
+        }
 
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            margin: 0; padding: 0; box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
 
         body, html {
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            overflow: hidden;
-            font-family: 'Orbitron', sans-serif;
-            color: #fff;
-        }
-
-        /* Background Matrix Embers */
-        .embers {
-            position: fixed;
-            top: 0; left: 0;
             width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #1a0000 0%, #000 80%);
-            z-index: 1;
+            background-color: #000;
+            overflow-x: hidden; overflow-y: auto;
+            font-family: 'Orbitron', sans-serif;
+            color: #fff; scroll-behavior: smooth;
         }
 
-        /* --- EXIT ANIMATION CLASS --- */
-        .exit-mode {
-            transform: translateY(-150vh) !important;
-            transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1) !important;
+        /* Fixed Background Embers */
+        .bg-fixed {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #1a0000 0%, #000 90%);
+            z-index: -1;
         }
 
-        /* --- 1. DEVICE SYSTEM ANALYZER (TOP) --- */
-        #system-panel {
-            position: absolute;
-            top: 20px;
-            width: 90%;
-            max-width: 500px;
-            background: rgba(255, 0, 0, 0.05);
+        .scanlines {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
+            background-size: 100% 2px, 3px 100%;
+            z-index: 1000; pointer-events: none;
+        }
+
+        /* --- SECTION 1: SYSTEM ANALYZER --- */
+        .system-panel-section {
+            min-height: 100vh; width: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 20px; z-index: 10;
+        }
+
+        .analyzer-card {
+            width: 100%; max-width: 550px;
+            background: rgba(10, 0, 0, 0.95);
             border: 1px solid rgba(255, 0, 0, 0.3);
-            border-top: 3px solid #ff0000;
-            padding: 15px;
+            border-top: 5px solid var(--primary);
+            padding: 20px;
             font-family: 'Share Tech Mono', monospace;
-            z-index: 1000;
-            opacity: 0;
-            transform: translateY(-100px);
-            animation: panel-drop 1s forwards 0.5s;
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.2);
         }
 
-        @keyframes panel-drop {
-            to { opacity: 1; transform: translateY(0); }
+        .header-box {
+            text-align: center; border-bottom: 2px solid var(--primary);
+            margin-bottom: 15px; padding-bottom: 10px;
         }
 
-        .panel-header {
-            color: #ff0000;
-            font-size: 14px;
-            font-weight: bold;
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 0, 0, 0.3);
-            margin-bottom: 10px;
-            padding-bottom: 5px;
-            letter-spacing: 2px;
+        .header-box h2 { color: var(--primary); letter-spacing: 5px; font-size: 20px; }
+
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .info-item { background: rgba(255, 255, 255, 0.05); padding: 8px; font-size: 13px; border-left: 2px solid var(--primary); }
+        .label { color: var(--secondary); display: block; font-size: 10px; text-transform: uppercase; }
+        .value { color: var(--matrix); text-shadow: 0 0 5px var(--matrix); }
+
+        /* --- FAKE HACKING CONSOLE --- */
+        .console-box {
+            background: #000; border: 1px solid #333; height: 150px;
+            overflow: hidden; padding: 10px; font-family: 'Fira Code', monospace;
+            font-size: 11px; position: relative;
         }
-
-        .data-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            font-size: 11px;
-            color: #00ff00; /* Matrix Green */
+        .console-box::after {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8)); pointer-events: none;
         }
+        .console-line { color: var(--matrix); margin-bottom: 4px; border-left: 2px solid var(--matrix); padding-left: 5px; }
+        .console-line.danger { color: #ff0000; }
 
-        .data-item { border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 2px; }
-        .label { color: #ff9900; margin-right: 5px; }
+        .scroll-down-btn {
+            margin-top: 20px; color: var(--primary); font-size: 12px;
+            animation: bounce 2s infinite; text-align: center;
+        }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
 
-        /* --- 2. MAIN CONTENT (CENTER) --- */
-        #main-content {
-            position: relative;
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            transition: transform 0.8s ease-in;
+        /* --- SECTION 2: ORIGINAL INTRO (RKX RAKIB) --- */
+        .intro-section {
+            min-height: 100vh; width: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            position: relative; overflow: hidden;
         }
 
         .crosshair {
-            position: absolute;
-            width: 120px; height: 120px;
-            border: 2px solid rgba(255, 0, 0, 0.3);
-            border-radius: 50%;
-            animation: target-lock 1.5s ease-out forwards;
-            opacity: 0;
+            position: absolute; width: 120px; height: 120px;
+            border: 2px solid rgba(255, 0, 0, 0.4); border-radius: 50%;
+            opacity: 0; z-index: 5;
         }
-
+        .animate-lock { animation: target-lock 1.5s ease-out forwards; }
         @keyframes target-lock {
             0% { transform: scale(5); opacity: 0; }
             80% { transform: scale(1); opacity: 1; border-color: #ff0000; }
             100% { transform: scale(1.2); opacity: 0; }
         }
 
-        .name-ariyan {
-            font-family: 'Black Ops One', cursive;
-            font-size: 4.5rem;
-            letter-spacing: 10px;
-            text-transform: uppercase;
-            opacity: 0;
-            animation: slam-name 0.5s forwards 1.2s, glow-pulse 3s infinite ease-in-out 1.7s;
-            text-align: center;
+        .name-box { text-align: center; z-index: 10; }
+        .name-rkx {
+            font-family: 'Black Ops One', cursive; font-size: 4.5rem;
+            color: #fff; letter-spacing: 10px; text-transform: uppercase;
+            opacity: 0; text-shadow: 5px 5px 0px var(--primary);
         }
-
+        .animate-slam { animation: slam-name 0.6s forwards, glow-pulse 3s infinite ease-in-out 0.6s; }
         @keyframes slam-name {
             0% { transform: scale(5); opacity: 0; filter: blur(20px); }
             100% { transform: scale(1); opacity: 1; filter: blur(0); }
         }
-
         @keyframes glow-pulse {
-            0%, 100% { text-shadow: 5px 5px 0px #ff0000; }
-            50% { text-shadow: 5px 5px 0px #ff0000, 0 0 25px rgba(255,0,0,0.7); }
+            0%, 100% { text-shadow: 5px 5px 0px var(--primary); }
+            50% { text-shadow: 5px 5px 0px var(--primary), 0 0 20px rgba(255,0,0,0.6); }
         }
 
         .ff-title {
-            font-size: 1.4rem;
-            color: #ffbd00;
-            letter-spacing: 8px;
-            margin-top: 10px;
-            opacity: 0;
-            animation: slide-in 0.5s forwards 1.7s;
+            font-size: 1.5rem; color: var(--secondary); letter-spacing: 10px;
+            margin-top: 10px; opacity: 0; transform: translateX(-100px);
         }
-
-        @keyframes slide-in {
-            from { transform: translateX(-100px); opacity: 0; }
-            to { opacity: 1; transform: translateX(0); }
-        }
+        .animate-slide { animation: slide-in 0.5s forwards; }
+        @keyframes slide-in { to { opacity: 1; transform: translateX(0); } }
 
         .version-tag {
-            background: #ff0000;
-            color: white;
-            padding: 4px 20px;
-            font-size: 0.9rem;
-            margin-top: 20px;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-            opacity: 0;
-            animation: fade-up 0.5s forwards 2.2s;
+            background: var(--primary); color: white; padding: 5px 22px;
+            font-size: 1rem; display: inline-block; margin-top: 20px;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); opacity: 0;
         }
+        .animate-fadeup { animation: fade-up 0.5s forwards; }
+        @keyframes fade-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes fade-up {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- 3. RGB BUTTON (ORIGINAL) --- */
+        /* --- RGB BUTTON --- */
         #tap-wrapper {
-            margin-top: 40px;
-            opacity: 0;
-            animation: fadeInBtn 0.8s forwards 3s;
-            cursor: pointer;
+            position: relative; z-index: 10; opacity: 0;
+            cursor: pointer; margin-top: 40px;
         }
-
+        .animate-btn { animation: fadeInBtn 0.8s forwards; }
         @keyframes fadeInBtn { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
 
-        .energy-btn { width: 150px; height: 150px; display: flex; justify-content: center; align-items: center; position: relative; }
-
+        .energy-btn { width: 160px; height: 160px; display: flex; justify-content: center; align-items: center; position: relative; }
         .ring-outer {
-            position: absolute; width: 100%; height: 100%;
-            border: 4px solid #fff; border-radius: 50%;
+            position: absolute; width: 100%; height: 100%; border: 4px solid #fff; border-radius: 50%; 
             animation: spin 2s linear infinite, rgb-lighting 3s linear infinite;
         }
+        .ring-inner {
+            position: absolute; width: 80%; height: 80%; border: 3px solid #fff; border-radius: 50%; 
+            animation: spin-rev 1.5s linear infinite, rgb-lighting 3s linear infinite reverse;
+        }
+        .core {
+            width: 65%; height: 65%; background: #000; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; border: 1px solid #fff;
+            animation: pulse 1s infinite alternate;
+        }
+        .tap-text { color: #fff; font-size: 13px; font-family: 'Russo One'; text-align: center; }
 
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes spin-rev { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+        @keyframes pulse { from { transform: scale(0.95); } to { transform: scale(1.05); } }
         @keyframes rgb-lighting {
             0% { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
             33% { border-color: #00ff00; box-shadow: 0 0 15px #00ff00; }
@@ -184,67 +175,63 @@
             100% { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
         }
 
-        .ring-inner {
-            position: absolute; width: 80%; height: 80%;
-            border: 3px solid #fff; border-radius: 50%;
-            animation: spin-reverse 1.5s linear infinite, rgb-lighting 3s linear infinite reverse;
-        }
-
-        .core {
-            width: 65%; height: 65%;
-            background: #000;
-            border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            border: 1px solid #fff;
-            animation: pulse 1s infinite alternate;
-        }
-
-        .tap-text { color: #fff; font-size: 12px; font-family: 'Russo One'; text-align: center; text-transform: uppercase; }
-
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes spin-reverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
-        @keyframes pulse { from { transform: scale(0.95); } to { transform: scale(1.05); } }
+        /* --- EXIT FLY UP --- */
+        .exit-now { transform: translateY(-200vh) !important; transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1) !important; }
 
     </style>
 </head>
 <body>
 
-    <div class="embers"></div>
+    <div class="bg-fixed"></div>
+    <div class="scanlines"></div>
 
-    <!-- Top System Panel -->
-    <div id="system-panel">
-        <div class="panel-header">CORE SYSTEM ANALYZER V2.0</div>
-        <div class="data-grid">
-            <div class="data-item"><span class="label">LOCATION:</span> <span id="loc">DHAKA, BD</span></div>
-            <div class="data-item"><span class="label">TIME:</span> <span id="time-display">00:00:00</span></div>
-            <div class="data-item"><span class="label">BATTERY:</span> <span id="bat-level">--%</span></div>
-            <div class="data-item"><span class="label">STATUS:</span> <span id="bat-charge">--</span></div>
-            <div class="data-item"><span class="label">RAM:</span> <span id="ram-info">--</span></div>
-            <div class="data-item"><span class="label">OS VER:</span> <span id="os-info">--</span></div>
-            <div class="data-item"><span class="label">BROWSER:</span> <span id="browser-info">--</span></div>
-            <div class="data-item"><span class="label">SCREEN:</span> <span id="screen-info">--</span></div>
-            <div class="data-item" style="grid-column: span 2;"><span class="label">NETWORK:</span> <span id="net-info">STABLE (4G/WIFI)</span></div>
-        </div>
-    </div>
-
-    <!-- Main Intro Section -->
-    <div id="main-content">
-        <div class="crosshair"></div>
+    <div id="master-container">
         
-        <div class="text-box" id="text-box-main">
-            <h1 class="name-ariyan">RKX RAKIB</h1>
-            <h2 class="ff-title">WELCOME TO MY PROFILE</h2>
-            <div class="version-tag">PROFILE V2.0</div>
+        <!-- SECTION 1: HACKER PANEL -->
+        <div class="system-panel-section">
+            <div class="analyzer-card">
+                <div class="header-box">
+                    <h2>CORE DECRYPTION ACTIVE</h2>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><span class="label">LOCATION:</span> <span id="loc" class="value">BANGLADESH</span></div>
+                    <div class="info-item"><span class="label">REAL TIME:</span> <span id="time" class="value">00:00:00</span></div>
+                    <div class="info-item"><span class="label">BATTERY:</span> <span id="bat" class="value">--%</span></div>
+                    <div class="info-item"><span class="label">CHARGING:</span> <span id="charge" class="val">--</span></div>
+                    <div class="info-item"><span class="label">ANDROID VER:</span> <span id="os" class="value">Detecting...</span></div>
+                    <div class="info-item"><span class="label">BROWSER:</span> <span id="br" class="value">--</span></div>
+                    <div class="info-item"><span class="label">RAM (EST):</span> <span id="ram" class="value">--</span></div>
+                    <div class="info-item"><span class="label">RESOLUTION:</span> <span id="res" class="value">--</span></div>
+                </div>
+
+                <div class="console-box" id="console">
+                    <!-- Hacking lines injected here -->
+                </div>
+            </div>
+            <div class="scroll-down-btn">▼ SCROLL TO BYPASS FIREWALL ▼</div>
         </div>
 
-        <div id="tap-wrapper" onclick="exitAndRedirect()">
-            <div class="energy-btn">
-                <div class="ring-outer"></div>
-                <div class="ring-inner"></div>
-                <div class="core">
-                    <div class="tap-text">VIEW MY<br>PROFILE</div>
+        <!-- SECTION 2: ORIGINAL INTRO -->
+        <div class="intro-section" id="intro-trigger">
+            <div class="crosshair" id="ch-anim"></div>
+            
+            <div class="name-box">
+                <h1 class="name-rkx" id="name-anim">RKX RAKIB</h1>
+                <h2 class="ff-title" id="title-anim">WELCOME TO MY PROFILE</h2>
+                <div class="version-tag" id="ver-anim">PROFILE V2.0</div>
+            </div>
+
+            <div id="tap-wrapper" onclick="startExit()">
+                <div class="energy-btn">
+                    <div class="ring-outer"></div>
+                    <div class="ring-inner"></div>
+                    <div class="core">
+                        <div class="tap-text">VIEW MY<br>PROFILE</div>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 
     <audio id="bg-music" loop>
@@ -252,74 +239,94 @@
     </audio>
 
     <script>
+        const consoleEl = document.getElementById('console');
+        const master = document.getElementById('master-container');
         const music = document.getElementById('bg-music');
-        const systemPanel = document.getElementById('system-panel');
-        const mainContent = document.getElementById('main-content');
 
-        // 1. LIVE DHAKA TIME
-        function updateTime() {
-            const options = { timeZone: 'Asia/Dhaka', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-            document.getElementById('time-display').innerText = new Date().toLocaleTimeString('en-US', options);
+        // 1. Fake Hacker Console Lines
+        const hackLines = [
+            "> INITIALIZING EXPLOIT...",
+            "> BYPASSING KERNEL SECURITY...",
+            "> ACCESSING ROOT DIRECTORY...",
+            "> FETCHING SYSTEM LOGS...",
+            "> TARGETING PRIVATE STORAGE...",
+            "> SCANNING GALLERY INDEX...",
+            "> EXTRACTING SAVED PASSWORDS...",
+            "> UPLOADING DATA TO CLOUD...",
+            "> FIREWALL BYPASSED SUCCESSFULLY.",
+            "> [DANGER] ENCRYPTION KEY FOUND!",
+            "> REMOTELY ACCESSING CAMERA...",
+            "> BUFFER OVERFLOW TRIGGERED.",
+            "> SYSTEM COMPROMISED."
+        ];
+
+        let lineIndex = 0;
+        function addConsoleLine() {
+            const line = document.createElement('div');
+            line.className = 'console-line' + (Math.random() > 0.8 ? ' danger' : '');
+            line.innerText = hackLines[lineIndex % hackLines.length];
+            consoleEl.appendChild(line);
+            lineIndex++;
+            if (consoleEl.childNodes.length > 8) consoleEl.removeChild(consoleEl.firstChild);
+            setTimeout(addConsoleLine, 800 + Math.random() * 1000);
         }
-        setInterval(updateTime, 1000);
-        updateTime();
+        addConsoleLine();
 
-        // 2. BATTERY & CHARGING DATA
-        if (navigator.getBattery) {
-            navigator.getBattery().then(bat => {
-                const refreshBat = () => {
-                    document.getElementById('bat-level').innerText = Math.round(bat.level * 100) + "%";
-                    document.getElementById('bat-charge').innerText = bat.charging ? "CHARGING" : "NOT CHARGING";
+        // 2. Real System Data Capture
+        function updateData() {
+            const options = { timeZone: 'Asia/Dhaka', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            document.getElementById('time').innerText = new Date().toLocaleTimeString('en-US', options);
+        }
+        setInterval(updateData, 1000);
+
+        if(navigator.getBattery) {
+            navigator.getBattery().then(b => {
+                const bUpdate = () => {
+                    document.getElementById('bat').innerText = Math.round(b.level * 100) + "%";
+                    document.getElementById('charge').innerText = b.charging ? "PLUGGED" : "UNPLUGGED";
                 };
-                refreshBat();
-                bat.onlevelchange = refreshBat;
-                bat.onchargingchange = refreshBat;
+                bUpdate(); b.onlevelchange = bUpdate; b.onchargingchange = bUpdate;
             });
         }
 
-        // 3. SYSTEM SPECIFICATIONS
-        function fetchSpecs() {
-            const ua = navigator.userAgent;
-            
-            // OS Detection
-            let os = "Unknown OS";
-            if (ua.indexOf("Android") > -1) os = "Android " + (ua.match(/Android\s([0-9\.]*)/) ? ua.match(/Android\s([0-9\.]*)/)[1] : "");
-            else if (ua.indexOf("iPhone") > -1) os = "iOS (Apple)";
-            document.getElementById('os-info').innerText = os;
+        const ua = navigator.userAgent;
+        // Accurate Android Version Detection
+        let androidVer = "Unknown OS";
+        if (ua.indexOf("Android") > -1) {
+            let match = ua.match(/Android\s([0-9\.]*)/);
+            androidVer = "Android " + (match ? match[1] : "OS");
+        } else if (ua.indexOf("iPhone") > -1) { androidVer = "iOS / Apple"; }
+        
+        document.getElementById('os').innerText = androidVer;
+        document.getElementById('br').innerText = ua.includes("Chrome") ? "Chrome" : "Mobile Browser";
+        document.getElementById('ram').innerText = navigator.deviceMemory ? navigator.deviceMemory + "GB" : "SECURED";
+        document.getElementById('res').innerText = window.screen.width + "x" + window.screen.height;
 
-            // Browser Detection
-            let br = "Mobile Web";
-            if (ua.indexOf("Chrome") > -1) br = "Chrome Engine";
-            else if (ua.indexOf("Firefox") > -1) br = "Firefox";
-            document.getElementById('browser-info').innerText = br;
+        // 3. Scroll Trigger for Original Intro
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    document.getElementById('ch-anim').classList.add('animate-lock');
+                    document.getElementById('name-anim').classList.add('animate-slam');
+                    setTimeout(() => document.getElementById('title-anim').classList.add('animate-slide'), 500);
+                    setTimeout(() => document.getElementById('ver-anim').classList.add('animate-fadeup'), 1000);
+                    setTimeout(() => document.getElementById('tap-wrapper').classList.add('animate-btn'), 1500);
+                }
+            });
+        }, { threshold: 0.5 });
 
-            // RAM & Screen
-            document.getElementById('ram-info').innerText = navigator.deviceMemory ? navigator.deviceMemory + " GB" : "N/A";
-            document.getElementById('screen-info').innerText = window.screen.width + "x" + window.screen.height;
+        observer.observe(document.getElementById('intro-trigger'));
 
-            // Connection
-            if (navigator.connection) {
-                document.getElementById('net-info').innerText = navigator.connection.effectiveType.toUpperCase() + " / " + navigator.connection.downlink + " Mbps";
-            }
-        }
-        fetchSpecs();
-
-        // 4. EXIT ANIMATION & REDIRECT
-        function exitAndRedirect() {
-            // Play music on interaction
+        // 4. Exit Animation
+        function startExit() {
             music.play().catch(e => {});
-
-            // Trigger Fly-Up Animation
-            systemPanel.classList.add('exit-mode');
-            mainContent.classList.add('exit-mode');
-
-            // Delay redirect until animation finished
+            master.classList.add('exit-now');
             setTimeout(() => {
                 window.location.href = "https://rkxrakib.vercel.app";
-            }, 800);
+            }, 1200);
         }
 
-        console.log("%c [RKX SYSTEM READY] ", "background: red; color: #fff; font-weight: bold; padding: 10px;");
+        console.log("%c RKX SYSTEM BYPASS ACTIVE ", "background: red; color: white; padding: 10px; font-weight: bold;");
     </script>
 </body>
 </html>
