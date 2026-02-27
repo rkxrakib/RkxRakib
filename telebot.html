@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link rel='apple-touch-icon' sizes='180x180' href='apple-touch-icon.png'>
+<link rel='icon' type='image/png' sizes='32x32' href='favicon-32x32.png'>
+<link rel='icon' type='image/png' sizes='16x16' href='favicon-16x16.png'>
+<link rel='manifest' href='site.webmanifest'>
+<meta name='theme-color' content='#ffffff'>
+    <!-- SEO & Social Meta Tags (Biz Pay) -->
+    <title>Biz Pay - Secure Global Wallet</title>
+    <meta name="description" content="Biz Pay is the most secure digital wallet for P2P Escrow and instant transfers.">
+    <meta property="og:title" content="Biz Pay - Global Digital Wallet">
+    <meta property="og:description" content="Experience the next level of secure digital transactions. Fast, Reliable, Secure.">
+    <meta property="og:image" content="https://i.ibb.co/mrGqN55J/1000273295.jpg">
+    <meta property="og:url" content="https://bizpay.nexpoint.site">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; color: #0f172a; line-height: 1.5; }
+
+        .main-wrapper { width: 100%; min-height: 100vh; display: flex; justify-content: center; }
+        .app-view {
+            width: 100%; background: #ffffff; min-height: 100vh;
+            display: flex; flex-direction: column; position: relative;
+        }
+        @media (min-width: 640px) {
+            .app-view { max-width: 480px; box-shadow: 0 0 100px rgba(0,0,0,0.05); }
+            body { background-color: #f1f5f9; }
+        }
+
+        /* প্রফেশনাল স্পিনার লোডার */
+        #loader {
+            position: fixed; inset: 0; background: #ffffff; z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .loader-box {
+            position: relative;
+            width: 100px; height: 100px;
+            display: flex; items-center; justify-content: center;
+        }
+
+        /* আউটার স্পিনিং রিং */
+        .spinner-ring {
+            position: absolute;
+            width: 100%; height: 100%;
+            border: 3px solid transparent;
+            border-top-color: #2563eb;
+            border-bottom-color: #2563eb;
+            border-radius: 50%;
+            animation: spin 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        }
+
+        /* ইনার লোগো */
+        .loader-logo {
+            width: 50px; height: 50px;
+            object-fit: contain;
+            animation: pulse-logo 1.5s ease-in-out infinite;
+            z-index: 10;
+            margin-top: 25px; /* Center adjustment */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse-logo {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .brand-name {
+            font-size: 24px; font-weight: 900; color: #0f172a;
+            margin-top: 25px; letter-spacing: -0.5px;
+            animation: text-fade 1s ease-out;
+        }
+
+        @keyframes text-fade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .loader-fade-out { opacity: 0; pointer-events: none; visibility: hidden; }
+
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- প্রফেশনাল স্পিনার লোডার -->
+    <div id="loader">
+        <div class="loader-box">
+            <div class="spinner-ring"></div>
+            <img src="https://i.ibb.co/39PskN5w/1000273283.png" class="loader-logo" alt="Logo">
+        </div>
+        <h1 class="brand-name">Biz Pay</h1>
+        <p class="text-[8px] font-black uppercase tracking-[5px] text-blue-600 mt-4 opacity-40">Secure Escrow Wallet</p>
+    </div>
+
+    <div class="main-wrapper">
+        <div class="app-view hide-scroll overflow-y-auto">
+            <main class="flex-1 flex flex-col">
+                <div class="flex flex-col flex-1 px-8 py-12 justify-between">
+    
+    <!-- Logo & Title -->
+    <div class="text-center mt-10">
+        <div class="w-20 h-20 bg-blue-600 rounded-[30px] flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-blue-100 animate-pulse">
+            <i class="fa-solid fa-wallet text-white text-3xl"></i>
+        </div>
+        <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Biz Pay</h1>
+        <p class="text-slate-400 font-bold text-[10px] uppercase tracking-[4px] mt-2">The Secure Crypto Wallet</p>
+    </div>
+
+    <!-- Login Content Box -->
+    <div class="w-full">
+        <div class="bg-slate-50 border border-slate-100 p-8 rounded-[40px] text-center">
+            <h2 class="text-xl font-bold text-slate-800 mb-2">Secure Login</h2>
+            <p class="text-slate-500 text-xs mb-8 leading-relaxed">
+                Connect your account securely via Telegram. We use end-to-end encryption to protect your data.
+            </p>
+            
+            <!-- বাটন -->
+            <button onclick="startTelegramLogin()" id="loginBtn" 
+                class="w-full bg-slate-900 text-white flex items-center justify-center gap-3 py-4 rounded-2xl font-bold text-sm shadow-xl active:scale-95 transition-all">
+                <i class="fa-brands fa-telegram text-xl"></i>
+                CONTINUE WITH TELEGRAM
+            </button>
+
+            <!-- পোলিং স্ট্যাটাস (প্রথমে হাইড) -->
+            <div id="statusArea" class="hidden mt-8">
+                <div class="flex flex-col items-center gap-3">
+                    <div class="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                    <p class="text-[10px] font-black text-blue-600 uppercase tracking-widest">Awaiting Bot Approval...</p>
+                    <p class="text-[9px] text-slate-400">Please Start the Bot on Telegram</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center">
+        <p class="text-[10px] text-slate-300 font-bold uppercase tracking-widest">
+            Licensed & Regulated Asset Management
+        </p>
+    </div>
+
+</div>
+
+<script>
+function startTelegramLogin() {
+    const btn = document.getElementById('loginBtn');
+    const status = document.getElementById('statusArea');
+    
+    // ১. টোকেন গেট করা
+    fetch('/api/gen_token.php')
+    .then(r => r.json())
+    .then(data => {
+        if(data.token) {
+            // ২. নতুন ট্যাবে টেলিগ্রাম ওপেন
+            window.open('https://t.me/BizPayWalletBot?start=' + data.token, '_blank');
+            
+            // ৩. UI পরিবর্তন
+            btn.innerHTML = '<i class="fa-solid fa-clock"></i> WAITING...';
+            btn.classList.replace('bg-slate-900', 'bg-slate-300');
+            status.classList.remove('hidden');
+            
+            // ৪. চেক করা শুরু
+            startPolling();
+        } else {
+            alert('Server Error: Token generation failed.');
+        }
+    }).catch(err => {
+        alert('Connection error. Please check your internet.');
+    });
+}
+
+function startPolling() {
+    const checkInterval = setInterval(function() {
+        fetch('/auth_check.php')
+        .then(r => r.json())
+        .then(data => {
+            if(data.status === 'success') {
+                clearInterval(checkInterval);
+                window.location.href = '/dashboard';
+            }
+        });
+    }, 2000);
+}
+</script>            </main>
+        </div>
+    </div>
+
+    <script>
+        // পেজ পুরোপুরি লোড হলে লোডার বন্ধ করা
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.classList.add('loader-fade-out');
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 500);
+            }, 1500); // ১.৫ সেকেন্ডের প্রিভিউ টাইম
+        });
+    </script>
+</body>
+</html>
