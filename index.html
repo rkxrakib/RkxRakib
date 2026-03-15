@@ -3,297 +3,314 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>RKX RAKIB</title>
-    <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="yeti-style.css">
-<style>
-  /* ওভারলে স্টাইল যা আপনার ডিজাইনকে মেইন সাইটের উপরে ভাসিয়ে রাখবে */
-  #login-modal {
-    display: none; 
-    position: fixed; 
-    inset: 0; 
-    background: rgba(0,0,0,0.85); 
-    z-index: 10000; 
-    justify-content: center; 
-    align-items: center;
-    backdrop-filter: blur(5px);
-  }
-  .close-btn {
-    position: absolute; top: 20px; right: 20px; 
-    font-size: 30px; color: white; cursor: pointer; z-index: 10001;
-  }
-</style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    
+    <!-- [ HIGH-POWERED SEO TAGS ] -->
+    <title>RKX RAKIB | Digital Content Creator & Frontend Developer | rkxrakib.vercel.app</title>
+    <meta name="title" content="Rkx Rakib JP - Official Vercel App | Number to Information">
+    <meta name="description" content="Official website of Rkx Rakib (Rkx Rakib JP). Web Designer, Frontend Developer, and Digital Entrepreneur from Jamalpur, Bangladesh. Explore digital tools and Number to Information services.">
+    <meta name="author" content="Rkx Rakib JP">
+    
+    <!-- Ultra Keywords for Google/Chrome Search -->
+    <meta name="keywords" content="Rkx Rakib Vercel App, Rkx Rakib, Rkx Rakib Vercel, rkxrakib.vercel.app, Rkx Rakib JP, Rkx Rakib Jamalpur, Rkx Rakib Facebook, Rkx Rakib Tiktok, Rkx Rakib Youtube, Rkx Rakib Google, Rkx Rakib chorom, Rkx Rakib.com, Rkx Rakib.xyz, RKX RAKIB Sigma, Number to Information, নাম্বার টু ইনফরমেশন, gajarbotol, RKX RAKIB GitHub, Web Developer Jamalpur, rkxrakib_69, BD Number Lookup API, Rkx Rakib Online Tools">
+
+    <!-- Favicon / Brand Logo -->
+    <link rel="icon" type="image/png" href="https://t.me/i/userpic/320/rkxrakib_69.svg">
+    <link rel="apple-touch-icon" href="https://t.me/i/userpic/320/rkxrakib_69.svg">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Orbitron:wght@400;700;900&family=Russo+One&family=Share+Tech+Mono&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #8b5cf6; /* Modern Purple */
+            --secondary: #ff2770; /* Crimson Pink */
+            --matrix: #00ff00;
+            --hacker-red: #ff0000;
+            --bg: #050508;
+            --card: #0f1016;
+            --text: #ffffff;
+            --gray: #9ca3af;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body, html { width: 100%; height: 100%; background-color: #000; font-family: 'Poppins', sans-serif; color: #fff; scroll-behavior: smooth; }
+
+        /* --- SECTION 1: HACKER INTRO WRAPPER --- */
+        #intro-wrapper {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 9999; background: #000; transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1);
+            overflow-y: auto;
+        }
+        .bg-fixed { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, #1a0000 0%, #000 90%); z-index: -1; }
+        .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05)); background-size: 100% 2px, 3px 100%; z-index: 1000; pointer-events: none; }
+
+        .analyzer-card { width: 90%; max-width: 550px; background: rgba(10, 0, 0, 0.95); border: 1px solid rgba(255, 0, 0, 0.3); border-top: 5px solid var(--hacker-red); padding: 25px; margin: 50px auto; font-family: 'Share Tech Mono', monospace; box-shadow: 0 0 50px rgba(255, 0, 0, 0.2); }
+        .header-box h2 { color: var(--hacker-red); letter-spacing: 5px; font-size: 20px; text-align: center; border-bottom: 2px solid var(--hacker-red); padding-bottom: 10px; margin-bottom: 15px; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .info-item { background: rgba(255, 255, 255, 0.05); padding: 10px; border-left: 2px solid var(--hacker-red); }
+        .label { color: #ffbd00; font-size: 10px; text-transform: uppercase; display: block; }
+        .value { color: var(--matrix); text-shadow: 0 0 5px var(--matrix); }
+        .console-box { background: #000; border: 1px solid #333; height: 120px; overflow: hidden; padding: 10px; font-family: 'Courier New'; font-size: 11px; margin-top: 15px; }
+
+        .name-section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .name-rkx { font-family: 'Black Ops One'; font-size: 4rem; opacity: 0; text-shadow: 5px 5px 0px var(--hacker-red); }
+        #tap-wrapper { opacity: 0; cursor: pointer; margin-top: 30px; }
+        .energy-btn { width: 150px; height: 150px; display: flex; justify-content: center; align-items: center; position: relative; }
+        .ring-outer { position: absolute; width: 100%; height: 100%; border: 4px solid #fff; border-radius: 50%; animation: spin 2s linear infinite, rgb-lit 3s linear infinite; }
+        .core { width: 70%; height: 70%; background: #000; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 1px solid #fff; }
+        @keyframes rgb-lit { 0% { border-color: red; } 50% { border-color: lime; } 100% { border-color: red; } }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* --- SECTION 2: MAIN PORTFOLIO --- */
+        #main-portfolio { opacity: 0; visibility: hidden; background: var(--bg); transition: opacity 1s; }
+        
+        nav { position: sticky; top: 0; width: 100%; height: 70px; background: rgba(0,0,0,0.9); backdrop-filter: blur(15px); display: flex; align-items: center; justify-content: space-between; padding: 0 25px; z-index: 1000; border-bottom: 1px solid rgba(139, 92, 246, 0.2); }
+        .logo-text { font-family: 'Orbitron'; font-weight: 900; font-size: 1.2rem; color: #fff; letter-spacing: 2px; }
+        .nav-logo { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--primary); }
+
+        .hero-box { text-align: center; padding: 80px 20px 40px; }
+        .u-img-main { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--primary); padding: 5px; margin-bottom: 15px; box-shadow: 0 0 25px rgba(139, 92, 246, 0.4); }
+        .hero-box h1 { font-size: 2.8rem; letter-spacing: -1px; }
+        .hero-box p { color: var(--primary); font-weight: 500; letter-spacing: 3px; font-size: 0.8rem; text-transform: uppercase; }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .card { background: var(--card); border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; transition: 0.3s; }
+        .card:hover { border-color: var(--primary); transform: translateY(-5px); }
+
+        /* --- PROJECTS SECTION --- */
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 20px; }
+        .p-card { background: #16171d; border-radius: 18px; overflow: hidden; border: 1px solid #222; }
+        .p-img-box img { width: 100%; height: 160px; object-fit: cover; }
+        .p-info { padding: 15px; }
+        .p-info h4 { color: var(--primary); margin-bottom: 5px; }
+        .p-info p { font-size: 13px; color: var(--gray); line-height: 1.5; }
+
+        /* --- CONTACT FORM --- */
+        .contact-form { display: flex; flex-direction: column; gap: 12px; }
+        .contact-form input, .contact-form textarea { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 15px; border-radius: 12px; font-family: inherit; outline: none; }
+        .contact-form input:focus { border-color: var(--primary); }
+        .send-btn { background: var(--primary); color: #fff; border: none; padding: 15px; border-radius: 12px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .send-btn:hover { background: var(--secondary); box-shadow: 0 5px 15px rgba(255, 39, 112, 0.4); }
+
+        .social-btns { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px; }
+        .s-link { padding: 10px 18px; background: rgba(255,255,255,0.03); border-radius: 12px; text-decoration: none; color: #fff; font-size: 14px; border: 1px solid #222; transition: 0.3s; }
+        .s-link:hover { border-color: var(--primary); background: var(--primary); }
+
+        footer { text-align: center; padding: 60px 20px; border-top: 1px solid #222; margin-top: 40px; }
+        .launch-date { color: var(--secondary); font-weight: bold; font-size: 14px; margin-bottom: 10px; display: block; }
+        .seo-cloud { opacity: 0.2; font-size: 10px; margin-top: 20px; }
+
+        /* Utility Class */
+        .animate-slam { animation: slam 0.6s forwards; }
+        @keyframes slam { 0% { transform: scale(5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        .exit-up { transform: translateY(-100vh) !important; }
+
+        @media (max-width: 600px) { .hero-box h1 { font-size: 2rem; } .info-grid { grid-template-columns: 1fr; } }
+    </style>
 </head>
 <body oncontextmenu="return false;">
 
-    <!-- [ TOP NAV & LOGIN OPTIONS ] -->
-    <nav class="top-nav">
-        <span class="logo-text">RKX RAKIB</span>
-        <div id="auth-actions">
-            <a href="javascript:void(0)" id="login-link" class="guest-btn" onclick="toggleLogin()" style="text-decoration: none;">Login</a>
-        </div>
-    </nav>
-
-    <!-- [ LOGIN OPTIONS OVERLAY - Optional ] -->
-    <div id="login-overlay" class="overlay hidden" onclick="hideLoginOptions()">
-        <div class="auth-card" onclick="event.stopPropagation()">
-            <h3>Connect Account</h3>
-            <div class="auth-buttons">
-                <button onclick="loginWithGoogle()" class="btn-black">
-                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Google
-                </button>
-                <button onclick="reEnableTGLogin()" class="btn-black">
-                    <i class="fab fa-telegram-plane"></i> Telegram
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- [ MAIN CONTENT - ALWAYS VISIBLE ] -->
-    <main class="main-content">
-        <!-- Header Profile -->
-        <div class="profile-header card">
-            <div class="p-wrap">
-                <img src="https://t.me/i/userpic/320/rkxrakib_69.svg" id="user-avatar" class="u-img">
-                <div class="badge">x</div>
-            </div>
-            <h1 id="user-display-name">RKX RAKIB</h1>
-            <p class="sub-text">Content Creator & Frontend Developer</p>
-        </div>
-
-        <!-- Identity Information -->
-        <div class="info-grid">
-            <div class="info-item card">
-                <i class="fas fa-birthday-cake"></i>
-                <span>Birthday</span>
-                <b>19 November</b>
-            </div>
-            <div class="info-item card">
-                <i class="fas fa-user-clock"></i>
-                <span>Age</span>
-                <b>15+ Years</b>
-            </div>
-        </div>
-
-        <div class="card location-card">
-            <i class="fas fa-map-marker-alt"></i>
-            <div>
-                <span>Address & Home</span>
-                <p>Mymensingh, Bangladesh</p>
-            </div>
-        </div>
-
-        <!-- About -->
-        <div class="card">
-            <h3>About Me</h3>
-            <p>👋 Hi, I'm a web designer and Frontend Developer! I love to create beautiful and functional websites. In addition to this, I'm a digital entrepreneur!</p>
-        </div>
-
-        <!-- Recent Work (Projects) -->
-        <h2 class="sec-label">My Recent Work</h2>
-
-        <div class="project-list">
-            <!-- Project 1 -->
-            <div class="p-card card" onclick="zoomToggle(this)">
-                <div class="img-box"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIAWWAng5lyu5fTaiopl2fcvIdv_YQ6DTocEQlyiOENnKSQT-Z5nVhCyMs&s=10"></div>
-                <div class="p-desc">
-                    <h4>Web Design Project</h4>
-                    <p>A modern web design project featuring various animations and interactive elements.</p>
+    <!-- [ SECTION 1: HACKER SYSTEM BYPASS ] -->
+    <div id="intro-wrapper">
+        <div class="bg-fixed"></div>
+        <div class="scanlines"></div>
+        
+        <div class="analyzer-section" style="min-height: 100vh; padding-top: 20px;">
+            <div class="analyzer-card">
+                <div class="header-box"><h2>SYSTEM ANALYZER v2.0</h2></div>
+                <div class="info-grid">
+                    <div class="info-item"><span class="label">LOCATION</span><span class="value">JAMALPUR, BD</span></div>
+                    <div class="info-item"><span class="label">LOCAL TIME</span><span id="h-time" class="value">00:00:00</span></div>
+                    <div class="info-item"><span class="label">BATTERY</span><span id="h-bat" class="value">Detecting...</span></div>
+                    <div class="info-item"><span class="label">DATABASE</span><span class="value">RKX-SECURE</span></div>
+                    <div class="info-item"><span class="label">STATUS</span><span class="value">BYPASS READY</span></div>
+                    <div class="info-item"><span class="label">OS VERSION</span><span id="h-os" class="value">Unknown</span></div>
                 </div>
+                <div class="console-box" id="console"></div>
             </div>
+            <div style="text-align: center; color: var(--hacker-red); font-size: 12px; letter-spacing: 5px; animation: pulse 1.5s infinite;">▼ SCROLL TO DECRYPT PROFILE ▼</div>
+        </div>
 
-            <!-- Project 2 -->
-            <div class="p-card card" onclick="zoomToggle(this)">
-                <div class="img-box"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpnG-sovPqPenkNlv4JfDsVVk852w40OIeEw&usqp=CAU"></div>
-                <div class="p-desc">
-                    <h4>Ai prompt master</h4>
-                    <p>I have a unique talent for using AI in an advanced way and creating prompts for all sectors. My main goal is to make tasks easier.</p>
-                </div>
-            </div>
-
-            <!-- Project 3 -->
-            <div class="p-card card" onclick="zoomToggle(this)">
-                <div class="img-box"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIWAwD7RAJVKwsDL5WJgtLUDcYLBLc4CpFxg&usqp=CAU"></div>
-                <div class="p-desc">
-                    <h4>Mobile Application design</h4>
-                    <p>User-friendly mobile application that makes daily tasks easier. Classic and simple finish.</p>
-                </div>
-            </div>
+        <div class="name-section" id="intro-trigger">
+            <h1 class="name-rkx" id="name-anim">RKX RAKIB</h1>
+            <p style="color:#ffbd00; font-family:'Orbitron'; letter-spacing:5px;">ACCESS GRANTED</p>
             
-            <!-- Project 4 -->
-            <div class="p-card card" onclick="zoomToggle(this)">
-                <div class="img-box"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlikZWlzdodKU28qyO_Cct5E4_ARDe4Ju97Wj-uBE36ykJEg8nnXc_sO0&s=10"></div>
-                <div class="p-desc">
-                    <h4>Graphic & Video Editing</h4>
-                    <p>Creative graphic design and professional video editing projects with high-quality elements.</p>
-                </div>
-            </div>
-
-            <!-- Project 5 -->
-            <div class="p-card card" onclick="zoomToggle(this)">
-                <div class="img-box"><img src="https://www.uscis.gov/sites/default/files/images/topic-landing/USCIS_Online-Tools_241x161_V1@2x.png"></div>
-                <div class="p-desc">
-                    <h4>Online offline tools</h4>
-                    <p>I built "RKXFLI", an Android app with various online and offline utility tools.</p>
+            <div id="tap-wrapper" onclick="revealPortfolio()">
+                <div class="energy-btn">
+                    <div class="ring-outer"></div>
+                    <div class="core"><div style="text-align:center; font-family:'Russo One'; font-size:12px;">START<br>SYSTEM</div></div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Contact Section -->
-        <div class="card contact-area">
-            <h3>Contact Me</h3>
-            <div id="contact-form">
-                <!-- User can send message with or without login -->
+    <!-- [ SECTION 2: MAIN PROFESSIONAL PORTFOLIO ] -->
+    <div id="main-portfolio">
+        <nav>
+            <div style="display:flex; align-items:center; gap:12px;">
+                <img src="https://t.me/i/userpic/320/rkxrakib_69.svg" class="nav-logo">
+                <span class="logo-text">RKX RAKIB</span>
             </div>
-        </div>
-    </main>
+            <a href="#contact" style="background:var(--primary); padding:8px 15px; border-radius:8px; text-decoration:none; color:#fff; font-size:12px; font-weight:bold;">Contact</a>
+        </nav>
 
-    <script src="script.js"></script>
+        <header class="hero-box">
+            <img src="https://t.me/i/userpic/320/rkxrakib_69.svg" class="u-img-main">
+            <h1>Rkx Rakib JP</h1>
+            <p>Frontend Developer • Content Creator • Digital Entrepreneur</p>
+        </header>
+
+        <main class="container">
+            <!-- ABOUT CARD -->
+            <section class="card">
+                <h3 style="color:var(--primary); margin-bottom:10px;"><i class="fas fa-user-tie"></i> About Me</h3>
+                <p style="color:var(--gray); font-size:15px; line-height:1.7;">
+                    👋 Hi, I'm <b>Rkx Rakib</b>! I'm a professional web designer and Frontend Developer from Jamalpur, Bangladesh. I love to build high-performance websites and digital tools. My most popular service is the <b>Number to Information</b> system.
+                </p>
+            </section>
+
+            <!-- STATS CARD -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom:20px;">
+                <div class="card" style="text-align:center; margin-bottom:0;">
+                    <i class="fas fa-birthday-cake" style="color:var(--secondary); font-size:24px;"></i><br>
+                    <span style="font-size:12px; color:var(--gray);">Birthday</span><br><b>19 November</b>
+                </div>
+                <div class="card" style="text-align:center; margin-bottom:0;">
+                    <i class="fas fa-map-location-dot" style="color:var(--primary); font-size:24px;"></i><br>
+                    <span style="font-size:12px; color:var(--gray);">Location</span><br><b>Jamalpur, BD</b>
+                </div>
+            </div>
+
+            <!-- PROJECTS SECTION (Original Data Restored) -->
+            <h2 style="margin: 30px 0 20px; font-family:'Orbitron'; font-size:1.5rem;">My Projects</h2>
+            <div class="project-grid">
+                <!-- Project 1 -->
+                <div class="p-card">
+                    <div class="p-img-box"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIAWWAng5lyu5fTaiopl2fcvIdv_YQ6DTocEQlyiOENnKSQT-Z5nVhCyMs&s=10"></div>
+                    <div class="p-info">
+                        <h4>Web Design Project</h4>
+                        <p>Modern web interface featuring high-end animations and responsive elements.</p>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="p-card">
+                    <div class="p-img-box"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpnG-sovPqPenkNlv4JfDsVVk852w40OIeEw&usqp=CAU"></div>
+                    <div class="p-info">
+                        <h4>AI Prompt Master</h4>
+                        <p>Advanced talent for creating prompts for AI sectors to make tasks 10x easier.</p>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="p-card">
+                    <div class="p-img-box"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIWAwD7RAJVKwsDL5WJgtLUDcYLBLc4CpFxg&usqp=CAU"></div>
+                    <div class="p-info">
+                        <h4>Mobile App Design</h4>
+                        <p>User-friendly UI/UX for Android applications with a classic and simple finish.</p>
+                    </div>
+                </div>
+                <!-- Project 4 -->
+                <div class="p-card">
+                    <div class="p-img-box"><img src="https://www.uscis.gov/sites/default/files/images/topic-landing/USCIS_Online-Tools_241x161_V1@2x.png"></div>
+                    <div class="p-info">
+                        <h4>RKXFLI Utility Tools</h4>
+                        <p>A multi-functional app containing essential online and offline utility tools.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SOCIAL LINKS -->
+            <div class="card" style="margin-top:40px; text-align:center;">
+                <h3 style="margin-bottom:20px;">Connect With Me</h3>
+                <div class="social-btns">
+                    <a href="https://fb.com/rkxrakib.xyz" target="_blank" class="s-link"><i class="fab fa-facebook"></i> Facebook</a>
+                    <a href="https://youtube.com/rkx_rakib" target="_blank" class="s-link"><i class="fab fa-youtube"></i> YouTube</a>
+                    <a href="https://github.com/rkxrakib" target="_blank" class="s-link"><i class="fab fa-github"></i> GitHub</a>
+                    <a href="https://tiktok.com/@rksrakibsigma" target="_blank" class="s-link"><i class="fab fa-tiktok"></i> TikTok</a>
+                    <a href="https://t.me/rkx_rakib" target="_blank" class="s-link"><i class="fab fa-telegram"></i> Telegram</a>
+                </div>
+            </div>
+
+            <!-- CONTACT SECTION -->
+            <section class="card" id="contact">
+                <h3 style="color:var(--primary); margin-bottom:20px;"><i class="fas fa-envelope"></i> Send Message</h3>
+                <form class="contact-form" onsubmit="sendToTelegram(event)">
+                    <input type="text" id="name" placeholder="Your Full Name" required>
+                    <input type="email" id="email" placeholder="Your Email Address" required>
+                    <textarea id="message" rows="4" placeholder="How can I help you?" required></textarea>
+                    <button type="submit" class="send-btn">SEND MESSAGE</button>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            <span class="launch-date"><i class="fas fa-rocket"></i> Site Launched: 2025-05-19</span>
+            <p>© <span id="year"></span> RKX RAKIB JP. All Rights Reserved.</p>
+            
+            <div class="seo-cloud">
+                Rkx Rakib.com | Rkx Rakib.xyz | Rkx Rakib chorom | Rkx Rakib Vercel App | জামালপুর ডেভেলপার | নাম্বার টু ইনফরমেশন
+            </div>
+        </footer>
+    </div>
+
     <script>
-      const firebaseConfig = {
-        apiKey: "AIzaSyDvtZJhIN850tU7cETuiqRyCyjCBdlFt-Y",
-        authDomain: "fynora-81313.firebaseapp.com",
-        databaseURL: "https://fynora-81313-default-rtdb.firebaseio.com",
-        projectId: "fynora-81313",
-        storageBucket: "fynora-81313.firebasestorage.app",
-        messagingSenderId: "593306264446",
-        appId: "1:593306264446:web:da476d4c77ae4ede6b492f",
-        measurementId: "G-BX0FWR2YMT"
-      };
-
-      firebase.initializeApp(firebaseConfig);
-      const auth = firebase.auth();
-
-      // Check login status
-      auth.onAuthStateChanged((user) => {
-        const authActions = document.getElementById('auth-actions');
-        if (user) {
-          authActions.innerHTML = `
-            <span style="color: #8b5cf6; font-size: 12px; margin-right: 10px;">Active</span>
-            <button onclick="logoutUser()" class="guest-btn">Logout</button>
-          `;
+        // --- Intro Logic ---
+        const consoleEl = document.getElementById('console');
+        const hLines = ["> ACCESSING DATABASE...", "> BYPASSING ENCRYPTION...", "> UPLOADING PORTFOLIO DATA...", "> CONNECTING TO RKX-SERVER...", "> VERIFYING USER...", "> ACCESS GRANTED!"];
+        let hCount = 0;
+        function runConsole() {
+            let d = document.createElement('div');
+            d.style.color = "#00ff00"; d.style.marginBottom = "5px";
+            d.innerText = hLines[hCount % hLines.length];
+            consoleEl.appendChild(d);
+            if(consoleEl.childNodes.length > 6) consoleEl.removeChild(consoleEl.firstChild);
+            hCount++;
+            setTimeout(runConsole, 1200);
         }
-      });
+        runConsole();
 
-      function logoutUser() {
-        auth.signOut().then(() => {
-          window.location.reload();
-        });
-      }
+        // System Info
+        setInterval(() => { document.getElementById('h-time').innerText = new Date().toLocaleTimeString(); }, 1000);
+        if(navigator.getBattery) { navigator.getBattery().then(b => { document.getElementById('h-bat').innerText = Math.round(b.level * 100) + "%"; }); }
+        document.getElementById('h-os').innerText = navigator.userAgent.includes("Android") ? "Android Core" : "Web Node";
+
+        // Scroll Observer
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if(e.isIntersecting) {
+                    document.getElementById('name-anim').classList.add('animate-slam');
+                    setTimeout(() => { document.getElementById('tap-wrapper').style.opacity = 1; }, 800);
+                }
+            });
+        }, { threshold: 0.5 });
+        obs.observe(document.getElementById('intro-trigger'));
+
+        // Reveal Portfolio
+        function revealPortfolio() {
+            document.getElementById('intro-wrapper').classList.add('exit-up');
+            setTimeout(() => {
+                document.getElementById('intro-wrapper').style.display = 'none';
+                document.getElementById('main-portfolio').style.opacity = 1;
+                document.getElementById('main-portfolio').style.visibility = 'visible';
+                window.scrollTo(0,0);
+            }, 1100);
+        }
+
+        // Contact Form Function (Sends to your Telegram or Email)
+        function sendToTelegram(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const msg = document.getElementById('message').value;
+            
+            // This is a simple redirect to Telegram with pre-filled text
+            const fullMsg = `Hello Rakib, I am ${name}. Email: ${email}. Message: ${msg}`;
+            const encoded = encodeURIComponent(fullMsg);
+            window.open(`https://t.me/rkx_rakib?text=${encoded}`, '_blank');
+            alert("Redirecting to Telegram to send your message!");
+        }
+
+        document.getElementById('year').innerText = new Date().getFullYear();
     </script>
-<!-- Login Overlay HTML -->
-<div id="rkx-login-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center; flex-direction: column;">
-    <button onclick="toggleLogin()" style="position: absolute; top: 20px; right: 20px; background: #ff2770; color: white; border: none; padding: 10px 15px; border-radius: 50%; cursor: pointer;">X</button>
-    
-    <div class="box" style="transform: scale(0.9);">
-        <div class="login">
-            <div class="loginBx">
-                <h2><i class="fa-solid fa-right-to-bracket"></i> Login <i class="fa-solid fa-heart"></i></h2>
-                <input type="email" id="modal-email" placeholder="Email">
-                <input type="password" id="modal-pass" placeholder="Password">
-                <input type="submit" value="Sign in" onclick="modalSignIn()" />
-                <div class="group">
-                    <a href="#">Forgot Password</a>
-                    <a href="javascript:void(0)" onclick="modalSignUp()" style="color: #ff2770;">Sign up</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-// বক্স ওপেন/বন্ধ করার ফাংশন
-function toggleLogin() {
-    const overlay = document.getElementById('rkx-login-overlay');
-    overlay.style.display = (overlay.style.display === 'none' || overlay.style.display === '') ? 'flex' : 'none';
-}
-
-// ইন-পেজ লগইন ফাংশন
-function modalSignIn() {
-    const email = document.getElementById('modal-email').value;
-    const pass = document.getElementById('modal-pass').value;
-    if(!email || !pass) return alert("Fill all fields");
-    
-    firebase.auth().signInWithEmailAndPassword(email, pass)
-    .then(() => { alert("Login Success!"); toggleLogin(); })
-    .catch(err => alert(err.message));
-}
-
-// ইন-পেজ সাইন-আপ ফাংশন
-function modalSignUp() {
-    const email = document.getElementById('modal-email').value;
-    const pass = document.getElementById('modal-pass').value;
-    if(!email || !pass) return alert("Enter email/pass to signup");
-    
-    firebase.auth().createUserWithEmailAndPassword(email, pass)
-    .then(() => alert("Account Created! Now Sign in."))
-    .catch(err => alert(err.message));
-}
-</script>
-<!-- [ FULL YETI LOGIN BOX MODAL ] -->
-<div id="login-modal">
-    <span class="close-btn" onclick="toggleLogin()">×</span>
-    <div class="box">
-        <div class="login">
-            <div class="loginBx">
-                <h2>
-                    <i class="fa-solid fa-right-to-bracket"></i> Login <i class="fa-solid fa-heart"></i>
-                </h2>
-                <input type="email" id="m-email" placeholder="Email">
-                <input type="password" id="m-pass" placeholder="Password">
-                <input type="submit" value="Sign in" onclick="mainLogin()" />
-                <div class="group">
-                    <a href="#">Forgot Password</a>
-                    <a href="javascript:void(0)" onclick="mainSignup()">Sign up</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-// বক্স ওপেন/বন্ধ করার ফাংশন
-function toggleLogin() {
-    const modal = document.getElementById('login-modal');
-    modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
-}
-
-// আপনার index.html এর Login লিঙ্কে ক্লিক করলে এটা কাজ করবে
-document.addEventListener('click', function(e) {
-    if(e.target && e.target.id == 'login-link'){
-        e.preventDefault();
-        toggleLogin();
-    }
-});
-
-// Firebase Functions
-function mainLogin() {
-    const email = document.getElementById('m-email').value;
-    const pass = document.getElementById('m-pass').value;
-    if(!email || !pass) return alert("সবগুলো ঘর পূরণ করুন");
-    
-    firebase.auth().signInWithEmailAndPassword(email, pass)
-    .then(() => { 
-        alert("Login Successful!"); 
-        window.location.reload(); 
-    })
-    .catch(err => alert(err.message));
-}
-
-function mainSignup() {
-    const email = document.getElementById('m-email').value;
-    const pass = document.getElementById('m-pass').value;
-    if(!email || !pass) return alert("Email ও Password দিন");
-    
-    firebase.auth().createUserWithEmailAndPassword(email, pass)
-    .then(() => alert("Account Created! Now Sign in."))
-    .catch(err => alert(err.message));
-}
-</script>
 </body>
 </html>
