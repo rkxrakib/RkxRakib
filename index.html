@@ -39,7 +39,7 @@
       "url": "https://rkxrakib.vercel.app",
       "image": "https://t.me/i/userpic/320/rkxrakib_69.svg",
       "sameAs": [
-        "https://youtube.com/rkx_rakib",
+        "https://www.youtube.com/@Rkx_Rakib",
         "https://t.me/rkx_rakib",
         "https://fb.com/rkxrakib.xyz",
         "https://github.com/rkxrakib",
@@ -231,7 +231,7 @@
             <section class="glass-card">
                 <h3 style="color:var(--primary); font-size:1.5rem; margin-bottom:15px;"><i class="fas fa-fingerprint"></i> The Identity</h3>
                 <p style="color:var(--gray); line-height:1.8; font-size:16px;">
-                    আমি <b>আরকেএক্স রাকিব</b> (Rkx Rakib), জামালপুর, বাংলাদেশ থেকে একজন প্রফেশনাল ওয়েব ডিজাইনার এবং ফ্রন্টেন্ড ডেভেলপার। আমি আধুনিক প্রযুক্তির মাধ্যমে সুন্দর এবং ফাংশনাল ওয়েবসাইট তৈরি করতে পছন্দ করি। ডিজিটাল এন্টারপ্রেনার হিসেবে আমার লক্ষ্য হলো মানুষের জীবনকে সহজ করার জন্য ডিজিটাল টুলস তৈরি করা। আমার সবচেয়ে জনপ্রিয় সার্ভিস হলো <b>"নাম্বার টু ইনফরমেশন"</b> (Number to Information), যা ভিজিটরদের দ্রুত মোবাইল অপারেটর এবং অন্যান্য তথ্য পেতে সাহায্য করে। 
+                    আমি <b></b> (Rkx Rakib), জামালপুর, বাংলাদেশ থেকে একজন প্রফেশনাল ওয়েব ডিজাইনার এবং ফ্রন্টেন্ড ডেভেলপার। আমি আধুনিক প্রযুক্তির মাধ্যমে সুন্দর এবং ফাংশনাল ওয়েবসাইট তৈরি করতে পছন্দ করি। ডিজিটাল এন্টারপ্রেনার হিসেবে আমার লক্ষ্য হলো মানুষের জীবনকে সহজ করার জন্য ডিজিটাল টুলস তৈরি করা।, যা ভিজিটরদের দ্রুত মোবাইল অপারেটর এবং অন্যান্য তথ্য পেতে সাহায্য করে। 
                 </p>
                 <div class="service-list">
                     <span class="s-tag">Web Development</span>
@@ -402,21 +402,54 @@
             }, 1500);
         }
 
-        // --- CONTACT FORM HANDLER (Redirect to Telegram) ---
-        function sendToTelegram(event) {
+        // --- CONTACT FORM HANDLER (Directly to Telegram via Bot API) ---
+        async function sendToTelegram(event) {
             event.preventDefault();
+
+            // আপনার তথ্য এখানে বসান
+            const botToken = "8243293869:AAELR-H8atWAYOYC2UgYchHx6URNk3I801o"; // Example: 748392:ABC-DEF...
+            const chatId = "7761133429";   // Example: 123456789
+
             const name = document.getElementById('user_name').value;
             const email = document.getElementById('user_email').value;
             const message = document.getElementById('user_message').value;
-            
-            const fullText = `🚀 New Portfolio Message!\n\n👤 Name: ${name}\n📧 Email: ${email}\n📝 Message: ${message}`;
-            const encodedText = encodeURIComponent(fullText);
-            
-            window.open(`https://t.me/rkx_rakib?text=${encodedText}`, '_blank');
-            alert("আপনার মেসেজটি পাঠানোর জন্য টেলিগ্রামে রিডাইরেক্ট করা হচ্ছে। ধন্যবাদ!");
+
+            const fullText = `🚀 *New Message from Website* \n\n👤 *Name:* ${name}\n📧 *Email:* ${email}\n📝 *Message:* ${message}`;
+
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+            const submitBtn = document.querySelector('.submit-btn');
+            submitBtn.innerText = "SENDING...";
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: fullText,
+                        parse_mode: 'Markdown'
+                    })
+                });
+
+                if (response.ok) {
+                    alert("ধন্যবাদ! আপনার মেসেজটি সফলভাবে রাকিবের কাছে পৌঁছে গেছে।");
+                    document.querySelector('.c-form').reset();
+                } else {
+                    alert("দুঃখিত! মেসেজটি পাঠানো যায়নি। আবার চেষ্টা করুন।");
+                }
+            } catch (error) {
+                alert("ইন্টারনেট সমস্যার কারণে মেসেজ পাঠানো সম্ভব হয়নি।");
+            } finally {
+                submitBtn.innerText = "SEND MESSAGE TO RAKIB";
+                submitBtn.disabled = false;
+            }
         }
 
         document.getElementById('year').innerText = new Date().getFullYear();
     </script>
 </body>
-</html>
+                                                 </html>
