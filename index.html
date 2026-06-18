@@ -88,6 +88,7 @@
   --secondary-dim:rgba(167,139,250,0.12);
   --green:#34d399;
   --bg:#080c14;
+  --bg-rgb:8,12,20;
   --bg-2:#0d1220;
   --surface:#111827;
   --border:rgba(255,255,255,0.07);
@@ -121,7 +122,7 @@ a{color:inherit;}
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.35;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");}
 
-.navbar{position:sticky;top:0;z-index:900;background:rgba(8,12,20,.85);backdrop-filter:blur(22px);border-bottom:1px solid var(--border);}
+.navbar{position:sticky;top:0;z-index:900;background:rgba(var(--bg-rgb),.85);backdrop-filter:blur(22px);border-bottom:1px solid var(--border);}
 .nav-container{max-width:1180px;margin:0 auto;height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,5vw,40px);}
 .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--font-display);font-weight:800;letter-spacing:3px;color:var(--text);font-size:1.02rem;}
 .nav-brand img{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--primary);object-fit:cover;box-shadow:0 0 12px var(--glow);}
@@ -133,11 +134,26 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opa
 .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;}
 .hamburger .bar{width:22px;height:2px;background:#fff;border-radius:2px;}
 
-.hero{min-height:100svh;display:flex;align-items:center;position:relative;overflow:hidden;padding:90px clamp(20px,5vw,40px) 60px;}
-.hero-banner{position:absolute;top:0;left:0;right:0;height:min(38vh,320px);overflow:hidden;z-index:0;}
-.hero-banner img{width:100%;height:100%;object-fit:cover;filter:saturate(1.05);}
-.hero-banner-fade{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,12,20,.25) 0%,var(--bg) 100%);}
-[data-theme="light"] .hero-banner-fade{background:linear-gradient(to bottom,rgba(247,249,252,.2) 0%,var(--bg) 100%);}
+.hero{min-height:80svh;display:flex;align-items:center;position:relative;overflow:hidden;padding:40px clamp(20px,5vw,40px) 60px;}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}
+
+/* FACEBOOK-STYLE PROFILE HEADER */
+.profile-header{position:relative;background:var(--bg);}
+.cover-banner{position:relative;width:100%;height:min(34vh,300px);min-height:160px;overflow:hidden;background:var(--bg-2);}
+.cover-banner img{width:100%;height:100%;object-fit:cover;filter:saturate(1.05);}
+.cover-banner-fade{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(var(--bg-rgb),0) 60%,rgba(var(--bg-rgb),.9) 100%);}
+.profile-strip{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,40px);display:flex;align-items:flex-end;gap:22px;transform:translateY(-46px);}
+.profile-avatar-wrap{position:relative;flex-shrink:0;}
+.profile-avatar{width:128px;height:128px;border-radius:50%;object-fit:cover;border:4px solid var(--bg);background:var(--surface);box-shadow:0 10px 30px rgba(0,0,0,.35);}
+.profile-online-dot{position:absolute;bottom:6px;right:6px;width:18px;height:18px;border-radius:50%;background:var(--green);border:3px solid var(--bg);box-shadow:0 0 8px var(--green);}
+.profile-meta{padding-bottom:10px;}
+.profile-name{font-family:var(--font-display);font-size:clamp(1.4rem,3vw,1.9rem);font-weight:800;color:var(--text);line-height:1.1;}
+.profile-handle{font-family:var(--font-mono);font-size:13px;color:var(--muted);margin-top:4px;letter-spacing:.3px;}
+@media(max-width:560px){
+  .profile-strip{transform:translateY(-34px);gap:14px;}
+  .profile-avatar{width:92px;height:92px;border-width:3px;}
+  .profile-online-dot{width:14px;height:14px;}
+}
 .hero-container{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center;position:relative;z-index:1;}
 .hero-grid-bg{position:absolute;inset:0;pointer-events:none;
   background-image:linear-gradient(rgba(99,179,237,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(99,179,237,.04) 1px,transparent 1px);
@@ -198,7 +214,7 @@ section{padding:96px clamp(20px,5vw,40px);position:relative;z-index:1;}
 .theme-toggle:hover{border-color:var(--primary);color:var(--primary);}
 
 /* MOBILE NAV DRAWER */
-.nav-menu.mobile-open{display:flex;flex-direction:column;position:fixed;top:66px;left:0;right:0;background:rgba(8,12,20,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:18px clamp(16px,5vw,40px);gap:6px;z-index:899;animation:fadeUp .3s ease both;}
+.nav-menu.mobile-open{display:flex;flex-direction:column;position:fixed;top:66px;left:0;right:0;background:rgba(var(--bg-rgb),.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:18px clamp(16px,5vw,40px);gap:6px;z-index:899;animation:fadeUp .3s ease both;}
 .nav-menu.mobile-open .nav-link{padding:12px 16px;}
 .hamburger.active .bar:nth-child(1){transform:translateY(7px) rotate(45deg);}
 .hamburger.active .bar:nth-child(2){opacity:0;}
@@ -222,7 +238,7 @@ section{padding:96px clamp(20px,5vw,40px);position:relative;z-index:1;}
 .about-container{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:center;}
 .about-image-wrapper{position:relative;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border);box-shadow:0 30px 70px rgba(0,0,0,.45);}
 .about-image{width:100%;aspect-ratio:7/5;object-fit:cover;}
-.about-image-wrapper::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(8,12,20,.55) 0%,transparent 55%);}
+.about-image-wrapper::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(var(--bg-rgb),.55) 0%,transparent 55%);}
 .about-description{color:var(--muted);font-size:15px;line-height:1.85;margin-bottom:30px;}
 .about-details{list-style:none;display:flex;flex-direction:column;gap:12px;}
 .about-details li{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:14px;transition:.2s;}
@@ -375,6 +391,7 @@ section{padding:96px clamp(20px,5vw,40px);position:relative;z-index:1;}
 /* LIGHT THEME */
 [data-theme="light"]{
   --bg:#f7f9fc;
+  --bg-rgb:247,249,252;
   --bg-2:#eef2f8;
   --surface:#ffffff;
   --border:rgba(15,30,50,0.08);
@@ -386,7 +403,6 @@ section{padding:96px clamp(20px,5vw,40px);position:relative;z-index:1;}
 [data-theme="light"] body::before{opacity:.08;}
 [data-theme="light"] .hero-status{background:rgba(52,211,153,.12);}
 [data-theme="light"] .btn-outline{border-color:rgba(15,30,50,.15);}
-[data-theme="light"] .nav-menu.mobile-open{background:rgba(247,249,252,.97);}
 [data-theme="light"] #loader{background:#f7f9fc;}
 
 </style>
@@ -426,17 +442,29 @@ section{padding:96px clamp(20px,5vw,40px);position:relative;z-index:1;}
 </nav>
 
 <main>
-  <header class="hero" id="home">
-    <div class="hero-banner">
+  <div class="profile-header">
+    <div class="cover-banner">
       <img src="https://rkxrakib.sirv.com/e181eba7-7c95-46fc-8a73-41ff1719d08c.jpeg" alt="Rkx Rakib cover banner" loading="eager" />
-      <div class="hero-banner-fade"></div>
+      <div class="cover-banner-fade"></div>
     </div>
+    <div class="profile-strip">
+      <div class="profile-avatar-wrap">
+        <img class="profile-avatar" src="https://rkxrakib.sirv.com/1000062831.jpg" alt="Rkx Rakib — Frontend Developer from Jamalpur Bangladesh" title="Rkx Rakib JP" width="160" height="160" fetchpriority="high" />
+        <span class="profile-online-dot" aria-hidden="true"></span>
+      </div>
+      <div class="profile-meta">
+        <h1 class="profile-name">Rkx Rakib</h1>
+        <p class="profile-handle">@rkx_rakib · Jamalpur, Bangladesh</p>
+      </div>
+    </div>
+  </div>
+
+  <header class="hero" id="home">
     <div class="hero-grid-bg"></div>
     <div class="hero-orb"></div>
     <div class="hero-container">
       <div class="hero-text">
         <div class="hero-status"><span class="status-dot"></span> Available for work</div>
-        <h1>Rkx Rakib</h1>
         <h2>I Am A <span class="typing-text" id="typing"></span></h2>
         <p>A passionate and versatile creator from Jamalpur, Bangladesh, specializing in modern digital solutions. From sleek user interfaces to powerful API integrations, I bring ideas to life with precision and creativity.</p>
         <div class="hero-buttons-wrapper">
@@ -449,7 +477,7 @@ section{padding:96px clamp(20px,5vw,40px);position:relative;z-index:1;}
       </div>
       <div class="hero-image-container">
         <div class="hero-image-wrapper">
-          <img class="hero-image" src="https://rkxrakib.sirv.com/1000062831.jpg" alt="Rkx Rakib — Frontend Developer from Jamalpur Bangladesh" title="Rkx Rakib JP" width="340" height="340" fetchpriority="high" />
+          <img class="hero-image" src="https://rkxrakib.sirv.com/1000062831.jpg" alt="Rkx Rakib — Frontend Developer from Jamalpur Bangladesh" title="Rkx Rakib JP" width="340" height="340" />
           <div class="hero-image-glow" aria-hidden="true"></div>
           <div class="floating-icon icon-1" aria-hidden="true"><i class="fas fa-code"></i></div>
           <div class="floating-icon icon-2" aria-hidden="true"><i class="fas fa-robot"></i></div>
@@ -463,7 +491,7 @@ section{padding:96px clamp(20px,5vw,40px);position:relative;z-index:1;}
   <section id="about" aria-labelledby="about-title">
     <div class="container about-container">
       <div class="about-image-wrapper reveal">
-        <img class="about-image" src="https://rkxrakib.sirv.com/1000062831.jpg" alt="Rkx Rakib frontend developer photo" title="Rkx Rakib — Web Designer Jamalpur Bangladesh" loading="lazy" />
+        <img class="about-image" src="https://rkxrakib.sirv.com/rkxrakibdev.jpg" alt="Rkx Rakib frontend developer photo" title="Rkx Rakib — Web Designer Jamalpur Bangladesh" loading="lazy" />
       </div>
       <div class="reveal">
         <div class="section-tag"><i class="fas fa-user"></i> About Me</div>
