@@ -1287,4 +1287,26 @@ window.RKX_TELEGRAM = { botToken: "8243293869:AAELR-H8atWAYOYC2UgYchHx6URNk3I801
       boxes.forEach((b,idx)=>{ if(map[idx]!=null){ b.dataset.count = map[idx]; b.dataset.suffix = suffix[idx]; } });
     }
     if(o.location){ document.querySelectorAll('[data-copy="Jamalpur, Bangladesh"]').forEach(li => { li.dataset.copy = o.location; li.lastChild.textContent = ' ' + o.location; }); }
-    if(o.telegra
+    if(o.telegram){ document.querySelectorAll('[data-copy="@rkx_rakib"]').forEach(li => { li.dataset.copy = o.telegram; }); }
+    if(o.botToken) window.RKX_TELEGRAM.botToken = o.botToken;
+    if(o.chatId) window.RKX_TELEGRAM.chatId = o.chatId;
+    if(Array.isArray(o.domains) && o.domains.length){
+      const grid = document.querySelector('.domains-grid');
+      if(grid){
+        grid.innerHTML = o.domains.map(url => {
+          let host = url; try{ host = new URL(url).hostname; }catch(e){}
+          return `<a class="domain-card" href="${url}" target="_blank" rel="noopener noreferrer"><span class="dot-ico"><img src="https://rkxrakib.sirv.com/rkxrakib.png" alt="Rkx Rakib logo" loading="lazy" /></span><span class="info"><b>${host}</b><span>Mirror domain</span></span></a>`;
+        }).join('');
+      }
+    }
+    if(Array.isArray(o.gallery) && o.gallery.length){
+      const grid = document.querySelector('.gallery-grid');
+      if(grid){
+        grid.innerHTML = o.gallery.map((url,idx) => `<div class="gallery-item${idx===o.gallery.length-1?' logo-tile':''}"><img src="${url}" alt="Rkx Rakib gallery image" loading="lazy" /><span class="cap">image_${idx+1}</span></div>`).join('');
+      }
+    }
+  } catch(e){ /* ignore malformed overrides */ }
+})();
+</script>
+</body>
+</html>
