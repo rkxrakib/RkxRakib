@@ -998,7 +998,10 @@ section{padding:88px clamp(18px,5vw,40px);position:relative;z-index:1;}
 
 <script>
 document.getElementById('yr').textContent = new Date().getFullYear();
-window.addEventListener('load', () => setTimeout(() => document.getElementById('loader').classList.add('hide'), 900));
+function hideLoader(){ const l = document.getElementById('loader'); if(l) l.classList.add('hide'); }
+document.addEventListener('DOMContentLoaded', () => setTimeout(hideLoader, 700));
+window.addEventListener('load', hideLoader);
+setTimeout(hideLoader, 3500); /* hard fallback so a slow/blocked image never leaves the loader stuck */
 
 /* CURSOR GLOW */
 window.addEventListener('pointermove', e => {
@@ -1279,5 +1282,4 @@ window.RKX_TELEGRAM = { botToken: "8243293869:AAELR-H8atWAYOYC2UgYchHx6URNk3I801
       const suffix = ['+','+','K+','%'];
       boxes.forEach((b,idx)=>{ if(map[idx]!=null){ b.dataset.count = map[idx]; b.dataset.suffix = suffix[idx]; } });
     }
-    if(o.location){ document.querySelectorAll('[data-copy="Jamalpur, Bangladesh"]').forEach(li => { li.dataset.copy = o.location; li.lastChild.textContent = ' ' + o.location; }); }
-    if(o.telegram){ document.querySelectorAll('[data-copy="@rkx_ra
+    if(o.location){ document.query
