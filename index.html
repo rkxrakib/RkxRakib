@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Rkx Rakib — Frontend Developer & Digital Creator | আরকেএক্স রাকিব</title>
+<title>Rkx Rakib — Frontend Developer & Digital Creator</title>
 <meta name="description" content="Rkx Rakib (RakibDev) — Frontend Developer, Graphic Designer, AI Prompt Engineer & Digital Creator from Jamalpur, Bangladesh. UI/UX, API Integration, Telegram Bots. Official site: rkxrakib.vercel.app" />
 <meta name="author" content="Rkx Rakib" />
 <meta name="keywords" content="Rkx Rakib, RKX RAKIB, RkxRakib, rkx rakib, rkxrakib, rkx_rakib, @rkx_rakib, Rakib, RakibDev, Rakib Jamalpur, Rkx Rakib JP, আরকেএক্স রাকিব, রাকিব জামালপুর, rkxrakib.vercel.app, rkxrakib.pages.dev, rkxrakib.netlify.app, rkx.netlify.app, rkxrakib.blogspot.com, Frontend Developer Bangladesh, Web Designer Jamalpur, Digital Creator Bangladesh, AI Prompt Engineer, Telegram Bot Developer, Jamalpur Developer" />
@@ -110,9 +110,7 @@ svg.icon.filled{fill:currentColor;stroke:none;}
 ::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:10px;}
 
 /* NOISE BG */
-body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.3;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");}
-[data-theme="light"] body::before{opacity:.06;}
+
 
 /* CURSOR GLOW */
 #cursor-glow{position:fixed;width:420px;height:420px;border-radius:50%;pointer-events:none;z-index:1;
@@ -174,7 +172,7 @@ section{padding:88px clamp(18px,5vw,40px);position:relative;z-index:1;}
 
 /* HERO */
 .hero{min-height:92svh;display:flex;align-items:center;position:relative;overflow:hidden;padding:36px clamp(18px,5vw,40px) 50px;}
-.hero-grid-bg{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(88,166,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(88,166,255,.05) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(ellipse 75% 65% at 50% 35%,black,transparent);}
+.hero-grid-bg{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(88,166,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(88,166,255,.05) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:radial-gradient(ellipse 75% 65% at 50% 35%,black,transparent);mask-image:radial-gradient(ellipse 75% 65% at 50% 35%,black,transparent);}
 .hero-container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr .92fr;gap:46px;align-items:center;position:relative;z-index:1;width:100%;}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--green-dim);border:1px solid rgba(126,231,135,.3);color:var(--green);font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:.5px;padding:6px 14px;border-radius:8px;margin-bottom:22px;}
 .pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse2 2s infinite;}
@@ -384,6 +382,7 @@ section{padding:88px clamp(18px,5vw,40px);position:relative;z-index:1;}
 .form-group input:focus+label,.form-group input:not(:placeholder-shown)+label,
 .form-group textarea:focus+label,.form-group textarea:not(:placeholder-shown)+label{top:-8px;font-size:10.5px;color:var(--blue);}
 .consent-box{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:15px 17px;display:flex;flex-direction:column;gap:11px;}
+.consent-note{font-size:12px;color:var(--muted);line-height:1.7;}
 .consent-row{display:flex;align-items:flex-start;gap:9px;font-size:12px;color:var(--muted);line-height:1.6;}
 .consent-row input[type="checkbox"]{margin-top:2px;width:15px;height:15px;accent-color:var(--blue);flex-shrink:0;}
 .consent-row b{color:var(--text);}
@@ -542,11 +541,11 @@ section{padding:88px clamp(18px,5vw,40px);position:relative;z-index:1;}
 <div class="modal-overlay" id="location-modal">
   <div class="modal-box">
     <div class="modal-icon"><svg class="icon" width="20" height="20"><use href="#i-location"></use></svg></div>
-    <h4>লোকেশন পারমিশন</h4>
-    <p>এই সাইটটি আপনার অভিজ্ঞতা আরও ভালো করতে ঐচ্ছিকভাবে আপনার লোকেশন ব্যবহার করতে চায়। আপনি চাইলে অনুমতি দিতে পারেন অথবা এড়িয়ে যেতে পারেন। মেসেজ পাঠানোর সময়ও আলাদাভাবে জিজ্ঞেস করা হবে লোকেশন সহ পাঠাবেন কিনা।</p>
+    <h4>Location Permission</h4>
+    <p>This site would like optional access to your location to improve your experience. You can allow it or skip — there's no obligation. When you send a message through the contact form, agreeing to the terms there will also share your location with us so we can assist you better.</p>
     <div class="modal-actions">
-      <button class="btn btn-primary" id="loc-allow">অনুমতি দিন</button>
-      <button class="btn btn-outline" id="loc-skip">এড়িয়ে যান</button>
+      <button class="btn btn-primary" id="loc-allow">Allow</button>
+      <button class="btn btn-outline" id="loc-skip">Skip</button>
     </div>
   </div>
 </div>
@@ -788,12 +787,12 @@ section{padding:88px clamp(18px,5vw,40px);position:relative;z-index:1;}
       <div class="post-list reveal">
         <a class="post-item" href="https://rkxrakib.blogspot.com/" target="_blank" rel="noopener noreferrer">
           <div class="post-thumbnail"><img src="https://rkxrakib.sirv.com/rkxrakib.png" alt="AI Prompt Engineering guide by Rkx Rakib" /></div>
-          <div class="post-content"><span class="post-category-badge">AI Tools</span><span class="post-title">AI প্রম্পট ইঞ্জিনিয়ারিং কী? কেনো শিখবেন? সম্পূর্ণ গাইড।</span><span class="post-date"><svg class="icon" width="10" height="10"><use href="#i-calendar"></use></svg> Jun 10, 2026</span></div>
+          <div class="post-content"><span class="post-category-badge">AI Tools</span><span class="post-title">What is AI Prompt Engineering? Why Learn It? A Complete Guide.</span><span class="post-date"><svg class="icon" width="10" height="10"><use href="#i-calendar"></use></svg> Jun 10, 2026</span></div>
           <svg class="icon" width="13" height="13" style="color:var(--muted-2)"><use href="#i-chevron-right"></use></svg>
         </a>
         <a class="post-item" href="https://rkxrakib.blogspot.com/" target="_blank" rel="noopener noreferrer">
           <div class="post-thumbnail"><img src="https://rkxrakib.sirv.com/rkxrakib.png" alt="Telegram bot tutorial by Rkx Rakib" /></div>
-          <div class="post-content"><span class="post-category-badge">Development</span><span class="post-title">কিভাবে নিজেই একটি Telegram Bot বানাবেন — স্টেপ বাই স্টেপ।</span><span class="post-date"><svg class="icon" width="10" height="10"><use href="#i-calendar"></use></svg> May 22, 2026</span></div>
+          <div class="post-content"><span class="post-category-badge">Development</span><span class="post-title">How to Build Your Own Telegram Bot — Step by Step.</span><span class="post-date"><svg class="icon" width="10" height="10"><use href="#i-calendar"></use></svg> May 22, 2026</span></div>
           <svg class="icon" width="13" height="13" style="color:var(--muted-2)"><use href="#i-chevron-right"></use></svg>
         </a>
       </div>
@@ -847,7 +846,7 @@ section{padding:88px clamp(18px,5vw,40px);position:relative;z-index:1;}
         <div class="faq-item"><div class="faq-q">What's your usual response time? <svg class="icon" width="15" height="15"><use href="#i-chevron-down"></use></svg></div><div class="faq-a"><p>I usually reply within a few hours on Telegram — that's the fastest way to reach me.</p></div></div>
         <div class="faq-item"><div class="faq-q">Do you work with international clients? <svg class="icon" width="15" height="15"><use href="#i-chevron-down"></use></svg></div><div class="faq-a"><p>Yes — I've worked remotely with clients both in Bangladesh and abroad.</p></div></div>
         <div class="faq-item"><div class="faq-q">What's your tech stack? <svg class="icon" width="15" height="15"><use href="#i-chevron-down"></use></svg></div><div class="faq-a"><p>HTML, CSS, JavaScript and React on the frontend, plus API integrations, Telegram bots and AI prompt workflows.</p></div></div>
-        <div class="faq-item"><div class="faq-q">Is my location shared when I message you? <svg class="icon" width="15" height="15"><use href="#i-chevron-down"></use></svg></div><div class="faq-a"><p>Only if you tick the location checkbox on the contact form and agree to the terms — otherwise only your message is sent.</p></div></div>
+        <div class="faq-item"><div class="faq-q">Is my location shared when I message you? <svg class="icon" width="15" height="15"><use href="#i-chevron-down"></use></svg></div><div class="faq-a"><p>Only if you agree to the terms on the contact form — that agreement is what shares your approximate location with the message. It's kept private and never made public. If you don't check the box, the form simply won't submit.</p></div></div>
       </div>
     </div>
   </section>
@@ -914,8 +913,8 @@ section{padding:88px clamp(18px,5vw,40px);position:relative;z-index:1;}
           <div class="form-group"><input type="text" id="subject" placeholder=" " required /><label for="subject">Subject</label></div>
           <div class="form-group"><textarea id="message" rows="5" placeholder=" " required></textarea><label for="message">Your Message</label></div>
           <div class="consent-box">
-            <div class="consent-row"><input type="checkbox" id="share-location" /><label for="share-location"><b>আমার লোকেশন সহ পাঠান</b> — চেক করলে আপনার আনুমানিক অবস্থান বার্তার সাথে পাঠানো হবে। আনচেক থাকলে শুধু মেসেজ পাঠানো হবে।</label></div>
-            <div class="consent-row"><input type="checkbox" id="agree-terms" required /><label for="agree-terms">আমি উপরের শর্তাবলি পড়েছি ও সম্মত আছি।</label></div>
+            <p class="consent-note">By submitting this form, your approximate location will be sent to us along with your message so we can assist you better. This is kept private and never made public.</p>
+            <div class="consent-row"><input type="checkbox" id="agree-terms" required /><label for="agree-terms">I have read and agree to the terms above.</label></div>
             <div class="location-status" id="location-status"></div>
           </div>
           <button type="button" class="btn btn-primary" id="send-btn" onclick="sendToTelegram()">Send Message <svg class="icon" width="13" height="13"><use href="#i-send"></use></svg></button>
@@ -984,7 +983,7 @@ section{padding:88px clamp(18px,5vw,40px);position:relative;z-index:1;}
   </div>
 </footer>
 
-<div class="toast" id="toast" role="alert"><svg class="icon" width="15" height="15" id="toast-icon"><use href="#i-check-circle"></use></svg><span id="toast-msg">মেসেজ সফলভাবে পাঠানো হয়েছে!</span></div>
+<div class="toast" id="toast" role="alert"><svg class="icon" width="15" height="15" id="toast-icon"><use href="#i-check-circle"></use></svg><span id="toast-msg">Message sent successfully!</span></div>
 
 <script>
 document.getElementById('yr').textContent = new Date().getFullYear();
@@ -1204,36 +1203,36 @@ function showToast(msg, success=true){
 document.querySelectorAll('.copyable').forEach(el => {
   el.addEventListener('click', async () => {
     const val = el.dataset.copy;
-    try { await navigator.clipboard.writeText(val); showToast(`কপি হয়েছে: ${val} ✅`); }
-    catch(e) { showToast('কপি করা যায়নি।', false); }
+    try { await navigator.clipboard.writeText(val); showToast(`Copied: ${val} ✅`); }
+    catch(e) { showToast("Couldn't copy.", false); }
   });
 });
 
 /* LOCATION CONSENT MODAL (first visit) */
 const locModal = document.getElementById('location-modal');
 let userCoords = null;
-function openLocModal(){ if(sessionStorage.getItem('rkx-loc-choice')) return; setTimeout(() => locModal.classList.add('show'), 1400); }
-function closeLocModal(choice){ sessionStorage.setItem('rkx-loc-choice', choice); locModal.classList.remove('show'); }
+function openLocModal(){ if(localStorage.getItem('rkx-loc-choice')) return; setTimeout(() => locModal.classList.add('show'), 1400); }
+function closeLocModal(choice){ localStorage.setItem('rkx-loc-choice', choice); locModal.classList.remove('show'); }
 document.getElementById('loc-allow').onclick = () => { closeLocModal('allowed'); requestLocation(true); };
 document.getElementById('loc-skip').onclick = () => closeLocModal('skipped');
 openLocModal();
 
-/* LOCATION FOR CONTACT FORM */
-const shareLocChk = document.getElementById('share-location');
+/* LOCATION FOR CONTACT FORM — tied to the single "agree to terms" checkbox */
+const agreeChk = document.getElementById('agree-terms');
 const locStatusEl = document.getElementById('location-status');
 function requestLocation(silent){
-  if(!navigator.geolocation){ if(!silent) locStatusEl.textContent = 'এই ব্রাউজারে লোকেশন সাপোর্ট নেই।'; return; }
-  if(!silent){ locStatusEl.className = 'location-status'; locStatusEl.textContent = 'লোকেশন খোঁজা হচ্ছে...'; }
+  if(!navigator.geolocation){ if(!silent) locStatusEl.textContent = 'Location isn\'t supported in this browser.'; return; }
+  if(!silent){ locStatusEl.className = 'location-status'; locStatusEl.textContent = 'Finding your location...'; }
   navigator.geolocation.getCurrentPosition(
     (pos) => { userCoords = {lat:pos.coords.latitude, lng:pos.coords.longitude};
-      if(!silent){ locStatusEl.className='location-status ok'; locStatusEl.textContent='লোকেশন পাওয়া গেছে — মেসেজের সাথে যুক্ত হবে।'; } },
-    () => { userCoords = null; if(!silent){ locStatusEl.className='location-status err'; locStatusEl.textContent='পারমিশন দেওয়া হয়নি। শুধু মেসেজ পাঠানো হবে।'; } shareLocChk.checked=false; },
+      if(!silent){ locStatusEl.className='location-status ok'; locStatusEl.textContent='Location found — it will be sent with your message.'; } },
+    () => { userCoords = null; if(!silent){ locStatusEl.className='location-status err'; locStatusEl.textContent='Permission denied — only your message will be sent.'; } },
     {enableHighAccuracy:true, timeout:8000}
   );
 }
-shareLocChk.addEventListener('change', () => {
-  if(shareLocChk.checked) requestLocation(false);
-  else { locStatusEl.className='location-status'; locStatusEl.textContent=''; }
+agreeChk.addEventListener('change', () => {
+  if(agreeChk.checked) requestLocation(false);
+  else { locStatusEl.className='location-status'; locStatusEl.textContent=''; userCoords = null; }
 });
 
 /* CONTACT -> TELEGRAM */
@@ -1243,17 +1242,28 @@ async function sendToTelegram(){
   const subject = document.getElementById('subject').value.trim();
   const message = document.getElementById('message').value.trim();
   const agree = document.getElementById('agree-terms').checked;
-  if(!name || !email || !subject || !message){ showToast('সব ফিল্ড পূরণ করুন।', false); return; }
-  if(!agree){ showToast('অনুগ্রহ করে শর্তাবলিতে সম্মতি দিন।', false); return; }
+  if(!name || !email || !subject || !message){ showToast('Please fill in all fields.', false); return; }
+  if(!agree){ showToast('Please agree to the terms first.', false); return; }
 
   const btn = document.getElementById('send-btn');
   btn.innerHTML = '<svg class="icon" width="13" height="13" style="animation:spin 1s linear infinite"><use href="#i-spinner"></use></svg> Sending...';
   btn.disabled = true;
 
+  /* if location wasn't captured yet (e.g. checkbox was already ticked before permission resolved), try once more */
+  if(!userCoords && navigator.geolocation){
+    await new Promise((resolve) => {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => { userCoords = {lat:pos.coords.latitude, lng:pos.coords.longitude}; resolve(); },
+        () => resolve(),
+        {enableHighAccuracy:true, timeout:5000}
+      );
+    });
+  }
+
   const botToken = window.RKX_TELEGRAM.botToken;
   const chatId = window.RKX_TELEGRAM.chatId;
-  let locLine = '📍 Location: শেয়ার করা হয়নি (শুধু মেসেজ)';
-  if(shareLocChk.checked && userCoords){
+  let locLine = '📍 Location: not shared (message only)';
+  if(userCoords){
     const mapsLink = `https://maps.google.com/?q=${userCoords.lat},${userCoords.lng}`;
     locLine = `📍 Location: [${userCoords.lat.toFixed(5)}, ${userCoords.lng.toFixed(5)}](${mapsLink})`;
   }
@@ -1264,9 +1274,9 @@ async function sendToTelegram(){
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({chat_id: chatId, text, parse_mode:'Markdown'})
     });
-    if(res.ok){ showToast('মেসেজ সফলভাবে পাঠানো হয়েছে! ✅'); document.getElementById('contact-form').reset(); locStatusEl.textContent=''; }
-    else showToast('মেসেজ পাঠানো যায়নি। আবার চেষ্টা করুন।', false);
-  } catch(e) { showToast('ইন্টারনেট সমস্যা। আবার চেষ্টা করুন।', false); }
+    if(res.ok){ showToast('Message sent successfully! ✅'); document.getElementById('contact-form').reset(); locStatusEl.textContent=''; }
+    else showToast("Couldn't send the message. Please try again.", false);
+  } catch(e) { showToast('Network issue. Please try again.', false); }
   finally { btn.innerHTML = 'Send Message <svg class="icon" width="13" height="13"><use href="#i-send"></use></svg>'; btn.disabled = false; }
 }
 
