@@ -1,0 +1,56 @@
+{
+  "hero": {
+    "title": "Hi, I'm Rakib.<br />I build things for the <span class=\"accent\">web.</span>",
+    "desc": "A passionate and versatile creator from Jamalpur, Bangladesh, specializing in modern digital solutions. From sleek user interfaces to powerful API integrations, I bring ideas to life with precision and creativity."
+  },
+  "about": {
+    "desc": "I am a passionate student and self-taught developer & designer with a strong desire to create amazing digital experiences. My journey is driven by curiosity and a commitment to continuous learning and improvement."
+  },
+  "stats": {
+    "projects": 50,
+    "years": 3,
+    "followers": 10,
+    "satisfaction": 100
+  },
+  "contact": {
+    "location": "Jamalpur, Bangladesh",
+    "telegram": "@rkx_rakib"
+  },
+  "telegramBot": {
+    "botToken": "8243293869:AAELR-H8atWAYOYC2UgYchHx6URNk3I801o",
+    "chatId": "7761133429"
+  },
+  "domains": [
+    "https://rkxrakib.vercel.app/",
+    "https://rkxrakib.pages.dev/",
+    "https://rkxrakib.netlify.app/",
+    "https://rkx.netlify.app/",
+    "https://rkxrakib.blogspot.com/"
+  ],
+  "gallery": [
+    { "url": "https://rkxrakib.sirv.com/rkxrakib.png", "alt": "Rkx Rakib official logo", "caption": "official_logo.png" },
+    { "url": "https://rkxrakib.sirv.com/rkxrakibdev.jpg", "alt": "Rkx Rakib — frontend developer portrait", "caption": "rakib_dev.jpg" },
+    { "url": "https://rkxrakib.sirv.com/e181eba7-7c95-46fc-8a73-41ff1719d08c.jpeg", "alt": "Rkx Rakib cover banner artwork", "caption": "cover_banner.jpeg" },
+    { "url": "https://rkxrakib.sirv.com/1000062831.jpg", "alt": "Rkx Rakib previous profile logo", "caption": "previous_logo.jpg — legacy" }
+  ],
+  "blog": [
+    {
+      "slug": "ai-prompt-engineering-guide",
+      "title": "What is AI Prompt Engineering? Why Learn It? A Complete Guide.",
+      "category": "AI Tools",
+      "date": "Jun 10, 2026",
+      "cover": "https://rkxrakib.sirv.com/rkxrakib.png",
+      "excerpt": "A complete beginner-to-advanced guide on AI prompt engineering — what it is, why it matters, and how to get started.",
+      "content": "<p>AI Prompt Engineering is the practice of writing precise instructions to guide AI models toward the exact output you want. It has quickly become one of the most valuable skills in the AI era.</p><p>This post is a placeholder — edit it from the Admin Panel (Blog tab) and replace it with your full article.</p>"
+    },
+    {
+      "slug": "telegram-bot-step-by-step",
+      "title": "How to Build Your Own Telegram Bot — Step by Step.",
+      "category": "Development",
+      "date": "May 22, 2026",
+      "cover": "https://rkxrakib.sirv.com/rkxrakib.png",
+      "excerpt": "A step-by-step walkthrough for building your first Telegram bot using the Bot API.",
+      "content": "<p>Telegram bots are a great way to automate messaging, support and notifications. In this guide we walk through creating a bot with BotFather and wiring it up to a simple backend.</p><p>This post is a placeholder — edit it from the Admin Panel (Blog tab) and replace it with your full article.</p>"
+    }
+  ]
+}
