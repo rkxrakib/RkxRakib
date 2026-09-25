@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title id="page-title">Blog — Rkx Rakib</title>
+<meta id="page-desc" name="description" content="Articles, tutorials and thoughts by Rkx Rakib — Frontend Developer from Jamalpur, Bangladesh." />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" id="page-canonical" href="https://rkxrakib.vercel.app/blog/" />
+<link rel="icon" type="image/png" href="https://rkxrakib.sirv.com/rkxrakib.png" />
+<meta property="og:type" content="article" />
+<meta id="og-title" property="og:title" content="Blog — Rkx Rakib" />
+<meta id="og-desc" property="og:description" content="Articles, tutorials and thoughts by Rkx Rakib." />
+<meta id="og-image" property="og:image" content="https://rkxrakib.sirv.com/rkxrakib.png" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{--bg:#0b0e13;--surface:#151b25;--border:rgba(255,255,255,.09);--text:#eef1f6;--muted:#8b93a3;--blue:#58a6ff;--font-d:'JetBrains Mono',monospace;--font-b:'Inter',sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);line-height:1.75;}
+.wrap{max-width:760px;margin:0 auto;padding:30px 18px 70px;}
+a{color:var(--blue);text-decoration:none;}
+.top-nav{display:flex;align-items:center;gap:10px;margin-bottom:30px;}
+.top-nav img{width:32px;height:32px;border-radius:9px;background:#fff;padding:2px;}
+.top-nav b{font-family:var(--font-d);}
+h1{font-family:var(--font-d);font-size:1.8rem;margin-bottom:6px;}
+.sub{color:var(--muted);font-size:13.5px;margin-bottom:30px;}
+.post-card{display:flex;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:14px;}
+.post-card img{width:90px;height:90px;border-radius:9px;object-fit:cover;flex-shrink:0;}
+.post-card h3{font-size:15px;margin-bottom:5px;}
+.post-card .cat{font-family:var(--font-d);font-size:10.5px;color:var(--blue);}
+.post-card .date{font-family:var(--font-d);font-size:11px;color:var(--muted);margin-top:5px;display:block;}
+.post-card p{font-size:12.5px;color:var(--muted);margin-top:4px;}
+article h1{margin-bottom:10px;}
+article .meta{color:var(--muted);font-family:var(--font-d);font-size:12px;margin-bottom:20px;}
+article img.cover{width:100%;border-radius:12px;margin-bottom:22px;object-fit:cover;max-height:340px;}
+article .content p{margin-bottom:16px;font-size:15px;color:#dfe3ea;}
+.back{display:inline-block;margin-bottom:20px;font-family:var(--font-d);font-size:12.5px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-nav"><img src="https://rkxrakib.sirv.com/rkxrakib.png" /><b>RKX<span style="color:var(--blue)">RAKIB</span></b></div>
+  <div id="content"><p style="color:var(--muted)">লোড হচ্ছে...</p></div>
+</div>
+<script>
+function esc(s){ return (s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+const params = new URLSearchParams(location.search);
+const slug = params.get('post');
+
+fetch('/content.json', {cache:'no-store'}).then(r=>r.json()).then(data => {
+  const posts = (data.blog||[]).slice().reverse();
+  const el = document.getElementById('content');
+  if(slug){
+    const post = (data.blog||[]).find(p => p.slug === slug);
+    if(!post){ el.innerHTML = '<a class="back" href="/blog/">← সব পোস্ট</a><p>পোস্টটি খুঁজে পাওয়া যায়নি।</p>'; return; }
+    document.getElementById('page-title').textContent = post.title + ' — Rkx Rakib';
+    document.getElementById('page-desc').setAttribute('content', post.excerpt || post.title);
+    document.getElementById('og-title').setAttribute('content', post.title);
+    document.getElementById('og-desc').setAttribute('content', post.excerpt || post.title);
+    document.getElementById('og-image').setAttribute('content', post.cover || 'https://rkxrakib.sirv.com/rkxrakib.png');
+    document.getElementById('page-canonical').setAttribute('href', 'https://rkxrakib.vercel.app/blog/?post='+encodeURIComponent(post.slug));
+    el.innerHTML = `<a class="back" href="/blog/">← সব পোস্ট</a>
+      <article>
+        <h1>${esc(post.title)}</h1>
+        <div class="meta">${esc(post.category||'Blog')} · ${esc(post.date||'')}</div>
+        ${post.cover ? `<img class="cover" src="${post.cover}" alt="${esc(post.title)}" />` : ''}
+        <div class="content">${post.content || ''}</div>
+      </article>`;
+  } else {
+    el.innerHTML = `<h1>Latest Posts</h1><p class="sub">Articles, tutorials and thoughts by Rkx Rakib.</p>` +
+      (posts.length ? posts.map(p => `
+        <a class="post-card" href="/blog/?post=${encodeURIComponent(p.slug || '')}" ${p.slug ? '' : `onclick="return false" style="opacity:.6;cursor:default;"`}>
+          <img src="${p.cover||'https://rkxrakib.sirv.com/rkxrakib.png'}" alt="${esc(p.title)}" />
+          <div><span class="cat">${esc(p.category||'Blog')}</span><h3>${esc(p.title)}</h3><p>${esc(p.excerpt||'')}</p><span class="date">${esc(p.date||'')}</span></div>
+        </a>`).join('') : '<p style="color:var(--muted)">এখনো কোনো পোস্ট নেই।</p>');
+  }
+}).catch(() => { document.getElementById('content').innerHTML = '<p>কন্টেন্ট লোড করা যায়নি।</p>'; });
+</script>
+</body>
+</html>
