@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Admin Panel — Rkx Rakib</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" type="image/png" href="https://rkxrakib.sirv.com/rkxrakib.png" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#0b0e13; --surface:#151b25; --surface-2:#1b2230; --border:rgba(255,255,255,.09);
+  --border-strong:rgba(255,255,255,.16); --text:#eef1f6; --muted:#8b93a3; --muted-2:#565f70;
+  --blue:#58a6ff; --blue-dim:rgba(88,166,255,.12); --green:#7ee787; --red:#ff8a8a; --orange:#ffa657;
+  --radius:12px; --font-d:'JetBrains Mono',monospace; --font-b:'Inter',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height:100vh;line-height:1.6;}
+.wrap{max-width:920px;margin:0 auto;padding:24px 18px 60px;}
+h1,h2,h3{font-family:var(--font-d);}
+a{color:var(--blue);}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:24px;}
+.brand img{width:34px;height:34px;border-radius:9px;background:#fff;padding:2px;}
+.brand b{font-family:var(--font-d);font-size:1.1rem;}
+.brand span{color:var(--muted-2);font-size:12px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:18px;}
+.card h2{font-size:1rem;margin-bottom:6px;color:var(--text);}
+.card p.hint{color:var(--muted);font-size:12.5px;margin-bottom:14px;}
+label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px;font-family:var(--font-d);}
+input[type=text],input[type=password],input[type=number],textarea,select{
+  width:100%;background:var(--bg);border:1px solid var(--border-strong);color:var(--text);
+  padding:10px 12px;border-radius:8px;font-size:13.5px;font-family:var(--font-b);outline:none;
+}
+input:focus,textarea:focus{border-color:var(--blue);}
+textarea{min-height:110px;resize:vertical;font-family:var(--font-b);}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;}
+@media(max-width:640px){.row,.row3{grid-template-columns:1fr;}}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:8px;border:1px solid transparent;
+  background:var(--blue);color:#04121f;font-weight:700;font-size:13px;cursor:pointer;font-family:var(--font-b);}
+.btn:hover{opacity:.9;}
+.btn.outline{background:transparent;border-color:var(--border-strong);color:var(--text);}
+.btn.danger{background:var(--red);color:#3a0b0b;}
+.btn:disabled{opacity:.5;cursor:not-allowed;}
+.actions{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;border-bottom:1px solid var(--border);padding-bottom:12px;}
+.tab-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:8px 14px;border-radius:8px;
+  font-family:var(--font-d);font-size:12px;cursor:pointer;}
+.tab-btn.active{background:var(--blue-dim);border-color:var(--blue);color:var(--blue);}
+.tabpage{display:none;}
+.tabpage.active{display:block;}
+.log{font-family:var(--font-d);font-size:11.5px;background:var(--bg);border:1px solid var(--border);border-radius:8px;
+  padding:10px 12px;max-height:160px;overflow-y:auto;white-space:pre-wrap;color:var(--muted);margin-top:12px;}
+.log .ok{color:var(--green);} .log .err{color:var(--red);}
+.thumb-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px;}
+.thumb{width:110px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;overflow:hidden;font-size:10px;}
+.thumb img{width:100%;height:80px;object-fit:cover;display:block;}
+.thumb .cap{display:block;padding:5px 6px;color:var(--muted);word-break:break-all;}
+.thumb .del{width:100%;background:var(--red);color:#3a0b0b;border:none;padding:5px;font-size:10.5px;cursor:pointer;font-weight:700;}
+.list-item{background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:10px;
+  display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.list-item .meta{font-size:12.5px;color:var(--muted);}
+.list-item .meta b{color:var(--text);display:block;font-size:13.5px;margin-bottom:2px;}
+.badge{display:inline-block;font-size:10px;font-family:var(--font-d);padding:3px 8px;border-radius:6px;background:var(--blue-dim);color:var(--blue);}
+.warn{background:rgba(255,166,87,.1);border:1px solid rgba(255,166,87,.3);color:var(--orange);padding:12px 14px;border-radius:8px;font-size:12.5px;margin-bottom:18px;}
+#login-screen{max-width:380px;margin:14vh auto 0;text-align:center;}
+#login-screen input{margin-top:14px;text-align:center;}
+#login-screen .btn{width:100%;justify-content:center;margin-top:14px;}
+.hidden{display:none !important;}
+.dropzone{border:2px dashed var(--border-strong);border-radius:10px;padding:26px;text-align:center;color:var(--muted);
+  cursor:pointer;font-size:12.5px;}
+.dropzone.drag{border-color:var(--blue);color:var(--blue);}
+.spin{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#04121f;
+  border-radius:50%;animation:sp .7s linear infinite;}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <img src="https://rkxrakib.sirv.com/rkxrakib.png" style="width:60px;height:60px;border-radius:14px;background:#fff;padding:4px;margin-bottom:14px;" />
+  <h1 style="font-size:1.2rem;">Admin Panel</h1>
+  <p style="color:var(--muted);font-size:12.5px;margin-top:6px;">পাসওয়ার্ড দিয়ে লগইন করো</p>
+  <input type="password" id="login-pass" placeholder="Password" autocomplete="current-password" />
+  <button class="btn" id="login-btn">লগইন করো</button>
+  <p id="login-err" style="color:var(--red);font-size:12px;margin-top:10px;"></p>
+  <p style="color:var(--muted-2);font-size:11px;margin-top:22px;">ডিফল্ট পাসওয়ার্ড: <b>rakib2026</b> — লগইনের পর অবশ্যই Settings ট্যাব থেকে বদলে নাও।</p>
+</div>
+
+<div id="dashboard" class="wrap hidden">
+  <div class="brand">
+    <img src="https://rkxrakib.sirv.com/rkxrakib.png" />
+    <div><b>RKX<span style="color:var(--blue)">RAKIB</span> — Admin</b><br /><span>Website content control panel</span></div>
+    <div style="margin-left:auto;display:flex;gap:8px;">
+      <a href="/" class="btn outline" style="text-decoration:none;">⌂ সাইট দেখো</a>
+      <button class="btn outline" id="logout-btn">লগআউট</button>
+    </div>
+  </div>
+
+  <div class="warn">
+    ⚠️ এটা একটা <b>স্ট্যাটিক ওয়েবসাইট</b> (কোনো সার্ভার/ডাটাবেজ নেই)। তাই কোনো পরিবর্তন <b>সবার জন্য</b> এবং <b>গুগলে</b> দেখাতে হলে,
+    সেটা সরাসরি তোমার GitHub রিপোতে সেভ হতে হবে (যেটা Vercel/Netlify/Cloudflare Pages অটো-ডিপ্লয় করে)।
+    তাই নিচের <b>Connect</b> ট্যাবে GitHub রিপো তথ্য + টোকেন দাও — এটা শুধু তোমার নিজের ব্রাউজারে সেভ থাকবে, কোথাও পাঠানো হয় না।
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="connect">🔌 Connect</button>
+    <button class="tab-btn" data-tab="images">🖼️ ছবি</button>
+    <button class="tab-btn" data-tab="blog">📝 ব্লগ</button>
+    <button class="tab-btn" data-tab="site">⚙️ সাইট তথ্য</button>
+    <button class="tab-btn" data-tab="manage">📋 ম্যানেজ</button>
+    <button class="tab-btn" data-tab="settings">🔑 Settings</button>
+  </div>
+
+  <!-- CONNECT TAB -->
+  <div class="tabpage active" id="tab-connect">
+    <div class="card">
+      <h2>GitHub সংযোগ</h2>
+      <p class="hint">তোমার সাইটের GitHub রিপোজিটরির তথ্য দাও (যেটা Vercel-এ ডিপ্লয় করা আছে)। Repo → Settings → Developer settings → Personal access tokens থেকে একটা <b>fine-grained token</b> বানাও, সেই রিপোর জন্য শুধু <b>Contents: Read & Write</b> পারমিশন দাও।</p>
+      <div class="row">
+        <div><label>GitHub username / org</label><input type="text" id="gh-owner" placeholder="rkxrakib" /></div>
+        <div><label>Repository নাম</label><input type="text" id="gh-repo" placeholder="rkxrakib-website" /></div>
+      </div>
+      <div class="row">
+        <div><label>Branch</label><input type="text" id="gh-branch" placeholder="main" value="main" /></div>
+        <div><label>Personal Access Token</label><input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxx" /></div>
+      </div>
+      <div class="actions">
+        <button class="btn" id="gh-save">সেভ করো</button>
+        <button class="btn outline" id="gh-test">কানেকশন টেস্ট করো</button>
+      </div>
+      <div class="log" id="connect-log">এখনো কিছু টেস্ট করা হয়নি।</div>
+    </div>
+  </div>
+
+  <!-- IMAGES TAB -->
+  <div class="tabpage" id="tab-images">
+    <div class="card">
+      <h2>নতুন ছবি আপলোড করো</h2>
+      <p class="hint">ছবি সিলেক্ট করলে সেটা সরাসরি তোমার GitHub রিপোর <code>/images/</code> ফোল্ডারে আপলোড হয়ে <code>content.json</code>-এ গ্যালারিতে যুক্ত হবে — অর্থাৎ সাথে সাথে সবার জন্য লাইভ সাইটে দেখাবে এবং গুগল ইমেজেও ইনডেক্স হবে (ক্রল হতে কিছুদিন সময় লাগে)।</p>
+      <label>ছবি বেছে নাও</label>
+      <div class="dropzone" id="img-drop">ক্লিক করো অথবা ছবি ড্র্যাগ করে ছাড়ো</div>
+      <input type="file" id="img-file" accept="image/*" class="hidden" />
+      <label>Alt text (SEO-র জন্য, ছবিতে কী দেখা যাচ্ছে সেটা লেখো)</label>
+      <input type="text" id="img-alt" placeholder="Rkx Rakib at a coding event" />
+      <label>Caption (ঐচ্ছিক)</label>
+      <input type="text" id="img-caption" placeholder="new_photo.jpg" />
+      <div class="actions">
+        <button class="btn" id="img-upload-btn" disabled>আপলোড ও পাবলিশ করো</button>
+      </div>
+      <div class="log" id="img-log"></div>
+      <div class="thumb-row" id="img-preview"></div>
+    </div>
+  </div>
+
+  <!-- BLOG TAB -->
+  <div class="tabpage" id="tab-blog">
+    <div class="card">
+      <h2>নতুন ব্লগ পোস্ট লেখো</h2>
+      <p class="hint">এই পোস্ট <code>/blog/</code> পেজে এবং হোমপেজের "Latest Posts"-এ পাবলিশ হবে।</p>
+      <label>টাইটেল</label>
+      <input type="text" id="blog-title" placeholder="আমার নতুন আর্টিকেলের নাম" />
+      <div class="row">
+        <div><label>ক্যাটাগরি</label><input type="text" id="blog-cat" placeholder="Development" /></div>
+        <div><label>তারিখ</label><input type="text" id="blog-date" placeholder="Sep 25, 2026" /></div>
+      </div>
+      <label>কভার ছবি (ঐচ্ছিক)</label>
+      <input type="file" id="blog-cover-file" accept="image/*" />
+      <label>সংক্ষিপ্ত বিবরণ (excerpt)</label>
+      <textarea id="blog-excerpt" placeholder="এক বা দুই লাইনে পোস্টের সারমর্ম..." style="min-height:60px;"></textarea>
+      <label>পোস্টের মূল লেখা</label>
+      <textarea id="blog-content" placeholder="তোমার আর্টিকেল এখানে লেখো। খালি লাইন দিলে নতুন প্যারাগ্রাফ হবে।"></textarea>
+      <div class="actions">
+        <button class="btn" id="blog-publish-btn">পাবলিশ করো</button>
+      </div>
+      <div class="log" id="blog-log"></div>
+    </div>
+  </div>
+
+  <!-- SITE INFO TAB -->
+  <div class="tabpage" id="tab-site">
+    <div class="card">
+      <h2>হোমপেজের লেখা</h2>
+      <label>Hero টাইটেল (HTML চলবে, যেমন &lt;br/&gt;, &lt;span class="accent"&gt;)</label>
+      <textarea id="site-hero-title" style="min-height:70px;"></textarea>
+      <label>Hero বর্ণনা</label>
+      <textarea id="site-hero-desc" style="min-height:70px;"></textarea>
+      <label>About বর্ণনা</label>
+      <textarea id="site-about-desc" style="min-height:70px;"></textarea>
+      <div class="row3">
+        <div><label>Projects</label><input type="number" id="stat-projects" /></div>
+        <div><label>Years</label><input type="number" id="stat-years" /></div>
+        <div><label>Followers (K)</label><input type="number" id="stat-followers" /></div>
+        <div><label>Satisfaction %</label><input type="number" id="stat-satisfaction" /></div>
+      </div>
+      <div class="row">
+        <div><label>Location</label><input type="text" id="site-location" /></div>
+        <div><label>Telegram handle</label><input type="text" id="site-telegram" /></div>
+      </div>
+      <label>Telegram Bot Token (কন্টাক্ট ফর্ম যেই বটে মেসেজ পাঠায়)</label>
+      <input type="text" id="site-bot-token" />
+      <label>Telegram Chat ID</label>
+      <input type="text" id="site-chat-id" />
+      <div class="actions">
+        <button class="btn" id="site-load-btn">বর্তমান তথ্য লোড করো</button>
+        <button class="btn" id="site-save-btn">সেভ করো</button>
+      </div>
+      <div class="log" id="site-log"></div>
+    </div>
+  </div>
+
+  <!-- MANAGE TAB -->
+  <div class="tabpage" id="tab-manage">
+    <div class="card">
+      <h2>গ্যালারি ম্যানেজ করো</h2>
+      <button class="btn outline" id="manage-load-gallery">লোড করো</button>
+      <div id="manage-gallery-list"></div>
+    </div>
+    <div class="card">
+      <h2>ব্লগ পোস্ট ম্যানেজ করো</h2>
+      <button class="btn outline" id="manage-load-blog">লোড করো</button>
+      <div id="manage-blog-list"></div>
+    </div>
+    <div class="log" id="manage-log"></div>
+  </div>
+
+  <!-- SETTINGS TAB -->
+  <div class="tabpage" id="tab-settings">
+    <div class="card">
+      <h2>পাসওয়ার্ড বদলাও</h2>
+      <p class="hint">⚠️ এই পাসওয়ার্ড শুধু তোমার নিজের ব্রাউজারে সেভ হয়। অন্য ডিভাইস থেকে লগইন করলে সেখানেও আলাদাভাবে বসাতে হবে। এটা মূলত সাধারণ দর্শক ঠেকানোর জন্য — পুরোপুরি সিকিউর করতে চাইলে সার্ভার-লেভেল অথেন্টিকেশন দরকার হবে।</p>
+      <label>নতুন পাসওয়ার্ড</label>
+      <input type="password" id="new-pass" />
+      <div class="actions"><button class="btn" id="save-pass-btn">পাসওয়ার্ড সেভ করো</button></div>
+      <p id="pass-msg" style="font-size:12px;margin-top:8px;"></p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ===================== HELPERS ===================== */
+const LS = {
+  get(k,d){ try{ const v = localStorage.getItem(k); return v===null? d : JSON.parse(v); }catch(e){ return d; } },
+  set(k,v){ localStorage.setItem(k, JSON.stringify(v)); }
+};
+async function sha256hex(str){
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+function log(id, msg, cls){
+  const el = document.getElementById(id);
+  const line = document.createElement('div');
+  if(cls) line.className = cls;
+  line.textContent = '› ' + msg;
+  el.appendChild(line);
+  el.scrollTop = el.scrollHeight;
+}
+function clearLog(id){ document.getElementById(id).innerHTML = ''; }
+
+/* ===================== LOGIN ===================== */
+const DEFAULT_PASS_HASH_SRC = 'rakib2026';
+async function checkLogin(){
+  const savedHash = LS.get('rkx-admin-pass-hash', null);
+  const targetHash = savedHash || await sha256hex(DEFAULT_PASS_HASH_SRC);
+  document.getElementById('login-btn').onclick = async () => {
+    const val = document.getElementById('login-pass').value;
+    const h = await sha256hex(val);
+    if(h === targetHash){
+      sessionStorage.setItem('rkx-admin-authed','1');
+      showDashboard();
+    } else {
+      document.getElementById('login-err').textContent = 'পাসওয়ার্ড ভুল হয়েছে।';
+    }
+  };
+  document.getElementById('login-pass').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('login-btn').click(); });
+}
+function showDashboard(){
+  document.getElementById('login-screen').classList.add('hidden');
+  document.getElementById('dashboard').classList.remove('hidden');
+  loadGithubSettingsIntoForm();
+}
+document.getElementById('logout-btn').onclick = () => { sessionStorage.removeItem('rkx-admin-authed'); location.reload(); };
+checkLogin();
+if(sessionStorage.getItem('rkx-admin-authed')==='1') showDashboard();
+
+/* ===================== TABS ===================== */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tabpage').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+  };
+});
+
+/* ===================== GITHUB SETTINGS ===================== */
+function getGh(){ return LS.get('rkx-gh-settings', {owner:'',repo:'',branch:'main',token:''}); }
+function setGh(v){ LS.set('rkx-gh-settings', v); }
+function loadGithubSettingsIntoForm(){
+  const g = getGh();
+  document.getElementById('gh-owner').value = g.owner || '';
+  document.getElementById('gh-repo').value = g.repo || '';
+  document.getElementById('gh-branch').value = g.branch || 'main';
+  document.getElementById('gh-token').value = g.token || '';
+}
+document.getElementById('gh-save').onclick = () => {
+  setGh({
+    owner: document.getElementById('gh-owner').value.trim(),
+    repo: document.getElementById('gh-repo').value.trim(),
+    branch: document.getElementById('gh-branch').value.trim() || 'main',
+    token: document.getElementById('gh-token').value.trim()
+  });
+  clearLog('connect-log');
+  log('connect-log','সেভ হয়েছে (শুধু এই ব্রাউজারে)।','ok');
+};
+document.getElementById('gh-test').onclick = async () => {
+  clearLog('connect-log');
+  const g = getGh();
+  if(!g.owner || !g.repo || !g.token){ log('connect-log','আগে owner, repo ও token দিয়ে সেভ করো।','err'); return; }
+  log('connect-log','কানেকশন চেক করা হচ্ছে...');
+  try{
+    const r = await fetch(`https://api.github.com/repos/${g.owner}/${g.repo}`, { headers: ghHeaders(g) });
+    if(r.ok){ log('connect-log', `সংযুক্ত ✓ — repo "${g.owner}/${g.repo}" পাওয়া গেছে।`,'ok'); }
+    else { const j = await r.json().catch(()=>({})); log('connect-log', `ব্যর্থ (${r.status}): ${j.message||'রিপো খুঁজে পাওয়া যায়নি বা টোকেনে পারমিশন নেই।'}`,'err'); }
+  }catch(e){ log('connect-log','নেটওয়ার্ক এরর: '+e.message,'err'); }
+};
+
+/* ===================== GITHUB API CORE ===================== */
+function ghHeaders(g){
+  return { 'Authorization': 'Bearer ' + g.token, 'Accept':'application/vnd.github+json' };
+}
+function b64EncodeUnicode(str){
+  return btoa(unescape(encodeURIComponent(str)));
+}
+async function ghGetFile(path){
+  const g = getGh();
+  const url = `https://api.github.com/repos/${g.owner}/${g.repo}/contents/${path}?ref=${encodeURIComponent(g.branch)}&t=${Date.now()}`;
+  const r = await fetch(url, { headers: ghHeaders(g) });
+  if(r.status === 404) return null;
+  if(!r.ok){ const j = await r.json().catch(()=>({})); throw new Error(j.message || ('GitHub error '+r.status)); }
+  const j = await r.json();
+  return { sha: j.sha, contentBase64: j.content };
+}
+async function ghPutFile(path, base64Content, message, sha){
+  const g = getGh();
+  if(!g.owner || !g.repo || !g.token) throw new Error('আগে Connect ট্যাবে GitHub তথ্য দাও।');
+  const url = `https://api.github.com/repos/${g.owner}/${g.repo}/contents/${path}`;
+  const body = { message, content: base64Content, branch: g.branch };
+  if(sha) body.sha = sha;
+  const r = await fetch(url, { method:'PUT', headers: {...ghHeaders(g), 'Content-Type':'application/json'}, body: JSON.stringify(body) });
+  if(!r.ok){ const j = await r.json().catch(()=>({})); throw new Error(j.message || ('GitHub error '+r.status)); }
+  return r.json();
+}
+async function loadContentJson(){
+  const f = await ghGetFile('content.json');
+  if(!f) throw new Error('content.json রিপোতে পাওয়া যায়নি — zip আপলোড করার সময় ফাইলটা রিপোর root-এ আছে কিনা দেখো।');
+  const text = decodeURIComponent(escape(atob(f.contentBase64.replace(/\n/g,''))));
+  return { data: JSON.parse(text), sha: f.sha };
+}
+async function saveContentJson(data, sha, message){
+  const text = JSON.stringify(data, null, 2);
+  return ghPutFile('content.json', b64EncodeUnicode(text), message, sha);
+}
+
+/* ===================== IMAGES TAB ===================== */
+let pendingImgFile = null;
+const dz = document.getElementById('img-drop');
+const imgFileInput = document.getElementById('img-file');
+dz.onclick = () => imgFileInput.click();
+dz.ondragover = e => { e.preventDefault(); dz.classList.add('drag'); };
+dz.ondragleave = () => dz.classList.remove('drag');
+dz.ondrop = e => { e.preventDefault(); dz.classList.remove('drag'); if(e.dataTransfer.files[0]) handleImgFile(e.dataTransfer.files[0]); };
+imgFileInput.onchange = () => { if(imgFileInput.files[0]) handleImgFile(imgFileInput.files[0]); };
+function handleImgFile(file){
+  pendingImgFile = file;
+  document.getElementById('img-upload-btn').disabled = false;
+  const url = URL.createObjectURL(file);
+  document.getElementById('img-preview').innerHTML = `<div class="thumb"><img src="${url}"/><span class="cap">${file.name}</span></div>`;
+  dz.textContent = `নির্বাচিত হয়েছে: ${file.name}`;
+}
+function fileToBase64(file){
+  return new Promise((res,rej)=>{
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(',')[1]);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
+document.getElementById('img-upload-btn').onclick = async () => {
+  if(!pendingImgFile) return;
+  clearLog('img-log');
+  const btn = document.getElementById('img-upload-btn');
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span> আপলোড হচ্ছে...';
+  try{
+    const ext = pendingImgFile.name.split('.').pop().toLowerCase();
+    const safeName = pendingImgFile.name.replace(/[^a-zA-Z0-9.\-_]/g,'-');
+    const filename = `${Date.now()}-${safeName}`;
+    log('img-log','ছবি GitHub-এ আপলোড হচ্ছে...');
+    const b64 = await fileToBase64(pendingImgFile);
+    await ghPutFile(`images/${filename}`, b64, `Upload image ${filename} via admin panel`);
+    log('img-log','ছবি আপলোড সম্পন্ন ✓ — এখন content.json আপডেট হচ্ছে...','ok');
+    const { data, sha } = await loadContentJson();
+    data.gallery = data.gallery || [];
+    data.gallery.push({
+      url: `/images/${filename}`,
+      alt: document.getElementById('img-alt').value.trim() || 'Rkx Rakib gallery image',
+      caption: document.getElementById('img-caption').value.trim() || safeName
+    });
+    await saveContentJson(data, sha, `Add gallery image ${filename}`);
+    log('img-log','সাইটে পাবলিশ হয়ে গেছে ✅ — Vercel অটো-ডিপ্লয় শুরু হলে ১-২ মিনিটে সবাই দেখতে পাবে।','ok');
+    pendingImgFile = null; dz.textContent = 'ক্লিক করো অথবা ছবি ড্র্যাগ করে ছাড়ো';
+    document.getElementById('img-alt').value=''; document.getElementById('img-caption').value='';
+    document.getElementById('img-preview').innerHTML='';
+  }catch(e){ log('img-log','এরর: '+e.message,'err'); }
+  finally{ btn.disabled=false; btn.textContent='আপলোড ও পাবলিশ করো'; }
+};
+
+/* ===================== BLOG TAB ===================== */
+document.getElementById('blog-publish-btn').onclick = async () => {
+  clearLog('blog-log');
+  const title = document.getElementById('blog-title').value.trim();
+  if(!title){ log('blog-log','টাইটেল দাও।','err'); return; }
+  const btn = document.getElementById('blog-publish-btn');
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span> পাবলিশ হচ্ছে...';
+  try{
+    let coverPath = '';
+    const coverFile = document.getElementById('blog-cover-file').files[0];
+    if(coverFile){
+      log('blog-log','কভার ছবি আপলোড হচ্ছে...');
+      const ext = coverFile.name.replace(/[^a-zA-Z0-9.\-_]/g,'-');
+      const filename = `${Date.now()}-${ext}`;
+      const b64 = await fileToBase64(coverFile);
+      await ghPutFile(`images/${filename}`, b64, `Upload blog cover ${filename}`);
+      coverPath = `/images/${filename}`;
+      log('blog-log','কভার ছবি আপলোড সম্পন্ন ✓','ok');
+    }
+    const rawContent = document.getElementById('blog-content').value.trim();
+    const htmlContent = rawContent.includes('<') ? rawContent :
+      rawContent.split(/\n\s*\n/).map(p => `<p>${p.trim().replace(/\n/g,'<br/>')}</p>`).join('');
+    const slug = title.toLowerCase().replace(/[^a-z0-9\u0980-\u09FF\s-]/g,'').trim().replace(/\s+/g,'-').slice(0,60) + '-' + Date.now().toString().slice(-5);
+
+    log('blog-log','content.json আপডেট হচ্ছে...');
+    const { data, sha } = await loadContentJson();
+    data.blog = data.blog || [];
+    data.blog.push({
+      slug, title,
+      category: document.getElementById('blog-cat').value.trim() || 'Blog',
+      date: document.getElementById('blog-date').value.trim() || new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),
+      cover: coverPath || 'https://rkxrakib.sirv.com/rkxrakib.png',
+      excerpt: document.getElementById('blog-excerpt').value.trim(),
+      content: htmlContent
+    });
+    await saveContentJson(data, sha, `Publish blog post: ${title}`);
+    log('blog-log','ব্লগ পোস্ট পাবলিশ হয়ে গেছে ✅ — /blog/ পেজে এবং হোমপেজে দেখা যাবে।','ok');
+    ['blog-title','blog-cat','blog-date','blog-excerpt','blog-content'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('blog-cover-file').value='';
+  }catch(e){ log('blog-log','এরর: '+e.message,'err'); }
+  finally{ btn.disabled=false; btn.textContent='পাবলিশ করো'; }
+};
+
+/* ===================== SITE INFO TAB ===================== */
+document.getElementById('site-load-btn').onclick = async () => {
+  clearLog('site-log');
+  try{
+    const { data } = await loadContentJson();
+    document.getElementById('site-hero-title').value = (data.hero&&data.hero.title)||'';
+    document.getElementById('site-hero-desc').value = (data.hero&&data.hero.desc)||'';
+    document.getElementById('site-about-desc').value = (data.about&&data.about.desc)||'';
+    document.getElementById('stat-projects').value = (data.stats&&data.stats.projects)||'';
+    document.getElementById('stat-years').value = (data.stats&&data.stats.years)||'';
+    document.getElementById('stat-followers').value = (data.stats&&data.stats.followers)||'';
+    document.getElementById('stat-satisfaction').value = (data.stats&&data.stats.satisfaction)||'';
+    document.getElementById('site-location').value = (data.contact&&data.contact.location)||'';
+    document.getElementById('site-telegram').value = (data.contact&&data.contact.telegram)||'';
+    document.getElementById('site-bot-token').value = (data.telegramBot&&data.telegramBot.botToken)||'';
+    document.getElementById('site-chat-id').value = (data.telegramBot&&data.telegramBot.chatId)||'';
+    log('site-log','বর্তমান তথ্য লোড হয়েছে ✓','ok');
+  }catch(e){ log('site-log','এরর: '+e.message,'err'); }
+};
+document.getElementById('site-save-btn').onclick = async () => {
+  clearLog('site-log');
+  const btn = document.getElementById('site-save-btn');
+  btn.disabled = true;
+  try{
+    const { data, sha } = await loadContentJson();
+    data.hero = { title: document.getElementById('site-hero-title').value, desc: document.getElementById('site-hero-desc').value };
+    data.about = { desc: document.getElementById('site-about-desc').value };
+    data.stats = {
+      projects: Number(document.getElementById('stat-projects').value)||0,
+      years: Number(document.getElementById('stat-years').value)||0,
+      followers: Number(document.getElementById('stat-followers').value)||0,
+      satisfaction: Number(document.getElementById('stat-satisfaction').value)||0
+    };
+    data.contact = { location: document.getElementById('site-location').value, telegram: document.getElementById('site-telegram').value };
+    data.telegramBot = { botToken: document.getElementById('site-bot-token').value, chatId: document.getElementById('site-chat-id').value };
+    await saveContentJson(data, sha, 'Update site info via admin panel');
+    log('site-log','সেভ ও পাবলিশ হয়ে গেছে ✅','ok');
+  }catch(e){ log('site-log','এরর: '+e.message,'err'); }
+  finally{ btn.disabled=false; }
+};
+
+/* ===================== MANAGE TAB ===================== */
+document.getElementById('manage-load-gallery').onclick = async () => {
+  clearLog('manage-log');
+  try{
+    const { data, sha } = await loadContentJson();
+    const wrap = document.getElementById('manage-gallery-list');
+    wrap.innerHTML = '';
+    (data.gallery||[]).forEach((item,idx) => {
+      const div = document.createElement('div');
+      div.className = 'list-item';
+      div.innerHTML = `<div class="meta"><b>${item.caption||('image_'+(idx+1))}</b>${item.url}</div>
+        <button class="btn danger" data-idx="${idx}">মুছে ফেলো</button>`;
+      div.querySelector('button').onclick = async () => {
+        try{
+          const cur = await loadContentJson();
+          cur.data.gallery.splice(idx,1);
+          await saveContentJson(cur.data, cur.sha, 'Delete gallery image via admin panel');
+          log('manage-log','ছবি মুছে ফেলা হয়েছে ✓','ok');
+          document.getElementById('manage-load-gallery').click();
+        }catch(e){ log('manage-log','এরর: '+e.message,'err'); }
+      };
+      wrap.appendChild(div);
+    });
+    if(!(data.gallery||[]).length) wrap.innerHTML = '<p class="hint">কোনো ছবি নেই।</p>';
+  }catch(e){ log('manage-log','এরর: '+e.message,'err'); }
+};
+document.getElementById('manage-load-blog').onclick = async () => {
+  clearLog('manage-log');
+  try{
+    const { data } = await loadContentJson();
+    const wrap = document.getElementById('manage-blog-list');
+    wrap.innerHTML = '';
+    (data.blog||[]).forEach((post,idx) => {
+      const div = document.createElement('div');
+      div.className = 'list-item';
+      div.innerHTML = `<div class="meta"><b>${post.title}</b><span class="badge">${post.category||'Blog'}</span> ${post.date||''}</div>
+        <button class="btn danger" data-idx="${idx}">মুছে ফেলো</button>`;
+      div.querySelector('button').onclick = async () => {
+        try{
+          const cur = await loadContentJson();
+          cur.data.blog.splice(idx,1);
+          await saveContentJson(cur.data, cur.sha, 'Delete blog post via admin panel');
+          log('manage-log','পোস্ট মুছে ফেলা হয়েছে ✓','ok');
+          document.getElementById('manage-load-blog').click();
+        }catch(e){ log('manage-log','এরর: '+e.message,'err'); }
+      };
+      wrap.appendChild(div);
+    });
+    if(!(data.blog||[]).length) wrap.innerHTML = '<p class="hint">কোনো পোস্ট নেই।</p>';
+  }catch(e){ log('manage-log','এরর: '+e.message,'err'); }
+};
+
+/* ===================== SETTINGS TAB — change password ===================== */
+document.getElementById('save-pass-btn').onclick = async () => {
+  const val = document.getElementById('new-pass').value;
+  const msg = document.getElementById('pass-msg');
+  if(!val || val.length < 4){ msg.style.color='var(--red)'; msg.textContent='অন্তত ৪ অক্ষরের পাসওয়ার্ড দাও।'; return; }
+  const h = await sha256hex(val);
+  LS.set('rkx-admin-pass-hash', h);
+  msg.style.color='var(--green)'; msg.textContent='পাসওয়ার্ড বদলানো হয়েছে (এই ব্রাউজারের জন্য)।';
+  document.getElementById('new-pass').value='';
+};
+</script>
+</body>
+</html>
