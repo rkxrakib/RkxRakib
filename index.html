@@ -784,7 +784,7 @@ section{padding:88px clamp(18px,5vw,40px);position:relative;z-index:1;}
         <h2 class="section-title" id="posts-title">Latest Posts</h2>
         <p class="section-subtitle">My latest articles, tutorials, and thoughts.</p>
       </div>
-      <div class="post-list reveal">
+      <div class="post-list reveal" id="post-list">
         <a class="post-item" href="https://rkxrakib.blogspot.com/" target="_blank" rel="noopener noreferrer">
           <div class="post-thumbnail"><img src="https://rkxrakib.sirv.com/rkxrakib.png" alt="AI Prompt Engineering guide by Rkx Rakib" /></div>
           <div class="post-content"><span class="post-category-badge">AI Tools</span><span class="post-title">What is AI Prompt Engineering? Why Learn It? A Complete Guide.</span><span class="post-date"><svg class="icon" width="10" height="10"><use href="#i-calendar"></use></svg> Jun 10, 2026</span></div>
@@ -858,7 +858,7 @@ section{padding:88px clamp(18px,5vw,40px);position:relative;z-index:1;}
         <h2 class="section-title" id="gallery-title">Photo Gallery</h2>
         <p class="section-subtitle">A few images from around the site — find Rkx Rakib on Google Images.</p>
       </div>
-      <div class="gallery-grid reveal">
+      <div class="gallery-grid reveal" id="gallery-grid">
         <div class="gallery-item"><img src="https://rkxrakib.sirv.com/rkxrakib.png" alt="Rkx Rakib official logo" loading="lazy" /><span class="cap">official_logo.png</span></div>
         <div class="gallery-item"><img src="https://rkxrakib.sirv.com/rkxrakibdev.jpg" alt="Rkx Rakib — frontend developer portrait" loading="lazy" /><span class="cap">rakib_dev.jpg</span></div>
         <div class="gallery-item"><img src="https://rkxrakib.sirv.com/e181eba7-7c95-46fc-8a73-41ff1719d08c.jpeg" alt="Rkx Rakib cover banner artwork" loading="lazy" /><span class="cap">cover_banner.jpeg</span></div>
@@ -1280,42 +1280,69 @@ async function sendToTelegram(){
   finally { btn.innerHTML = 'Send Message <svg class="icon" width="13" height="13"><use href="#i-send"></use></svg>'; btn.disabled = false; }
 }
 
-/* ===== ADMIN CONTENT OVERRIDES (applied if saved from /admin) ===== */
+/* ===== LIVE SITE CONTENT (loaded from /content.json, edited via /admin) ===== */
 window.RKX_TELEGRAM = { botToken: "8243293869:AAELR-H8atWAYOYC2UgYchHx6URNk3I801o", chatId: "7761133429" };
-(function applyAdminOverrides(){
-  try{
-    const raw = localStorage.getItem('rkx-content-overrides');
-    if(!raw) return;
-    const o = JSON.parse(raw);
-    if(o.heroTitle) document.querySelector('.hero-text h1').innerHTML = o.heroTitle;
-    if(o.heroDesc) document.querySelector('.hero-text p').textContent = o.heroDesc;
-    if(o.aboutDesc) document.querySelector('.about-description').textContent = o.aboutDesc;
-    if(o.stats){
-      const boxes = document.querySelectorAll('.stat-n');
-      const map = [o.stats.projects, o.stats.years, o.stats.followers, o.stats.satisfaction];
-      const suffix = ['+','+','K+','%'];
-      boxes.forEach((b,idx)=>{ if(map[idx]!=null){ b.dataset.count = map[idx]; b.dataset.suffix = suffix[idx]; } });
-    }
-    if(o.location){ document.querySelectorAll('[data-copy="Jamalpur, Bangladesh"]').forEach(li => { li.dataset.copy = o.location; li.lastChild.textContent = ' ' + o.location; }); }
-    if(o.telegram){ document.querySelectorAll('[data-copy="@rkx_rakib"]').forEach(li => { li.dataset.copy = o.telegram; }); }
-    if(o.botToken) window.RKX_TELEGRAM.botToken = o.botToken;
-    if(o.chatId) window.RKX_TELEGRAM.chatId = o.chatId;
-    if(Array.isArray(o.domains) && o.domains.length){
-      const grid = document.querySelector('.domains-grid');
-      if(grid){
-        grid.innerHTML = o.domains.map(url => {
-          let host = url; try{ host = new URL(url).hostname; }catch(e){}
-          return `<a class="domain-card" href="${url}" target="_blank" rel="noopener noreferrer"><span class="dot-ico"><img src="https://rkxrakib.sirv.com/rkxrakib.png" alt="Rkx Rakib logo" loading="lazy" /></span><span class="info"><b>${host}</b><span>Mirror domain</span></span></a>`;
-        }).join('');
+(function applySiteContent(){
+  fetch('/content.json', { cache: 'no-store' })
+    .then(r => r.ok ? r.json() : null)
+    .then(o => { if(o) renderContent(o); })
+    .catch(() => { /* content.json not found yet — keep the built-in defaults on the page */ });
+
+  function renderContent(o){
+    try{
+      if(o.hero && o.hero.title) document.querySelector('.hero-text h1').innerHTML = o.hero.title;
+      if(o.hero && o.hero.desc) document.querySelector('.hero-text p').textContent = o.hero.desc;
+      if(o.about && o.about.desc) document.querySelector('.about-description').textContent = o.about.desc;
+      if(o.stats){
+        const boxes = document.querySelectorAll('.stat-n');
+        const map = [o.stats.projects, o.stats.years, o.stats.followers, o.stats.satisfaction];
+        const suffix = ['+','+','K+','%'];
+        boxes.forEach((b,idx)=>{ if(map[idx]!=null){ b.dataset.count = map[idx]; b.dataset.suffix = suffix[idx]; b.textContent = '0'; } });
       }
-    }
-    if(Array.isArray(o.gallery) && o.gallery.length){
-      const grid = document.querySelector('.gallery-grid');
-      if(grid){
-        grid.innerHTML = o.gallery.map((url,idx) => `<div class="gallery-item${idx===o.gallery.length-1?' logo-tile':''}"><img src="${url}" alt="Rkx Rakib gallery image" loading="lazy" /><span class="cap">image_${idx+1}</span></div>`).join('');
+      if(o.contact && o.contact.location){ document.querySelectorAll('[data-copy="Jamalpur, Bangladesh"]').forEach(li => { li.dataset.copy = o.contact.location; li.lastChild.textContent = ' ' + o.contact.location; }); }
+      if(o.contact && o.contact.telegram){ document.querySelectorAll('[data-copy="@rkx_rakib"]').forEach(li => { li.dataset.copy = o.contact.telegram; }); }
+      if(o.telegramBot && o.telegramBot.botToken) window.RKX_TELEGRAM.botToken = o.telegramBot.botToken;
+      if(o.telegramBot && o.telegramBot.chatId) window.RKX_TELEGRAM.chatId = o.telegramBot.chatId;
+
+      if(Array.isArray(o.domains) && o.domains.length){
+        const grid = document.querySelector('.domains-grid');
+        if(grid){
+          grid.innerHTML = o.domains.map(url => {
+            let host = url; try{ host = new URL(url).hostname; }catch(e){}
+            return `<a class="domain-card" href="${url}" target="_blank" rel="noopener noreferrer"><span class="dot-ico"><img src="https://rkxrakib.sirv.com/rkxrakib.png" alt="Rkx Rakib logo" loading="lazy" /></span><span class="info"><b>${host}</b><span>Mirror domain</span></span></a>`;
+          }).join('');
+        }
       }
-    }
-  } catch(e){ /* ignore malformed overrides */ }
+
+      if(Array.isArray(o.gallery) && o.gallery.length){
+        const grid = document.getElementById('gallery-grid');
+        if(grid){
+          grid.innerHTML = o.gallery.map((item,idx) => {
+            const url = typeof item === 'string' ? item : item.url;
+            const alt = (typeof item === 'object' && item.alt) ? item.alt : 'Rkx Rakib gallery image';
+            const cap = (typeof item === 'object' && item.caption) ? item.caption : `image_${idx+1}`;
+            return `<div class="gallery-item${idx===o.gallery.length-1?' logo-tile':''}"><img src="${url}" alt="${alt}" loading="lazy" /><span class="cap">${cap}</span></div>`;
+          }).join('');
+        }
+      }
+
+      if(Array.isArray(o.blog) && o.blog.length){
+        const list = document.getElementById('post-list');
+        if(list){
+          list.innerHTML = o.blog.slice().reverse().map(p => {
+            const href = p.slug ? `/blog/?post=${encodeURIComponent(p.slug)}` : (p.url || '#');
+            const target = p.slug ? '' : ' target="_blank" rel="noopener noreferrer"';
+            const cover = p.cover || 'https://rkxrakib.sirv.com/rkxrakib.png';
+            return `<a class="post-item" href="${href}"${target}>
+              <div class="post-thumbnail"><img src="${cover}" alt="${p.title}" /></div>
+              <div class="post-content"><span class="post-category-badge">${p.category || 'Blog'}</span><span class="post-title">${p.title}</span><span class="post-date"><svg class="icon" width="10" height="10"><use href="#i-calendar"></use></svg> ${p.date || ''}</span></div>
+              <svg class="icon" width="13" height="13" style="color:var(--muted-2)"><use href="#i-chevron-right"></use></svg>
+            </a>`;
+          }).join('');
+        }
+      }
+    } catch(e){ /* ignore malformed content.json */ }
+  }
 })();
 </script>
 </body>
