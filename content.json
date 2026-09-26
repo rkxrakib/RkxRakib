@@ -28,10 +28,31 @@
     "https://rkxrakib.blogspot.com/"
   ],
   "gallery": [
-    { "url": "https://rkxrakib.sirv.com/rkxrakib.png", "alt": "Rkx Rakib official logo", "caption": "official_logo.png" },
-    { "url": "https://rkxrakib.sirv.com/rkxrakibdev.jpg", "alt": "Rkx Rakib — frontend developer portrait", "caption": "rakib_dev.jpg" },
-    { "url": "https://rkxrakib.sirv.com/e181eba7-7c95-46fc-8a73-41ff1719d08c.jpeg", "alt": "Rkx Rakib cover banner artwork", "caption": "cover_banner.jpeg" },
-    { "url": "https://rkxrakib.sirv.com/1000062831.jpg", "alt": "Rkx Rakib previous profile logo", "caption": "previous_logo.jpg — legacy" }
+    {
+      "url": "https://rkxrakib.sirv.com/rkxrakib.png",
+      "alt": "Rkx Rakib official logo",
+      "caption": "official_logo.png"
+    },
+    {
+      "url": "https://rkxrakib.sirv.com/rkxrakibdev.jpg",
+      "alt": "Rkx Rakib — frontend developer portrait",
+      "caption": "rakib_dev.jpg"
+    },
+    {
+      "url": "https://rkxrakib.sirv.com/e181eba7-7c95-46fc-8a73-41ff1719d08c.jpeg",
+      "alt": "Rkx Rakib cover banner artwork",
+      "caption": "cover_banner.jpeg"
+    },
+    {
+      "url": "https://rkxrakib.sirv.com/1000062831.jpg",
+      "alt": "Rkx Rakib previous profile logo",
+      "caption": "previous_logo.jpg — legacy"
+    },
+    {
+      "url": "/images/1790413518097-1000010784.jpg",
+      "alt": "Rkx Rakib With Arman, Arman Rkx Rakib,",
+      "caption": "arman.jpg"
+    }
   ],
   "blog": [
     {
