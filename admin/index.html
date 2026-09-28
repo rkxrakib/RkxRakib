@@ -9,233 +9,317 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
 :root{
-  --bg:#0b0e13; --surface:#151b25; --surface-2:#1b2230; --border:rgba(255,255,255,.09);
+  --bg:#0b0e13; --bg2:#0e1219; --surface:#151b25; --surface-2:#1b2230; --border:rgba(255,255,255,.09);
   --border-strong:rgba(255,255,255,.16); --text:#eef1f6; --muted:#8b93a3; --muted-2:#565f70;
-  --blue:#58a6ff; --blue-dim:rgba(88,166,255,.12); --green:#7ee787; --red:#ff8a8a; --orange:#ffa657;
+  --blue:#58a6ff; --blue-dim:rgba(88,166,255,.12); --green:#7ee787; --green-dim:rgba(126,231,135,.12);
+  --red:#ff8a8a; --orange:#ffa657; --purple:#d2a8ff;
   --radius:12px; --font-d:'JetBrains Mono',monospace; --font-b:'Inter',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height:100vh;line-height:1.6;}
-.wrap{max-width:920px;margin:0 auto;padding:24px 18px 60px;}
-h1,h2,h3{font-family:var(--font-d);}
 a{color:var(--blue);}
-.brand{display:flex;align-items:center;gap:10px;margin-bottom:24px;}
-.brand img{width:34px;height:34px;border-radius:9px;background:#fff;padding:2px;}
-.brand b{font-family:var(--font-d);font-size:1.1rem;}
-.brand span{color:var(--muted-2);font-size:12px;}
+h1,h2,h3{font-family:var(--font-d);}
+::-webkit-scrollbar{width:8px;} ::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:10px;}
+
+/* ---- LOGIN ---- */
+#login-screen{max-width:380px;margin:12vh auto 0;text-align:center;padding:0 18px;}
+#login-screen img{width:64px;height:64px;border-radius:16px;background:#fff;padding:5px;margin-bottom:16px;}
+#login-screen h1{font-size:1.25rem;}
+#login-screen .sub{color:var(--muted);font-size:12.5px;margin-top:6px;}
+#login-screen input{width:100%;margin-top:16px;text-align:center;background:var(--surface);border:1px solid var(--border-strong);
+  color:var(--text);padding:12px;border-radius:10px;font-size:14px;outline:none;}
+#login-screen input:focus{border-color:var(--blue);}
+#login-screen .btn{width:100%;justify-content:center;margin-top:14px;}
+#login-err{color:var(--red);font-size:12px;margin-top:10px;min-height:16px;}
+#login-hint{color:var(--muted-2);font-size:11px;margin-top:24px;line-height:1.7;}
+
+/* ---- APP SHELL ---- */
+#app{display:none;min-height:100vh;}
+#app.show{display:flex;}
+.sidebar{width:230px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);padding:20px 14px;
+  position:sticky;top:0;height:100vh;overflow-y:auto;}
+.sb-brand{display:flex;align-items:center;gap:9px;margin-bottom:22px;padding:0 6px;}
+.sb-brand img{width:30px;height:30px;border-radius:8px;background:#fff;padding:2px;}
+.sb-brand b{font-family:var(--font-d);font-size:13px;}
+.sb-brand span{display:block;color:var(--muted-2);font-size:10px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;color:var(--muted);
+  font-family:var(--font-d);font-size:12.5px;cursor:pointer;margin-bottom:3px;border:1px solid transparent;}
+.nav-item:hover{background:var(--surface);color:var(--text);}
+.nav-item.active{background:var(--blue-dim);border-color:rgba(88,166,255,.3);color:var(--blue);}
+.sb-foot{margin-top:16px;padding-top:14px;border-top:1px solid var(--border);}
+.sb-foot a,.sb-foot button{display:block;width:100%;text-align:left;background:none;border:none;color:var(--muted);
+  font-family:var(--font-d);font-size:11.5px;padding:8px 12px;cursor:pointer;border-radius:8px;text-decoration:none;}
+.sb-foot a:hover,.sb-foot button:hover{background:var(--surface);color:var(--text);}
+.main{flex:1;padding:26px clamp(16px,3vw,34px) 60px;max-width:1000px;}
+.hamburger-mobile{display:none;}
+@media(max-width:860px){
+  #app.show{display:block;}
+  .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:500;transform:translateX(-100%);transition:.25s;width:230px;}
+  .sidebar.open{transform:translateX(0);}
+  .main{padding-top:64px;}
+  .hamburger-mobile{display:flex;position:fixed;top:14px;left:14px;z-index:501;width:38px;height:38px;background:var(--surface);
+    border:1px solid var(--border-strong);border-radius:9px;align-items:center;justify-content:center;color:var(--text);cursor:pointer;}
+  .sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:499;}
+  .sb-overlay.show{display:block;}
+}
+
+.pagehead{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:20px;}
+.pagehead h2{font-size:1.3rem;}
+.pagehead p{color:var(--muted);font-size:12.5px;margin-top:4px;}
+
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:18px;}
-.card h2{font-size:1rem;margin-bottom:6px;color:var(--text);}
-.card p.hint{color:var(--muted);font-size:12.5px;margin-bottom:14px;}
-label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px;font-family:var(--font-d);}
+.card h3{font-size:.95rem;margin-bottom:6px;}
+.card p.hint{color:var(--muted);font-size:12.5px;margin-bottom:14px;line-height:1.7;}
+label{display:block;font-size:11.5px;color:var(--muted);margin:12px 0 5px;font-family:var(--font-d);text-transform:uppercase;letter-spacing:.3px;}
 input[type=text],input[type=password],input[type=number],textarea,select{
   width:100%;background:var(--bg);border:1px solid var(--border-strong);color:var(--text);
   padding:10px 12px;border-radius:8px;font-size:13.5px;font-family:var(--font-b);outline:none;
 }
 input:focus,textarea:focus{border-color:var(--blue);}
 textarea{min-height:110px;resize:vertical;font-family:var(--font-b);}
+.pass-field{position:relative;}
+.pass-field button{position:absolute;right:6px;top:6px;bottom:6px;background:var(--surface-2);border:1px solid var(--border);
+  color:var(--muted);border-radius:6px;padding:0 10px;font-size:11px;cursor:pointer;font-family:var(--font-d);}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .row3{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;}
 @media(max-width:640px){.row,.row3{grid-template-columns:1fr;}}
-.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:8px;border:1px solid transparent;
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border-radius:9px;border:1px solid transparent;
   background:var(--blue);color:#04121f;font-weight:700;font-size:13px;cursor:pointer;font-family:var(--font-b);}
 .btn:hover{opacity:.9;}
 .btn.outline{background:transparent;border-color:var(--border-strong);color:var(--text);}
 .btn.danger{background:var(--red);color:#3a0b0b;}
+.btn.sm{padding:6px 12px;font-size:11.5px;}
 .btn:disabled{opacity:.5;cursor:not-allowed;}
 .actions{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;}
-.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;border-bottom:1px solid var(--border);padding-bottom:12px;}
-.tab-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:8px 14px;border-radius:8px;
-  font-family:var(--font-d);font-size:12px;cursor:pointer;}
-.tab-btn.active{background:var(--blue-dim);border-color:var(--blue);color:var(--blue);}
-.tabpage{display:none;}
-.tabpage.active{display:block;}
 .log{font-family:var(--font-d);font-size:11.5px;background:var(--bg);border:1px solid var(--border);border-radius:8px;
-  padding:10px 12px;max-height:160px;overflow-y:auto;white-space:pre-wrap;color:var(--muted);margin-top:12px;}
+  padding:10px 12px;max-height:180px;overflow-y:auto;white-space:pre-wrap;color:var(--muted);margin-top:12px;}
 .log .ok{color:var(--green);} .log .err{color:var(--red);}
-.thumb-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px;}
-.thumb{width:110px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;overflow:hidden;font-size:10px;}
-.thumb img{width:100%;height:80px;object-fit:cover;display:block;}
-.thumb .cap{display:block;padding:5px 6px;color:var(--muted);word-break:break-all;}
-.thumb .del{width:100%;background:var(--red);color:#3a0b0b;border:none;padding:5px;font-size:10.5px;cursor:pointer;font-weight:700;}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:18px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;}
+.stat-card b{font-size:1.6rem;display:block;font-family:var(--font-d);}
+.stat-card span{color:var(--muted);font-size:11.5px;}
+.status-pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-d);font-size:11px;padding:5px 11px;
+  border-radius:20px;background:var(--surface-2);border:1px solid var(--border);color:var(--muted);}
+.status-pill.ok{color:var(--green);border-color:rgba(126,231,135,.3);background:var(--green-dim);}
+.status-pill.bad{color:var(--red);border-color:rgba(255,138,138,.3);}
+.dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+.warn{background:rgba(255,166,87,.1);border:1px solid rgba(255,166,87,.3);color:var(--orange);padding:12px 14px;border-radius:8px;font-size:12.5px;margin-bottom:18px;line-height:1.7;}
+
+.dropzone{border:2px dashed var(--border-strong);border-radius:10px;padding:30px 16px;text-align:center;color:var(--muted);
+  cursor:pointer;font-size:12.5px;transition:.2s;}
+.dropzone.drag{border-color:var(--blue);color:var(--blue);background:var(--blue-dim);}
+.queue-item{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:12px;margin-top:10px;
+  display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;}
+.queue-item .thumb-wrap{width:64px;height:64px;border-radius:8px;overflow:hidden;background:var(--bg);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;}
+.queue-item .thumb-wrap img,.queue-item .thumb-wrap video{width:100%;height:100%;object-fit:cover;}
+.queue-item .fields input{margin-bottom:6px;font-size:12.5px;padding:7px 9px;}
+.queue-item .fields input:last-child{margin-bottom:0;}
+.queue-item .side{display:flex;flex-direction:column;align-items:flex-end;gap:6px;}
+.queue-item .filesize{font-size:10.5px;color:var(--muted-2);font-family:var(--font-d);}
+.queue-status{font-size:10.5px;font-family:var(--font-d);}
+.queue-status.pending{color:var(--muted);} .queue-status.uploading{color:var(--orange);}
+.queue-status.done{color:var(--green);} .queue-status.error{color:var(--red);}
+.remove-x{background:none;border:none;color:var(--muted-2);cursor:pointer;font-size:14px;}
 .list-item{background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:10px;
-  display:flex;justify-content:space-between;align-items:center;gap:10px;}
+  display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
 .list-item .meta{font-size:12.5px;color:var(--muted);}
 .list-item .meta b{color:var(--text);display:block;font-size:13.5px;margin-bottom:2px;}
-.badge{display:inline-block;font-size:10px;font-family:var(--font-d);padding:3px 8px;border-radius:6px;background:var(--blue-dim);color:var(--blue);}
-.warn{background:rgba(255,166,87,.1);border:1px solid rgba(255,166,87,.3);color:var(--orange);padding:12px 14px;border-radius:8px;font-size:12.5px;margin-bottom:18px;}
-#login-screen{max-width:380px;margin:14vh auto 0;text-align:center;}
-#login-screen input{margin-top:14px;text-align:center;}
-#login-screen .btn{width:100%;justify-content:center;margin-top:14px;}
+.badge{display:inline-block;font-size:10px;font-family:var(--font-d);padding:3px 8px;border-radius:6px;background:var(--blue-dim);color:var(--blue);margin-right:6px;}
+.badge.video{background:rgba(210,168,255,.12);color:var(--purple);}
+.tabpage{display:none;} .tabpage.active{display:block;}
 .hidden{display:none !important;}
-.dropzone{border:2px dashed var(--border-strong);border-radius:10px;padding:26px;text-align:center;color:var(--muted);
-  cursor:pointer;font-size:12.5px;}
-.dropzone.drag{border-color:var(--blue);color:var(--blue);}
 .spin{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#04121f;
   border-radius:50%;animation:sp .7s linear infinite;}
 @keyframes sp{to{transform:rotate(360deg)}}
+.progressbar{height:5px;border-radius:4px;background:var(--surface-2);overflow:hidden;margin-top:6px;}
+.progressbar i{display:block;height:100%;background:var(--blue);width:0%;transition:.3s;}
 </style>
 </head>
 <body>
 
 <div id="login-screen">
-  <img src="https://rkxrakib.sirv.com/rkxrakib.png" style="width:60px;height:60px;border-radius:14px;background:#fff;padding:4px;margin-bottom:14px;" />
-  <h1 style="font-size:1.2rem;">Admin Panel</h1>
-  <p style="color:var(--muted);font-size:12.5px;margin-top:6px;">পাসওয়ার্ড দিয়ে লগইন করো</p>
-  <input type="password" id="login-pass" placeholder="Password" autocomplete="current-password" />
+  <img src="https://rkxrakib.sirv.com/rkxrakib.png" />
+  <h1>Admin Panel</h1>
+  <p class="sub">পাসওয়ার্ড দিয়ে লগইন করো</p>
+  <div class="pass-field">
+    <input type="password" id="login-pass" placeholder="Password" autocomplete="current-password" />
+  </div>
   <button class="btn" id="login-btn">লগইন করো</button>
-  <p id="login-err" style="color:var(--red);font-size:12px;margin-top:10px;"></p>
-  <p style="color:var(--muted-2);font-size:11px;margin-top:22px;">ডিফল্ট পাসওয়ার্ড: <b>rakib2026</b> — লগইনের পর অবশ্যই Settings ট্যাব থেকে বদলে নাও।</p>
+  <p id="login-err"></p>
+  <p id="login-hint">ডিফল্ট পাসওয়ার্ড: <b>rakib2026</b> — লগইনের পর Settings থেকে বদলে নাও। ৫ বার ভুল দিলে ৬০ সেকেন্ডের জন্য লক হয়ে যাবে।</p>
 </div>
 
-<div id="dashboard" class="wrap hidden">
-  <div class="brand">
-    <img src="https://rkxrakib.sirv.com/rkxrakib.png" />
-    <div><b>RKX<span style="color:var(--blue)">RAKIB</span> — Admin</b><br /><span>Website content control panel</span></div>
-    <div style="margin-left:auto;display:flex;gap:8px;">
-      <a href="/" class="btn outline" style="text-decoration:none;">⌂ সাইট দেখো</a>
-      <button class="btn outline" id="logout-btn">লগআউট</button>
+<div id="app">
+  <button class="hamburger-mobile" id="mobile-toggle">☰</button>
+  <div class="sb-overlay" id="sb-overlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-brand">
+      <img src="https://rkxrakib.sirv.com/rkxrakib.png" />
+      <div><b>RKX<span style="color:var(--blue)">RAKIB</span></b><span>Admin Panel</span></div>
     </div>
-  </div>
-
-  <div class="warn">
-    ⚠️ এটা একটা <b>স্ট্যাটিক ওয়েবসাইট</b> (কোনো সার্ভার/ডাটাবেজ নেই)। তাই কোনো পরিবর্তন <b>সবার জন্য</b> এবং <b>গুগলে</b> দেখাতে হলে,
-    সেটা সরাসরি তোমার GitHub রিপোতে সেভ হতে হবে (যেটা Vercel/Netlify/Cloudflare Pages অটো-ডিপ্লয় করে)।
-    তাই নিচের <b>Connect</b> ট্যাবে GitHub রিপো তথ্য + টোকেন দাও — এটা শুধু তোমার নিজের ব্রাউজারে সেভ থাকবে, কোথাও পাঠানো হয় না।
-  </div>
-
-  <div class="tabs">
-    <button class="tab-btn active" data-tab="connect">🔌 Connect</button>
-    <button class="tab-btn" data-tab="images">🖼️ ছবি</button>
-    <button class="tab-btn" data-tab="blog">📝 ব্লগ</button>
-    <button class="tab-btn" data-tab="site">⚙️ সাইট তথ্য</button>
-    <button class="tab-btn" data-tab="manage">📋 ম্যানেজ</button>
-    <button class="tab-btn" data-tab="settings">🔑 Settings</button>
-  </div>
-
-  <!-- CONNECT TAB -->
-  <div class="tabpage active" id="tab-connect">
-    <div class="card">
-      <h2>GitHub সংযোগ</h2>
-      <p class="hint">তোমার সাইটের GitHub রিপোজিটরির তথ্য দাও (যেটা Vercel-এ ডিপ্লয় করা আছে)। Repo → Settings → Developer settings → Personal access tokens থেকে একটা <b>fine-grained token</b> বানাও, সেই রিপোর জন্য শুধু <b>Contents: Read & Write</b> পারমিশন দাও।</p>
-      <div class="row">
-        <div><label>GitHub username / org</label><input type="text" id="gh-owner" placeholder="rkxrakib" /></div>
-        <div><label>Repository নাম</label><input type="text" id="gh-repo" placeholder="rkxrakib-website" /></div>
-      </div>
-      <div class="row">
-        <div><label>Branch</label><input type="text" id="gh-branch" placeholder="main" value="main" /></div>
-        <div><label>Personal Access Token</label><input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxx" /></div>
-      </div>
-      <div class="actions">
-        <button class="btn" id="gh-save">সেভ করো</button>
-        <button class="btn outline" id="gh-test">কানেকশন টেস্ট করো</button>
-      </div>
-      <div class="log" id="connect-log">এখনো কিছু টেস্ট করা হয়নি।</div>
+    <div class="nav-item active" data-tab="dashboard">📊 Dashboard</div>
+    <div class="nav-item" data-tab="connect">🔌 Connect</div>
+    <div class="nav-item" data-tab="media">🖼️ Media আপলোড</div>
+    <div class="nav-item" data-tab="blog">📝 ব্লগ</div>
+    <div class="nav-item" data-tab="site">⚙️ সাইট তথ্য</div>
+    <div class="nav-item" data-tab="manage">📋 ম্যানেজ</div>
+    <div class="nav-item" data-tab="settings">🔒 Security</div>
+    <div class="sb-foot">
+      <a href="/">⌂ লাইভ সাইট দেখো</a>
+      <button id="logout-btn">↩ লগআউট</button>
     </div>
-  </div>
+  </aside>
 
-  <!-- IMAGES TAB -->
-  <div class="tabpage" id="tab-images">
-    <div class="card">
-      <h2>নতুন ছবি আপলোড করো</h2>
-      <p class="hint">ছবি সিলেক্ট করলে সেটা সরাসরি তোমার GitHub রিপোর <code>/images/</code> ফোল্ডারে আপলোড হয়ে <code>content.json</code>-এ গ্যালারিতে যুক্ত হবে — অর্থাৎ সাথে সাথে সবার জন্য লাইভ সাইটে দেখাবে এবং গুগল ইমেজেও ইনডেক্স হবে (ক্রল হতে কিছুদিন সময় লাগে)।</p>
-      <label>ছবি বেছে নাও</label>
-      <div class="dropzone" id="img-drop">ক্লিক করো অথবা ছবি ড্র্যাগ করে ছাড়ো</div>
-      <input type="file" id="img-file" accept="image/*" class="hidden" />
-      <label>Alt text (SEO-র জন্য, ছবিতে কী দেখা যাচ্ছে সেটা লেখো)</label>
-      <input type="text" id="img-alt" placeholder="Rkx Rakib at a coding event" />
-      <label>Caption (ঐচ্ছিক)</label>
-      <input type="text" id="img-caption" placeholder="new_photo.jpg" />
-      <div class="actions">
-        <button class="btn" id="img-upload-btn" disabled>আপলোড ও পাবলিশ করো</button>
-      </div>
-      <div class="log" id="img-log"></div>
-      <div class="thumb-row" id="img-preview"></div>
-    </div>
-  </div>
+  <main class="main">
 
-  <!-- BLOG TAB -->
-  <div class="tabpage" id="tab-blog">
-    <div class="card">
-      <h2>নতুন ব্লগ পোস্ট লেখো</h2>
-      <p class="hint">এই পোস্ট <code>/blog/</code> পেজে এবং হোমপেজের "Latest Posts"-এ পাবলিশ হবে।</p>
-      <label>টাইটেল</label>
-      <input type="text" id="blog-title" placeholder="আমার নতুন আর্টিকেলের নাম" />
-      <div class="row">
-        <div><label>ক্যাটাগরি</label><input type="text" id="blog-cat" placeholder="Development" /></div>
-        <div><label>তারিখ</label><input type="text" id="blog-date" placeholder="Sep 25, 2026" /></div>
+    <!-- DASHBOARD -->
+    <div class="tabpage active" id="tab-dashboard">
+      <div class="pagehead"><div><h2>Dashboard</h2><p>তোমার সাইটের বর্তমান অবস্থা</p></div>
+        <span class="status-pill" id="gh-status-pill"><span class="dot"></span> GitHub সংযোগ চেক করা হয়নি</span>
       </div>
-      <label>কভার ছবি (ঐচ্ছিক)</label>
-      <input type="file" id="blog-cover-file" accept="image/*" />
-      <label>সংক্ষিপ্ত বিবরণ (excerpt)</label>
-      <textarea id="blog-excerpt" placeholder="এক বা দুই লাইনে পোস্টের সারমর্ম..." style="min-height:60px;"></textarea>
-      <label>পোস্টের মূল লেখা</label>
-      <textarea id="blog-content" placeholder="তোমার আর্টিকেল এখানে লেখো। খালি লাইন দিলে নতুন প্যারাগ্রাফ হবে।"></textarea>
-      <div class="actions">
-        <button class="btn" id="blog-publish-btn">পাবলিশ করো</button>
+      <div class="stat-grid">
+        <div class="stat-card"><b id="stat-images">—</b><span>ছবি</span></div>
+        <div class="stat-card"><b id="stat-videos">—</b><span>ভিডিও</span></div>
+        <div class="stat-card"><b id="stat-posts">—</b><span>ব্লগ পোস্ট</span></div>
       </div>
-      <div class="log" id="blog-log"></div>
+      <div class="card">
+        <h3>দ্রুত শুরু করো</h3>
+        <p class="hint">প্রথমবার ব্যবহার করলে আগে <b>Connect</b> ট্যাবে গিয়ে তোমার GitHub রিপো যুক্ত করো, তারপর <b>Media</b> ট্যাব থেকে ছবি/ভিডিও আপলোড শুরু করতে পারবে।</p>
+        <div class="actions">
+          <button class="btn" onclick="switchTab('connect')">🔌 Connect সেটআপ করো</button>
+          <button class="btn outline" onclick="switchTab('media')">🖼️ Media আপলোড করো</button>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <!-- SITE INFO TAB -->
-  <div class="tabpage" id="tab-site">
-    <div class="card">
-      <h2>হোমপেজের লেখা</h2>
-      <label>Hero টাইটেল (HTML চলবে, যেমন &lt;br/&gt;, &lt;span class="accent"&gt;)</label>
-      <textarea id="site-hero-title" style="min-height:70px;"></textarea>
-      <label>Hero বর্ণনা</label>
-      <textarea id="site-hero-desc" style="min-height:70px;"></textarea>
-      <label>About বর্ণনা</label>
-      <textarea id="site-about-desc" style="min-height:70px;"></textarea>
-      <div class="row3">
-        <div><label>Projects</label><input type="number" id="stat-projects" /></div>
-        <div><label>Years</label><input type="number" id="stat-years" /></div>
-        <div><label>Followers (K)</label><input type="number" id="stat-followers" /></div>
-        <div><label>Satisfaction %</label><input type="number" id="stat-satisfaction" /></div>
+    <!-- CONNECT -->
+    <div class="tabpage" id="tab-connect">
+      <div class="pagehead"><div><h2>GitHub সংযোগ</h2><p>এই তথ্য শুধু তোমার ব্রাউজারে সেভ থাকে, অন্য কোথাও পাঠানো হয় না।</p></div></div>
+      <div class="card">
+        <p class="hint">Repo → Settings → Developer settings → Personal access tokens থেকে একটা টোকেন বানাও যেটার <b>Contents: Read & Write</b> পারমিশন আছে (classic token হলে পুরো <b>repo</b> scope দাও)।</p>
+        <div class="row">
+          <div><label>GitHub username / org</label><input type="text" id="gh-owner" placeholder="rkxrakib" /></div>
+          <div><label>Repository নাম</label><input type="text" id="gh-repo" placeholder="rkxrakib-website" /></div>
+        </div>
+        <div class="row">
+          <div><label>Branch</label><input type="text" id="gh-branch" placeholder="main" value="main" /></div>
+          <div><label>Personal Access Token</label>
+            <div class="pass-field"><input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxx" /><button type="button" id="gh-token-toggle">দেখাও</button></div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn" id="gh-save">সেভ করো</button>
+          <button class="btn outline" id="gh-test">কানেকশন টেস্ট করো</button>
+        </div>
+        <div class="log" id="connect-log">এখনো কিছু টেস্ট করা হয়নি।</div>
       </div>
-      <div class="row">
-        <div><label>Location</label><input type="text" id="site-location" /></div>
-        <div><label>Telegram handle</label><input type="text" id="site-telegram" /></div>
+    </div>
+
+    <!-- MEDIA (BULK UPLOAD) -->
+    <div class="tabpage" id="tab-media">
+      <div class="pagehead"><div><h2>Media আপলোড</h2><p>একসাথে একাধিক ছবি বা ভিডিও বেছে নিয়ে সব একসাথে পাবলিশ করো।</p></div></div>
+      <div class="card">
+        <div class="dropzone" id="media-drop">📁 ক্লিক করো অথবা একাধিক ছবি/ভিডিও ড্র্যাগ করে ছাড়ো</div>
+        <input type="file" id="media-file" accept="image/*,video/*" multiple class="hidden" />
+        <p class="hint" style="margin-top:10px;margin-bottom:0;">ছবি ৫-১০ MB এর নিচে রাখলে সবচেয়ে ভালো কাজ করবে। ভিডিও ৫০ MB এর বেশি হলে ব্রাউজার থেকে আপলোড ব্যর্থ হতে পারে — বড় ভিডিও হলে আগে কমপ্রেস করে নাও।</p>
+        <div id="media-queue"></div>
+        <div class="actions" id="media-actions" style="display:none;">
+          <button class="btn" id="media-upload-all">🚀 সব আপলোড ও পাবলিশ করো</button>
+          <button class="btn outline" id="media-clear">সব বাদ দাও</button>
+        </div>
+        <div class="log" id="media-log"></div>
       </div>
-      <label>Telegram Bot Token (কন্টাক্ট ফর্ম যেই বটে মেসেজ পাঠায়)</label>
-      <input type="text" id="site-bot-token" />
-      <label>Telegram Chat ID</label>
-      <input type="text" id="site-chat-id" />
-      <div class="actions">
-        <button class="btn" id="site-load-btn">বর্তমান তথ্য লোড করো</button>
-        <button class="btn" id="site-save-btn">সেভ করো</button>
+    </div>
+
+    <!-- BLOG -->
+    <div class="tabpage" id="tab-blog">
+      <div class="pagehead"><div><h2>নতুন ব্লগ পোস্ট</h2><p>এই পোস্ট /blog পেজে ও হোমপেজে পাবলিশ হবে।</p></div></div>
+      <div class="card">
+        <label>টাইটেল</label>
+        <input type="text" id="blog-title" placeholder="আমার নতুন আর্টিকেলের নাম" />
+        <div class="row">
+          <div><label>ক্যাটাগরি</label><input type="text" id="blog-cat" placeholder="Development" /></div>
+          <div><label>তারিখ</label><input type="text" id="blog-date" placeholder="Sep 25, 2026" /></div>
+        </div>
+        <label>কভার ছবি (ঐচ্ছিক)</label>
+        <input type="file" id="blog-cover-file" accept="image/*" />
+        <label>সংক্ষিপ্ত বিবরণ (excerpt)</label>
+        <textarea id="blog-excerpt" style="min-height:60px;" placeholder="এক বা দুই লাইনে পোস্টের সারমর্ম..."></textarea>
+        <label>পোস্টের মূল লেখা</label>
+        <textarea id="blog-content" placeholder="তোমার আর্টিকেল এখানে লেখো। খালি লাইন দিলে নতুন প্যারাগ্রাফ হবে।"></textarea>
+        <div class="actions"><button class="btn" id="blog-publish-btn">পাবলিশ করো</button></div>
+        <div class="log" id="blog-log"></div>
       </div>
-      <div class="log" id="site-log"></div>
     </div>
-  </div>
 
-  <!-- MANAGE TAB -->
-  <div class="tabpage" id="tab-manage">
-    <div class="card">
-      <h2>গ্যালারি ম্যানেজ করো</h2>
-      <button class="btn outline" id="manage-load-gallery">লোড করো</button>
-      <div id="manage-gallery-list"></div>
+    <!-- SITE INFO -->
+    <div class="tabpage" id="tab-site">
+      <div class="pagehead"><div><h2>সাইটের তথ্য</h2><p>হোমপেজের লেখা, স্ট্যাটস ও যোগাযোগের তথ্য বদলাও।</p></div></div>
+      <div class="card">
+        <label>Hero টাইটেল (HTML চলবে)</label>
+        <textarea id="site-hero-title" style="min-height:70px;"></textarea>
+        <label>Hero বর্ণনা</label>
+        <textarea id="site-hero-desc" style="min-height:70px;"></textarea>
+        <label>About বর্ণনা</label>
+        <textarea id="site-about-desc" style="min-height:70px;"></textarea>
+        <div class="row3">
+          <div><label>Projects</label><input type="number" id="stat-projects" /></div>
+          <div><label>Years</label><input type="number" id="stat-years" /></div>
+          <div><label>Followers (K)</label><input type="number" id="stat-followers" /></div>
+          <div><label>Satisfaction %</label><input type="number" id="stat-satisfaction" /></div>
+        </div>
+        <div class="row">
+          <div><label>Location</label><input type="text" id="site-location" /></div>
+          <div><label>Telegram handle</label><input type="text" id="site-telegram" /></div>
+        </div>
+        <label>Telegram Bot Token</label>
+        <input type="text" id="site-bot-token" />
+        <label>Telegram Chat ID</label>
+        <input type="text" id="site-chat-id" />
+        <div class="actions">
+          <button class="btn outline" id="site-load-btn">বর্তমান তথ্য লোড করো</button>
+          <button class="btn" id="site-save-btn">সেভ করো</button>
+        </div>
+        <div class="log" id="site-log"></div>
+      </div>
     </div>
-    <div class="card">
-      <h2>ব্লগ পোস্ট ম্যানেজ করো</h2>
-      <button class="btn outline" id="manage-load-blog">লোড করো</button>
-      <div id="manage-blog-list"></div>
-    </div>
-    <div class="log" id="manage-log"></div>
-  </div>
 
-  <!-- SETTINGS TAB -->
-  <div class="tabpage" id="tab-settings">
-    <div class="card">
-      <h2>পাসওয়ার্ড বদলাও</h2>
-      <p class="hint">⚠️ এই পাসওয়ার্ড শুধু তোমার নিজের ব্রাউজারে সেভ হয়। অন্য ডিভাইস থেকে লগইন করলে সেখানেও আলাদাভাবে বসাতে হবে। এটা মূলত সাধারণ দর্শক ঠেকানোর জন্য — পুরোপুরি সিকিউর করতে চাইলে সার্ভার-লেভেল অথেন্টিকেশন দরকার হবে।</p>
-      <label>নতুন পাসওয়ার্ড</label>
-      <input type="password" id="new-pass" />
-      <div class="actions"><button class="btn" id="save-pass-btn">পাসওয়ার্ড সেভ করো</button></div>
-      <p id="pass-msg" style="font-size:12px;margin-top:8px;"></p>
+    <!-- MANAGE -->
+    <div class="tabpage" id="tab-manage">
+      <div class="pagehead"><div><h2>ম্যানেজ করো</h2><p>পুরনো ছবি/ভিডিও/পোস্ট দেখো ও মুছে ফেলো।</p></div></div>
+      <div class="card"><h3>Gallery</h3><button class="btn outline sm" id="manage-load-gallery">লোড করো</button><div id="manage-gallery-list"></div></div>
+      <div class="card"><h3>Blog পোস্ট</h3><button class="btn outline sm" id="manage-load-blog">লোড করো</button><div id="manage-blog-list"></div></div>
+      <div class="log" id="manage-log"></div>
     </div>
-  </div>
 
+    <!-- SETTINGS / SECURITY -->
+    <div class="tabpage" id="tab-settings">
+      <div class="pagehead"><div><h2>Security Settings</h2><p>এডমিন প্যানেলের সুরক্ষা নিয়ন্ত্রণ করো।</p></div></div>
+      <div class="warn">⚠️ এটা একটা স্ট্যাটিক সাইট (সার্ভার নেই), তাই এই পাসওয়ার্ড-লক শুধু ব্রাউজার-সাইড সুরক্ষা — সাধারণ দর্শক ঠেকাতে যথেষ্ট, কিন্তু ব্রাউজারের ডেভেলপার টুলস ঘাঁটতে পারা কেউ চাইলে বাইপাস করতে পারে। আসল সুরক্ষা হলো তোমার GitHub Token — সেটা কাউকে দিও না, আর সন্দেহ হলেই GitHub থেকে সাথে সাথে Revoke করে দিও।</div>
+      <div class="card">
+        <h3>পাসওয়ার্ড বদলাও</h3>
+        <label>নতুন পাসওয়ার্ড</label>
+        <input type="password" id="new-pass" />
+        <div class="actions"><button class="btn" id="save-pass-btn">সেভ করো</button></div>
+        <p id="pass-msg" style="font-size:12px;margin-top:8px;"></p>
+      </div>
+      <div class="card">
+        <h3>অটো-লগআউট</h3>
+        <p class="hint">নির্দিষ্ট সময় কোনো কার্যক্রম না হলে অটোমেটিক লগআউট হয়ে যাবে।</p>
+        <select id="auto-logout-mins">
+          <option value="10">১০ মিনিট</option>
+          <option value="20" selected>২০ মিনিট</option>
+          <option value="60">৬০ মিনিট</option>
+          <option value="0">বন্ধ (সুপারিশ করা হয় না)</option>
+        </select>
+        <div class="actions"><button class="btn outline" id="save-timeout-btn">সেভ করো</button></div>
+        <p id="timeout-msg" style="font-size:12px;margin-top:8px;"></p>
+      </div>
+    </div>
+
+  </main>
 </div>
 
 <script>
@@ -248,6 +332,7 @@ async function sha256hex(str){
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
   return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
 }
+function randomSalt(){ return [...crypto.getRandomValues(new Uint8Array(16))].map(b=>b.toString(16).padStart(2,'0')).join(''); }
 function log(id, msg, cls){
   const el = document.getElementById(id);
   const line = document.createElement('div');
@@ -257,42 +342,110 @@ function log(id, msg, cls){
   el.scrollTop = el.scrollHeight;
 }
 function clearLog(id){ document.getElementById(id).innerHTML = ''; }
+function fmtSize(bytes){
+  if(bytes < 1024*1024) return (bytes/1024).toFixed(0)+' KB';
+  return (bytes/1024/1024).toFixed(1)+' MB';
+}
 
-/* ===================== LOGIN ===================== */
-const DEFAULT_PASS_HASH_SRC = 'rakib2026';
+/* ===================== LOGIN (salted hash + lockout) ===================== */
+const DEFAULT_PASS = 'rakib2026';
+const LOCKOUT_KEY = 'rkx-admin-lockout';
+const ATTEMPTS_KEY = 'rkx-admin-attempts';
+
+async function getPassHash(){
+  let rec = LS.get('rkx-admin-pass-v2', null);
+  if(!rec){
+    const salt = randomSalt();
+    const hash = await sha256hex(salt + DEFAULT_PASS);
+    rec = { salt, hash };
+    LS.set('rkx-admin-pass-v2', rec);
+  }
+  return rec;
+}
+function isLockedOut(){
+  const until = LS.get(LOCKOUT_KEY, 0);
+  return until && Date.now() < until;
+}
+function lockoutSecondsLeft(){ return Math.ceil((LS.get(LOCKOUT_KEY,0) - Date.now())/1000); }
+
 async function checkLogin(){
-  const savedHash = LS.get('rkx-admin-pass-hash', null);
-  const targetHash = savedHash || await sha256hex(DEFAULT_PASS_HASH_SRC);
-  document.getElementById('login-btn').onclick = async () => {
-    const val = document.getElementById('login-pass').value;
-    const h = await sha256hex(val);
-    if(h === targetHash){
-      sessionStorage.setItem('rkx-admin-authed','1');
-      showDashboard();
+  document.getElementById('login-btn').onclick = attemptLogin;
+  document.getElementById('login-pass').addEventListener('keydown', e => { if(e.key==='Enter') attemptLogin(); });
+}
+async function attemptLogin(){
+  const errEl = document.getElementById('login-err');
+  if(isLockedOut()){ errEl.textContent = `অনেকবার ভুল হয়েছে — ${lockoutSecondsLeft()} সেকেন্ড পর আবার চেষ্টা করো।`; return; }
+  const val = document.getElementById('login-pass').value;
+  const rec = await getPassHash();
+  const h = await sha256hex(rec.salt + val);
+  if(h === rec.hash){
+    LS.set(ATTEMPTS_KEY, 0);
+    sessionStorage.setItem('rkx-admin-authed', String(Date.now()));
+    showDashboard();
+  } else {
+    const attempts = LS.get(ATTEMPTS_KEY, 0) + 1;
+    LS.set(ATTEMPTS_KEY, attempts);
+    if(attempts >= 5){
+      LS.set(LOCKOUT_KEY, Date.now() + 60000);
+      LS.set(ATTEMPTS_KEY, 0);
+      errEl.textContent = '৫ বার ভুল হয়েছে — ৬০ সেকেন্ডের জন্য লক করা হলো।';
     } else {
-      document.getElementById('login-err').textContent = 'পাসওয়ার্ড ভুল হয়েছে।';
+      errEl.textContent = `পাসওয়ার্ড ভুল হয়েছে। (${attempts}/5 চেষ্টা)`;
     }
-  };
-  document.getElementById('login-pass').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('login-btn').click(); });
+  }
 }
 function showDashboard(){
   document.getElementById('login-screen').classList.add('hidden');
-  document.getElementById('dashboard').classList.remove('hidden');
+  document.getElementById('app').classList.add('show');
   loadGithubSettingsIntoForm();
+  refreshDashboardStats();
+  resetInactivityTimer();
 }
 document.getElementById('logout-btn').onclick = () => { sessionStorage.removeItem('rkx-admin-authed'); location.reload(); };
 checkLogin();
-if(sessionStorage.getItem('rkx-admin-authed')==='1') showDashboard();
 
-/* ===================== TABS ===================== */
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.onclick = () => {
-    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-    document.querySelectorAll('.tabpage').forEach(p=>p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
-  };
-});
+/* session validity: authed flag + not expired by inactivity timeout */
+function sessionValid(){
+  const authedAt = sessionStorage.getItem('rkx-admin-authed');
+  if(!authedAt) return false;
+  const timeoutMins = LS.get('rkx-admin-timeout-mins', 20);
+  if(timeoutMins === 0) return true;
+  const lastActive = Number(sessionStorage.getItem('rkx-admin-last-active') || authedAt);
+  return (Date.now() - lastActive) < timeoutMins * 60000;
+}
+let inactivityTimer = null;
+function resetInactivityTimer(){
+  sessionStorage.setItem('rkx-admin-last-active', String(Date.now()));
+  const timeoutMins = LS.get('rkx-admin-timeout-mins', 20);
+  if(inactivityTimer) clearTimeout(inactivityTimer);
+  if(timeoutMins > 0){
+    inactivityTimer = setTimeout(() => { sessionStorage.removeItem('rkx-admin-authed'); location.reload(); }, timeoutMins*60000);
+  }
+}
+['click','keydown','mousemove','touchstart'].forEach(evt => document.addEventListener(evt, () => { if(sessionStorage.getItem('rkx-admin-authed')) resetInactivityTimer(); }, {passive:true}));
+
+if(sessionValid()) showDashboard();
+else sessionStorage.removeItem('rkx-admin-authed');
+
+/* ===================== SIDEBAR / TABS ===================== */
+function switchTab(name){
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tabpage').forEach(p=>p.classList.remove('active'));
+  document.querySelector(`.nav-item[data-tab="${name}"]`).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sb-overlay').classList.remove('show');
+  if(name === 'dashboard') refreshDashboardStats();
+}
+document.querySelectorAll('.nav-item').forEach(btn => btn.onclick = () => switchTab(btn.dataset.tab));
+document.getElementById('mobile-toggle').onclick = () => {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sb-overlay').classList.add('show');
+};
+document.getElementById('sb-overlay').onclick = () => {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sb-overlay').classList.remove('show');
+};
 
 /* ===================== GITHUB SETTINGS ===================== */
 function getGh(){ return LS.get('rkx-gh-settings', {owner:'',repo:'',branch:'main',token:''}); }
@@ -304,6 +457,12 @@ function loadGithubSettingsIntoForm(){
   document.getElementById('gh-branch').value = g.branch || 'main';
   document.getElementById('gh-token').value = g.token || '';
 }
+document.getElementById('gh-token-toggle').onclick = () => {
+  const inp = document.getElementById('gh-token');
+  const btn = document.getElementById('gh-token-toggle');
+  if(inp.type === 'password'){ inp.type = 'text'; btn.textContent = 'লুকাও'; }
+  else { inp.type = 'password'; btn.textContent = 'দেখাও'; }
+};
 document.getElementById('gh-save').onclick = () => {
   setGh({
     owner: document.getElementById('gh-owner').value.trim(),
@@ -321,18 +480,25 @@ document.getElementById('gh-test').onclick = async () => {
   log('connect-log','কানেকশন চেক করা হচ্ছে...');
   try{
     const r = await fetch(`https://api.github.com/repos/${g.owner}/${g.repo}`, { headers: ghHeaders(g) });
-    if(r.ok){ log('connect-log', `সংযুক্ত ✓ — repo "${g.owner}/${g.repo}" পাওয়া গেছে।`,'ok'); }
-    else { const j = await r.json().catch(()=>({})); log('connect-log', `ব্যর্থ (${r.status}): ${j.message||'রিপো খুঁজে পাওয়া যায়নি বা টোকেনে পারমিশন নেই।'}`,'err'); }
-  }catch(e){ log('connect-log','নেটওয়ার্ক এরর: '+e.message,'err'); }
+    if(r.ok){
+      log('connect-log', `সংযুক্ত ✓ — repo "${g.owner}/${g.repo}" পাওয়া গেছে।`,'ok');
+      setGhStatusPill(true);
+    } else {
+      const j = await r.json().catch(()=>({}));
+      log('connect-log', `ব্যর্থ (${r.status}): ${j.message||'রিপো খুঁজে পাওয়া যায়নি বা টোকেনে পারমিশন নেই।'}`,'err');
+      setGhStatusPill(false);
+    }
+  }catch(e){ log('connect-log','নেটওয়ার্ক এরর: '+e.message,'err'); setGhStatusPill(false); }
 };
+function setGhStatusPill(ok){
+  const pill = document.getElementById('gh-status-pill');
+  pill.className = 'status-pill ' + (ok?'ok':'bad');
+  pill.innerHTML = `<span class="dot"></span> ${ok?'GitHub সংযুক্ত':'GitHub সংযোগ নেই'}`;
+}
 
 /* ===================== GITHUB API CORE ===================== */
-function ghHeaders(g){
-  return { 'Authorization': 'Bearer ' + g.token, 'Accept':'application/vnd.github+json' };
-}
-function b64EncodeUnicode(str){
-  return btoa(unescape(encodeURIComponent(str)));
-}
+function ghHeaders(g){ return { 'Authorization': 'Bearer ' + g.token, 'Accept':'application/vnd.github+json' }; }
+function b64EncodeUnicode(str){ return btoa(unescape(encodeURIComponent(str))); }
 async function ghGetFile(path){
   const g = getGh();
   const url = `https://api.github.com/repos/${g.owner}/${g.repo}/contents/${path}?ref=${encodeURIComponent(g.branch)}&t=${Date.now()}`;
@@ -354,30 +520,13 @@ async function ghPutFile(path, base64Content, message, sha){
 }
 async function loadContentJson(){
   const f = await ghGetFile('content.json');
-  if(!f) throw new Error('content.json রিপোতে পাওয়া যায়নি — zip আপলোড করার সময় ফাইলটা রিপোর root-এ আছে কিনা দেখো।');
+  if(!f) throw new Error('content.json রিপোতে পাওয়া যায়নি।');
   const text = decodeURIComponent(escape(atob(f.contentBase64.replace(/\n/g,''))));
   return { data: JSON.parse(text), sha: f.sha };
 }
 async function saveContentJson(data, sha, message){
   const text = JSON.stringify(data, null, 2);
   return ghPutFile('content.json', b64EncodeUnicode(text), message, sha);
-}
-
-/* ===================== IMAGES TAB ===================== */
-let pendingImgFile = null;
-const dz = document.getElementById('img-drop');
-const imgFileInput = document.getElementById('img-file');
-dz.onclick = () => imgFileInput.click();
-dz.ondragover = e => { e.preventDefault(); dz.classList.add('drag'); };
-dz.ondragleave = () => dz.classList.remove('drag');
-dz.ondrop = e => { e.preventDefault(); dz.classList.remove('drag'); if(e.dataTransfer.files[0]) handleImgFile(e.dataTransfer.files[0]); };
-imgFileInput.onchange = () => { if(imgFileInput.files[0]) handleImgFile(imgFileInput.files[0]); };
-function handleImgFile(file){
-  pendingImgFile = file;
-  document.getElementById('img-upload-btn').disabled = false;
-  const url = URL.createObjectURL(file);
-  document.getElementById('img-preview').innerHTML = `<div class="thumb"><img src="${url}"/><span class="cap">${file.name}</span></div>`;
-  dz.textContent = `নির্বাচিত হয়েছে: ${file.name}`;
 }
 function fileToBase64(file){
   return new Promise((res,rej)=>{
@@ -387,33 +536,108 @@ function fileToBase64(file){
     r.readAsDataURL(file);
   });
 }
-document.getElementById('img-upload-btn').onclick = async () => {
-  if(!pendingImgFile) return;
-  clearLog('img-log');
-  const btn = document.getElementById('img-upload-btn');
-  btn.disabled = true; btn.innerHTML = '<span class="spin"></span> আপলোড হচ্ছে...';
+
+/* ===================== DASHBOARD ===================== */
+async function refreshDashboardStats(){
+  const g = getGh();
+  if(!g.owner || !g.repo || !g.token){ setGhStatusPill(false); return; }
   try{
-    const ext = pendingImgFile.name.split('.').pop().toLowerCase();
-    const safeName = pendingImgFile.name.replace(/[^a-zA-Z0-9.\-_]/g,'-');
-    const filename = `${Date.now()}-${safeName}`;
-    log('img-log','ছবি GitHub-এ আপলোড হচ্ছে...');
-    const b64 = await fileToBase64(pendingImgFile);
-    await ghPutFile(`images/${filename}`, b64, `Upload image ${filename} via admin panel`);
-    log('img-log','ছবি আপলোড সম্পন্ন ✓ — এখন content.json আপডেট হচ্ছে...','ok');
-    const { data, sha } = await loadContentJson();
-    data.gallery = data.gallery || [];
-    data.gallery.push({
-      url: `/images/${filename}`,
-      alt: document.getElementById('img-alt').value.trim() || 'Rkx Rakib gallery image',
-      caption: document.getElementById('img-caption').value.trim() || safeName
-    });
-    await saveContentJson(data, sha, `Add gallery image ${filename}`);
-    log('img-log','সাইটে পাবলিশ হয়ে গেছে ✅ — Vercel অটো-ডিপ্লয় শুরু হলে ১-২ মিনিটে সবাই দেখতে পাবে।','ok');
-    pendingImgFile = null; dz.textContent = 'ক্লিক করো অথবা ছবি ড্র্যাগ করে ছাড়ো';
-    document.getElementById('img-alt').value=''; document.getElementById('img-caption').value='';
-    document.getElementById('img-preview').innerHTML='';
-  }catch(e){ log('img-log','এরর: '+e.message,'err'); }
-  finally{ btn.disabled=false; btn.textContent='আপলোড ও পাবলিশ করো'; }
+    const { data } = await loadContentJson();
+    const gallery = data.gallery || [];
+    document.getElementById('stat-images').textContent = gallery.filter(i=>!i.type||i.type==='image').length;
+    document.getElementById('stat-videos').textContent = gallery.filter(i=>i.type==='video').length;
+    document.getElementById('stat-posts').textContent = (data.blog||[]).length;
+    setGhStatusPill(true);
+  }catch(e){ setGhStatusPill(false); }
+}
+
+/* ===================== MEDIA TAB — BULK UPLOAD ===================== */
+let mediaQueue = []; // {file, alt, caption, status, type}
+const mdrop = document.getElementById('media-drop');
+const mediaFileInput = document.getElementById('media-file');
+mdrop.onclick = () => mediaFileInput.click();
+mdrop.ondragover = e => { e.preventDefault(); mdrop.classList.add('drag'); };
+mdrop.ondragleave = () => mdrop.classList.remove('drag');
+mdrop.ondrop = e => { e.preventDefault(); mdrop.classList.remove('drag'); addFilesToQueue([...e.dataTransfer.files]); };
+mediaFileInput.onchange = () => { addFilesToQueue([...mediaFileInput.files]); mediaFileInput.value = ''; };
+
+function addFilesToQueue(files){
+  files.forEach(file => {
+    const type = file.type.startsWith('video') ? 'video' : 'image';
+    mediaQueue.push({ file, type, alt: '', caption: file.name, status: 'pending', id: Math.random().toString(36).slice(2) });
+  });
+  renderQueue();
+}
+function renderQueue(){
+  const wrap = document.getElementById('media-queue');
+  wrap.innerHTML = '';
+  mediaQueue.forEach(item => {
+    const url = URL.createObjectURL(item.file);
+    const div = document.createElement('div');
+    div.className = 'queue-item';
+    div.innerHTML = `
+      <div class="thumb-wrap">${item.type==='video' ? `<video src="${url}" muted></video>` : `<img src="${url}" />`}</div>
+      <div class="fields">
+        <input type="text" placeholder="Alt text (SEO)" value="${item.alt}" data-role="alt" />
+        <input type="text" placeholder="Caption" value="${item.caption}" data-role="caption" />
+      </div>
+      <div class="side">
+        <span class="filesize">${fmtSize(item.file.size)}${item.file.size > 50*1024*1024 ? ' ⚠️' : ''}</span>
+        <span class="queue-status ${item.status}" data-role="status">${
+          item.status==='pending'?'অপেক্ষমাণ': item.status==='uploading'?'আপলোড হচ্ছে...': item.status==='done'?'সম্পন্ন ✓':'ব্যর্থ ✗'
+        }</span>
+        <button class="remove-x" data-role="remove">✕</button>
+      </div>`;
+    div.querySelector('[data-role="alt"]').oninput = e => item.alt = e.target.value;
+    div.querySelector('[data-role="caption"]').oninput = e => item.caption = e.target.value;
+    div.querySelector('[data-role="remove"]').onclick = () => { mediaQueue = mediaQueue.filter(i=>i.id!==item.id); renderQueue(); };
+    wrap.appendChild(div);
+  });
+  document.getElementById('media-actions').style.display = mediaQueue.length ? 'flex' : 'none';
+}
+document.getElementById('media-clear').onclick = () => { mediaQueue = []; renderQueue(); };
+document.getElementById('media-upload-all').onclick = async () => {
+  if(!mediaQueue.length) return;
+  clearLog('media-log');
+  const btn = document.getElementById('media-upload-all');
+  btn.disabled = true;
+  const uploaded = [];
+  for(const item of mediaQueue){
+    if(item.status === 'done') { uploaded.push(item); continue; }
+    item.status = 'uploading'; renderQueue();
+    try{
+      const safeName = item.file.name.replace(/[^a-zA-Z0-9.\-_]/g,'-');
+      const filename = `${Date.now()}-${Math.random().toString(36).slice(2,6)}-${safeName}`;
+      log('media-log', `আপলোড হচ্ছে: ${item.file.name} ...`);
+      const b64 = await fileToBase64(item.file);
+      await ghPutFile(`images/${filename}`, b64, `Upload media ${filename} via admin panel`);
+      item.status = 'done';
+      item.publishedUrl = `/images/${filename}`;
+      log('media-log', `${item.file.name} আপলোড সম্পন্ন ✓`, 'ok');
+      uploaded.push(item);
+    }catch(e){
+      item.status = 'error';
+      log('media-log', `${item.file.name} ব্যর্থ: ${e.message}`, 'err');
+    }
+    renderQueue();
+  }
+  const newlyUploaded = uploaded.filter(i => i.publishedUrl);
+  if(newlyUploaded.length){
+    try{
+      log('media-log', 'content.json আপডেট হচ্ছে...');
+      const { data, sha } = await loadContentJson();
+      data.gallery = data.gallery || [];
+      newlyUploaded.forEach(item => {
+        data.gallery.push({ type: item.type, url: item.publishedUrl, alt: item.alt || 'Rkx Rakib gallery media', caption: item.caption || '' });
+      });
+      await saveContentJson(data, sha, `Add ${newlyUploaded.length} media item(s) via admin panel`);
+      log('media-log', `${newlyUploaded.length}টা মিডিয়া সাইটে পাবলিশ হয়ে গেছে ✅`, 'ok');
+      mediaQueue = mediaQueue.filter(i => i.status !== 'done');
+      renderQueue();
+      refreshDashboardStats();
+    }catch(e){ log('media-log', 'content.json সেভ করতে এরর: '+e.message, 'err'); }
+  }
+  btn.disabled = false;
 };
 
 /* ===================== BLOG TAB ===================== */
@@ -428,8 +652,8 @@ document.getElementById('blog-publish-btn').onclick = async () => {
     const coverFile = document.getElementById('blog-cover-file').files[0];
     if(coverFile){
       log('blog-log','কভার ছবি আপলোড হচ্ছে...');
-      const ext = coverFile.name.replace(/[^a-zA-Z0-9.\-_]/g,'-');
-      const filename = `${Date.now()}-${ext}`;
+      const safe = coverFile.name.replace(/[^a-zA-Z0-9.\-_]/g,'-');
+      const filename = `${Date.now()}-${safe}`;
       const b64 = await fileToBase64(coverFile);
       await ghPutFile(`images/${filename}`, b64, `Upload blog cover ${filename}`);
       coverPath = `/images/${filename}`;
@@ -452,9 +676,10 @@ document.getElementById('blog-publish-btn').onclick = async () => {
       content: htmlContent
     });
     await saveContentJson(data, sha, `Publish blog post: ${title}`);
-    log('blog-log','ব্লগ পোস্ট পাবলিশ হয়ে গেছে ✅ — /blog/ পেজে এবং হোমপেজে দেখা যাবে।','ok');
+    log('blog-log','ব্লগ পোস্ট পাবলিশ হয়ে গেছে ✅','ok');
     ['blog-title','blog-cat','blog-date','blog-excerpt','blog-content'].forEach(id=>document.getElementById(id).value='');
     document.getElementById('blog-cover-file').value='';
+    refreshDashboardStats();
   }catch(e){ log('blog-log','এরর: '+e.message,'err'); }
   finally{ btn.disabled=false; btn.textContent='পাবলিশ করো'; }
 };
@@ -504,26 +729,28 @@ document.getElementById('site-save-btn').onclick = async () => {
 document.getElementById('manage-load-gallery').onclick = async () => {
   clearLog('manage-log');
   try{
-    const { data, sha } = await loadContentJson();
+    const { data } = await loadContentJson();
     const wrap = document.getElementById('manage-gallery-list');
     wrap.innerHTML = '';
     (data.gallery||[]).forEach((item,idx) => {
       const div = document.createElement('div');
       div.className = 'list-item';
-      div.innerHTML = `<div class="meta"><b>${item.caption||('image_'+(idx+1))}</b>${item.url}</div>
-        <button class="btn danger" data-idx="${idx}">মুছে ফেলো</button>`;
+      const isVideo = item.type === 'video';
+      div.innerHTML = `<div class="meta"><span class="badge ${isVideo?'video':''}">${isVideo?'VIDEO':'IMAGE'}</span><b>${item.caption||('media_'+(idx+1))}</b>${item.url}</div>
+        <button class="btn danger sm" data-idx="${idx}">মুছে ফেলো</button>`;
       div.querySelector('button').onclick = async () => {
         try{
           const cur = await loadContentJson();
           cur.data.gallery.splice(idx,1);
-          await saveContentJson(cur.data, cur.sha, 'Delete gallery image via admin panel');
-          log('manage-log','ছবি মুছে ফেলা হয়েছে ✓','ok');
+          await saveContentJson(cur.data, cur.sha, 'Delete gallery media via admin panel');
+          log('manage-log','মুছে ফেলা হয়েছে ✓','ok');
           document.getElementById('manage-load-gallery').click();
+          refreshDashboardStats();
         }catch(e){ log('manage-log','এরর: '+e.message,'err'); }
       };
       wrap.appendChild(div);
     });
-    if(!(data.gallery||[]).length) wrap.innerHTML = '<p class="hint">কোনো ছবি নেই।</p>';
+    if(!(data.gallery||[]).length) wrap.innerHTML = '<p class="hint">কোনো মিডিয়া নেই।</p>';
   }catch(e){ log('manage-log','এরর: '+e.message,'err'); }
 };
 document.getElementById('manage-load-blog').onclick = async () => {
@@ -536,7 +763,7 @@ document.getElementById('manage-load-blog').onclick = async () => {
       const div = document.createElement('div');
       div.className = 'list-item';
       div.innerHTML = `<div class="meta"><b>${post.title}</b><span class="badge">${post.category||'Blog'}</span> ${post.date||''}</div>
-        <button class="btn danger" data-idx="${idx}">মুছে ফেলো</button>`;
+        <button class="btn danger sm" data-idx="${idx}">মুছে ফেলো</button>`;
       div.querySelector('button').onclick = async () => {
         try{
           const cur = await loadContentJson();
@@ -544,6 +771,7 @@ document.getElementById('manage-load-blog').onclick = async () => {
           await saveContentJson(cur.data, cur.sha, 'Delete blog post via admin panel');
           log('manage-log','পোস্ট মুছে ফেলা হয়েছে ✓','ok');
           document.getElementById('manage-load-blog').click();
+          refreshDashboardStats();
         }catch(e){ log('manage-log','এরর: '+e.message,'err'); }
       };
       wrap.appendChild(div);
@@ -552,15 +780,26 @@ document.getElementById('manage-load-blog').onclick = async () => {
   }catch(e){ log('manage-log','এরর: '+e.message,'err'); }
 };
 
-/* ===================== SETTINGS TAB — change password ===================== */
+/* ===================== SECURITY TAB ===================== */
 document.getElementById('save-pass-btn').onclick = async () => {
   const val = document.getElementById('new-pass').value;
   const msg = document.getElementById('pass-msg');
   if(!val || val.length < 4){ msg.style.color='var(--red)'; msg.textContent='অন্তত ৪ অক্ষরের পাসওয়ার্ড দাও।'; return; }
-  const h = await sha256hex(val);
-  LS.set('rkx-admin-pass-hash', h);
+  const salt = randomSalt();
+  const hash = await sha256hex(salt + val);
+  LS.set('rkx-admin-pass-v2', { salt, hash });
   msg.style.color='var(--green)'; msg.textContent='পাসওয়ার্ড বদলানো হয়েছে (এই ব্রাউজারের জন্য)।';
   document.getElementById('new-pass').value='';
+};
+(function initTimeoutSelect(){
+  document.getElementById('auto-logout-mins').value = String(LS.get('rkx-admin-timeout-mins', 20));
+})();
+document.getElementById('save-timeout-btn').onclick = () => {
+  const mins = Number(document.getElementById('auto-logout-mins').value);
+  LS.set('rkx-admin-timeout-mins', mins);
+  document.getElementById('timeout-msg').style.color = 'var(--green)';
+  document.getElementById('timeout-msg').textContent = 'সেভ হয়েছে।';
+  resetInactivityTimer();
 };
 </script>
 </body>
