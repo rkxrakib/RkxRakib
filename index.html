@@ -345,14 +345,24 @@ section{padding:88px clamp(18px,5vw,40px);position:relative;z-index:1;}
 /* GALLERY */
 .gallery{background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
 .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
-.gallery-item{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);aspect-ratio:1/1;background:var(--surface);}
-.gallery-item img{width:100%;height:100%;object-fit:cover;transition:.4s;}
-.gallery-item:hover img{transform:scale(1.05);}
-.gallery-item .cap{position:absolute;left:0;right:0;bottom:0;padding:10px 12px 8px;font-size:10.5px;font-family:var(--font-display);color:#fff;background:linear-gradient(to top,rgba(0,0,0,.8),transparent);opacity:0;transition:.2s;}
+.gallery-item{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);aspect-ratio:1/1;background:var(--surface);cursor:pointer;}
+.gallery-item img,.gallery-item video{width:100%;height:100%;object-fit:cover;transition:.4s;}
+.gallery-item:hover img,.gallery-item:hover video{transform:scale(1.05);}
+.gallery-item .cap{position:absolute;left:0;right:0;bottom:0;padding:10px 12px 8px;font-size:10.5px;font-family:var(--font-display);color:#fff;background:linear-gradient(to top,rgba(0,0,0,.8),transparent);opacity:0;transition:.2s;z-index:2;}
 .gallery-item:hover .cap{opacity:1;}
 .gallery-item.logo-tile{grid-column:span 2;grid-row:span 2;}
 .gallery-item.logo-tile img{object-fit:contain;padding:24px;background:radial-gradient(circle at 50% 40%,rgba(88,166,255,.12),transparent 70%);}
+.gallery-item .play-badge{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:rgba(11,14,19,.65);border:1.5px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;pointer-events:none;z-index:2;}
 @media(max-width:768px){ .gallery-grid{grid-template-columns:repeat(2,1fr);} .gallery-item.logo-tile{grid-column:span 2;grid-row:span 1;} }
+
+/* LIGHTBOX */
+.lightbox-overlay{position:fixed;inset:0;background:rgba(3,4,7,.94);z-index:9998;display:flex;align-items:center;justify-content:center;padding:40px 20px;opacity:0;visibility:hidden;transition:.25s;}
+.lightbox-overlay.show{opacity:1;visibility:visible;}
+.lightbox-inner{max-width:min(90vw,900px);max-height:88vh;display:flex;flex-direction:column;align-items:center;gap:12px;}
+.lightbox-inner img,.lightbox-inner video{max-width:100%;max-height:78vh;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.6);}
+.lightbox-cap{color:var(--muted);font-family:var(--font-display);font-size:12.5px;text-align:center;}
+.lightbox-close{position:fixed;top:22px;right:24px;width:40px;height:40px;border-radius:10px;background:var(--surface);border:1px solid var(--border-strong);color:var(--text);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:9999;}
+.lightbox-close:hover{border-color:var(--blue);color:var(--blue);}
 
 /* DOMAINS */
 .domains-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:13px;}
@@ -547,6 +557,14 @@ section{padding:88px clamp(18px,5vw,40px);position:relative;z-index:1;}
       <button class="btn btn-primary" id="loc-allow">Allow</button>
       <button class="btn btn-outline" id="loc-skip">Skip</button>
     </div>
+  </div>
+</div>
+
+<div class="lightbox-overlay" id="lightbox-overlay" aria-hidden="true">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
+  <div class="lightbox-inner">
+    <div id="lightbox-media"></div>
+    <div class="lightbox-cap" id="lightbox-cap"></div>
   </div>
 </div>
 
@@ -1280,6 +1298,36 @@ async function sendToTelegram(){
   finally { btn.innerHTML = 'Send Message <svg class="icon" width="13" height="13"><use href="#i-send"></use></svg>'; btn.disabled = false; }
 }
 
+/* GALLERY LIGHTBOX */
+function openLightbox(item){
+  const media = document.getElementById('lightbox-media');
+  media.innerHTML = item.type === 'video'
+    ? `<video src="${item.url}" controls autoplay playsinline></video>`
+    : `<img src="${item.url}" alt="${item.alt || ''}" />`;
+  document.getElementById('lightbox-cap').textContent = item.caption || '';
+  document.getElementById('lightbox-overlay').classList.add('show');
+}
+function closeLightbox(){
+  document.getElementById('lightbox-overlay').classList.remove('show');
+  document.getElementById('lightbox-media').innerHTML = '';
+}
+document.getElementById('lightbox-close').onclick = closeLightbox;
+document.getElementById('lightbox-overlay').addEventListener('click', e => { if(e.target.id === 'lightbox-overlay') closeLightbox(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
+function bindGalleryLightbox(){
+  document.querySelectorAll('#gallery-grid .gallery-item').forEach(el => {
+    el.onclick = () => {
+      const vid = el.querySelector('video');
+      const img = el.querySelector('img');
+      const capEl = el.querySelector('.cap');
+      const caption = capEl ? capEl.textContent : '';
+      if(vid) openLightbox({ type:'video', url: vid.getAttribute('src'), caption });
+      else if(img) openLightbox({ type:'image', url: img.src, alt: img.alt, caption });
+    };
+  });
+}
+bindGalleryLightbox();
+
 /* ===== LIVE SITE CONTENT (loaded from /content.json, edited via /admin) ===== */
 window.RKX_TELEGRAM = { botToken: "8243293869:AAELR-H8atWAYOYC2UgYchHx6URNk3I801o", chatId: "7761133429" };
 (function applySiteContent(){
@@ -1319,10 +1367,15 @@ window.RKX_TELEGRAM = { botToken: "8243293869:AAELR-H8atWAYOYC2UgYchHx6URNk3I801
         if(grid){
           grid.innerHTML = o.gallery.map((item,idx) => {
             const url = typeof item === 'string' ? item : item.url;
+            const type = (typeof item === 'object' && item.type === 'video') ? 'video' : 'image';
             const alt = (typeof item === 'object' && item.alt) ? item.alt : 'Rkx Rakib gallery image';
             const cap = (typeof item === 'object' && item.caption) ? item.caption : `image_${idx+1}`;
-            return `<div class="gallery-item${idx===o.gallery.length-1?' logo-tile':''}"><img src="${url}" alt="${alt}" loading="lazy" /><span class="cap">${cap}</span></div>`;
+            const media = type === 'video'
+              ? `<video src="${url}" muted playsinline preload="metadata"></video><span class="play-badge">▶</span>`
+              : `<img src="${url}" alt="${alt}" loading="lazy" />`;
+            return `<div class="gallery-item">${media}<span class="cap">${cap}</span></div>`;
           }).join('');
+          bindGalleryLightbox();
         }
       }
 
